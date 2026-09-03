@@ -32,13 +32,16 @@
   .side .arrow { font-size:24px; line-height:1; font-weight:400 }
   .side.no { background:var(--no) } .side.yes { background:var(--yes) }
   .stack { position:relative; width:100%; height:100%; max-height:820px; min-height:320px }
-  .card { position:absolute; inset:0; background:var(--card); border-radius:16px; box-shadow:0 1px 2px rgba(20,20,30,.04), 0 16px 48px rgba(20,20,30,.07); padding:28px 36px 40px; overflow:auto;
-          display:flex; flex-direction:column; gap:16px; transition:transform .35s cubic-bezier(.22,1,.36,1), opacity .3s; touch-action:none; user-select:none;
+  .card { position:absolute; inset:0; background:var(--card); border-radius:16px; box-shadow:0 1px 2px rgba(20,20,30,.04), 0 16px 48px rgba(20,20,30,.07); padding:0; overflow:auto;
+          display:flex; flex-direction:column; gap:0; transition:transform .35s cubic-bezier(.22,1,.36,1), opacity .3s; touch-action:none; user-select:none;
           mask-image:linear-gradient(to bottom, #000 calc(100% - 56px), transparent); -webkit-mask-image:linear-gradient(to bottom, #000 calc(100% - 56px), transparent) }
   .card.top { animation:settle .32s cubic-bezier(.22,1,.36,1) }
   @keyframes settle { from { transform:translateY(10px); opacity:.6 } to { transform:none; opacity:1 } }
   @media (prefers-reduced-motion: reduce) { .card, .card.top { animation:none; transition:none } }
-  .card > section, .card > h1, .card > .note { max-width:66ch }
+  .card .head { position:sticky; top:0; z-index:2; background:var(--card); padding:26px 36px 14px; transition:box-shadow .15s }
+  .card .head.stuck { box-shadow:0 1px 0 var(--line), 0 8px 16px -12px rgba(20,20,30,.25) }
+  .card .body { padding:4px 36px 40px; display:flex; flex-direction:column; gap:16px }
+  .card .body > section, .card .head > h1, .card .body > .note { max-width:66ch }
   .card { z-index:3 }
   .card.next { z-index:2; transform:scale(.96) translateY(14px); opacity:.6; pointer-events:none }
   .card.next > *, .card.next2 > * { visibility:hidden }
@@ -76,7 +79,7 @@
   .chip.never, .chip.avoid { background:var(--no-soft); color:var(--no) }
   .chip.always { background:var(--yes-soft); color:var(--yes) }
   .chip.prefer, .chip.context { background:var(--accent-soft); color:var(--accent) }
-  h1 { font:600 28px/38px Georgia, "Times New Roman", serif; letter-spacing:-.005em; margin:6px 0 0; text-wrap:balance }
+  h1 { font:600 28px/38px Georgia, "Times New Roman", serif; letter-spacing:-.005em; margin:0; text-wrap:balance }
   .id { font-size:14px; line-height:24px; color:var(--ink-3); font-variant-numeric:tabular-nums }
   .card .id { display:none }
   h2 { font-size:12px; line-height:22px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); margin:0 0 8px; font-weight:600 }
@@ -108,7 +111,7 @@
   .toast.on { opacity:1 }
   .done { text-align:center; color:var(--ink-2) }
   .done b { display:block; font-size:28px; color:var(--ink); margin-bottom:8px }
-  @media (max-width:640px) { .card { padding:18px } h1 { font-size:22px; line-height:32px } }
+  @media (max-width:640px) { .card .head { padding:18px 18px 10px } .card .body { padding:0 18px 28px } h1 { font-size:22px; line-height:32px } }
 </style>
 </head>
 <body>
@@ -215,6 +218,8 @@ function cardEl(c, i) {
   const sec = (title, body, quiet) => body ? `<section class="${quiet ? "quiet" : ""}"><h2>${title}</h2>${body}</section>` : "";
   el.innerHTML = `
     <div class="stamp yes">PROMOTE</div><div class="stamp no">RETIRE</div>
+    <div class="head"><h1>${esc(c.title)}</h1></div>
+    <div class="body">
     <div class="chiprow">
       <div class="chips">
         <span class="chip ${esc(c.stance)}"><em>stance</em><select name="stance" onchange="this.parentNode.className='chip '+this.value">${opt(["always","never","prefer","avoid","context"], c.stance)}</select></span>
@@ -227,7 +232,6 @@ function cardEl(c, i) {
         <span class="chip dim"><em>scope</em><select name="scope">${opt(scopes, c.scope)}</select></span>
       </div>
     </div>
-    <h1>${esc(c.title)}</h1>
     <div class="id">${esc(c.id)} · seen in ${esc(c.occurrences.join(", "))}</div>
     ${c.review_note ? `<div class="note">${md(c.review_note)}</div>` : ""}
     ${sec("Rule", `<p>${md(c.rule)}</p>`)}
@@ -236,7 +240,9 @@ function cardEl(c, i) {
     ${sec("Exceptions", c.exceptions && `<p>${md(c.exceptions)}</p>`, true)}
     ${sec(`Evidence · ${c.evidence.length}`, `<ul>${ev}</ul>`, true)}
     ${sec("See also", c.seeAlso && `<p>${md(c.seeAlso)}</p>`, true)}
-    ${sec("Review notes", c.notes && `<p>${md(c.notes)}</p>`)}`;
+    ${sec("Review notes", c.notes && `<p>${md(c.notes)}</p>`)}
+    </div>`;
+  el.addEventListener("scroll", () => el.querySelector(".head").classList.toggle("stuck", el.scrollTop > 4), { passive: true });
   return el;
 }
 function edits(el, c) {
