@@ -99,7 +99,8 @@
   .stamp.yes { right:28px; color:var(--yes); border-color:var(--yes) }
   .stamp.no { left:28px; color:var(--no); border-color:var(--no); transform:rotate(14deg) }
   footer { display:flex; justify-content:center; gap:10px; padding:14px 20px 18px; flex-wrap:wrap }
-  footer button, .side.mobile { border:0; border-radius:999px; padding:10px 18px; font-weight:600; cursor:pointer; background:var(--card); color:var(--ink) }
+  footer button, .side.mobile { border:1px solid var(--line); border-radius:999px; padding:10px 18px; font-weight:600; cursor:pointer; background:var(--card); color:var(--ink); box-shadow:0 1px 2px rgba(20,20,30,.05); transition:border-color .12s }
+  footer button:hover { border-color:#cfcdc5 }
   kbd { font:11px ui-monospace, monospace; opacity:.6; margin-left:6px }
   footer .side.mobile { display:none }
   @media (max-width:900px) {
