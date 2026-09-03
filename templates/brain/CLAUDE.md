@@ -31,3 +31,6 @@
     in the DB-c-500..599 range, with evidence prefixed by the project slug. From client
     projects only `scope: universal` survives; project-specific rules are discarded, not
     scoped. Read `inbox/_imports/README.md`.
+12. **Titles are two lines.** A title is one sentence of at most 80 characters that names the
+    rule; every qualifier, example, and mechanism goes in `## Rule`. `bun run check` rejects
+    longer titles.

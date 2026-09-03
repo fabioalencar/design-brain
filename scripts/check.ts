@@ -1,6 +1,7 @@
 // Validates frontmatter of inbox/, decisions/, patterns/. Exit 1 on any error.
 import { listDocs, scopeKind, DIMENSIONS, STANCES, STATUSES, KINDS, COMPONENTS, brainRoot, toolRoot } from "./lib";
 
+const TITLE_MAX = 80; // two lines at the review card width; detail goes in ## Rule
 const errors: string[] = [];
 const warn: string[] = [];
 const root = brainRoot();
@@ -18,6 +19,7 @@ for (const dir of ["inbox", "decisions"]) {
       ids.set(fm.id, f);
     }
     need(typeof fm.title === "string" && (fm.title as string).length > 8, `${f}: title missing`);
+    if (typeof fm.title === "string" && (fm.title as string).length > TITLE_MAX) errors.push(`${f}: title is ${(fm.title as string).length} chars; max ${TITLE_MAX} (two lines). Move detail into ## Rule.`);
     need(DIMENSIONS.includes(fm.dimension as any), `${f}: dimension invalid (${fm.dimension})`);
     need(scopeKind(fm.scope) !== "invalid", `${f}: scope invalid (${fm.scope})`);
     need(STANCES.includes(fm.stance as any), `${f}: stance invalid (${fm.stance})`);
@@ -45,6 +47,7 @@ for (const d of listDocs(root + "patterns")) {
   need(d.fm.type === "pattern", `${f}: type must be pattern`);
   need(["anti-slop","craft"].includes(d.fm.kind as string), `${f}: kind must be anti-slop|craft`);
   need(typeof d.fm.title === "string", `${f}: title missing`);
+  if (typeof d.fm.title === "string" && (d.fm.title as string).length > TITLE_MAX) errors.push(`${f}: title is ${(d.fm.title as string).length} chars; max ${TITLE_MAX}`);
   need(["universal","personal"].includes(d.fm.scope as string), `${f}: scope must be universal|personal`);
   need(/\*\*Looks like:\*\*/.test(d.body), `${f}: missing **Looks like:**`);
   need(/\*\*Fix:\*\*/.test(d.body), `${f}: missing **Fix:**`);

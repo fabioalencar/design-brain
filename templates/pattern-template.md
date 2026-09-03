@@ -1,7 +1,7 @@
 ---
 type: pattern
 kind: anti-slop          # anti-slop|craft
-title: Pattern name a reviewer can say out loud
+title: Pattern name a reviewer can say out loud, max 80 characters
 tags: [hero, cta]
 scope: universal         # universal|personal
 occurrences: [project-slug]

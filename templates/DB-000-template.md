@@ -1,6 +1,6 @@
 ---
 id: DB-c-000
-title: Short, specific rule stated as a sentence
+title: Short rule as one sentence, max 80 characters, two lines on the card; detail goes in Rule
 dimension: color        # typography|color|spacing|layout|motion|copy|components|process|anti-slop
 scope: personal         # universal|personal|client:<slug>|project:<slug>
 stance: prefer          # always|never|prefer|avoid|context
