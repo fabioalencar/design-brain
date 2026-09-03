@@ -10,7 +10,7 @@
   * { box-sizing:border-box }
   html,body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.45 -apple-system, "Inter", system-ui, sans-serif; height:100% }
   body { display:flex; flex-direction:column; min-height:100vh; overflow:hidden }
-  .wrap { width:min(1100px, 100%); margin:0 auto; padding:0 20px }
+  .wrap { width:min(720px, 100%); margin:0 auto; padding:0 20px; box-sizing:content-box }
   header { display:flex; align-items:center; gap:14px; padding:14px 0 6px; font-size:12px; color:var(--ink-2); font-variant-numeric:tabular-nums }
   header b { color:var(--ink); font-weight:600 }
   header span { white-space:nowrap }
@@ -23,7 +23,8 @@
   .toolbar select { border:0; background:var(--card); padding:7px 10px; border-radius:8px; color:var(--ink); font-size:14px }
   .toolbar .compile { margin-left:auto; border:0; background:var(--card); border-radius:999px; padding:10px 18px; font-weight:600; color:var(--ink); cursor:pointer }
   main { flex:1; min-height:0; display:grid; grid-template-columns:1fr minmax(0, 720px) 1fr; align-items:center; gap:16px; width:min(1100px, 100%); margin:0 auto; padding:0 20px }
-  .side { border:0; border-radius:999px; padding:12px 22px; font-weight:600; color:#fff; cursor:pointer; justify-self:center; white-space:nowrap }
+  .side { border:0; border-radius:999px; padding:12px 22px; font-weight:600; color:#fff; cursor:pointer; justify-self:center; white-space:nowrap; display:inline-flex; align-items:center; gap:10px; font-size:16px }
+  .side .arrow { font-size:24px; line-height:1; font-weight:400 }
   .side.no { background:var(--no) } .side.yes { background:var(--yes) }
   .stack { position:relative; width:100%; height:100%; max-height:820px; min-height:320px }
   .card { position:absolute; inset:0; background:var(--card); border-radius:14px; box-shadow:0 12px 40px rgba(20,20,30,.08); padding:26px 30px; overflow:auto;
@@ -35,12 +36,32 @@
   .card.gone-r { transform:translate(120%, -6%) rotate(12deg); opacity:0 }
   .card.gone-l { transform:translate(-120%, -6%) rotate(-12deg); opacity:0 }
   .card.gone-d { transform:translateY(120%); opacity:0 }
-  .chips { display:flex; gap:6px; flex-wrap:wrap; font-size:12px }
-  .chip { padding:3px 9px; border-radius:999px; background:var(--accent-soft); color:var(--accent); font-weight:600 }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; font-size:12px; align-items:center }
+  .chip { padding:3px 9px; border-radius:999px; background:var(--accent-soft); color:var(--accent); border:0; font:inherit; font-size:12px; font-weight:600; line-height:1.5 }
+  select.chip { appearance:none; -webkit-appearance:none; cursor:pointer; padding-right:22px; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%23666' stroke-width='1.5'/></svg>"); background-repeat:no-repeat; background-position:right 8px center }
+  input.chip { width:78px; cursor:text; font-variant-numeric:tabular-nums }
+  .addnote { margin-left:auto; border:0; background:var(--paper); color:var(--ink-2); border-radius:999px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer }
+  .addnote:hover { color:var(--ink) }
+  details { border-top:1px solid var(--line); padding:6px 0 }
+  details:first-of-type { border-top:0 }
+  summary { list-style:none; cursor:pointer; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); font-weight:600; padding:6px 0; display:flex; align-items:center; gap:8px; user-select:none }
+  summary::-webkit-details-marker { display:none }
+  summary::before { content:""; width:6px; height:6px; border-right:1.5px solid var(--ink-3); border-bottom:1.5px solid var(--ink-3); transform:rotate(-45deg); transition:transform .15s }
+  details[open] > summary::before { transform:rotate(45deg) }
+  details > *:not(summary) { margin:4px 0 8px }
+  .modal-bg { position:fixed; inset:0; background:rgba(20,20,30,.35); display:none; align-items:center; justify-content:center; z-index:50 }
+  .modal-bg.on { display:flex }
+  .modal { background:var(--card); border-radius:14px; padding:22px 24px; width:min(560px, 92vw); box-shadow:0 20px 60px rgba(20,20,30,.2); display:flex; flex-direction:column; gap:12px }
+  .modal h3 { margin:0; font-size:16px; font-weight:650 }
+  .modal textarea { border:1px solid var(--line); border-radius:8px; padding:10px; font:inherit; font-size:14px; min-height:120px; resize:vertical; background:var(--paper); color:var(--ink) }
+  .modal .row { display:flex; justify-content:flex-end; gap:8px }
+  .modal button { border:0; border-radius:999px; padding:9px 16px; font-weight:600; cursor:pointer; background:var(--paper); color:var(--ink) }
+  .modal button.primary { background:var(--accent); color:#fff }
   .chip.dim { background:#eeeef2; color:var(--ink-2) }
   .chip.never, .chip.avoid { background:var(--no-soft); color:var(--no) }
   .chip.always { background:var(--yes-soft); color:var(--yes) }
-  h1 { font-size:24px; line-height:1.2; letter-spacing:-.01em; margin:0; font-weight:650 }
+  .chip.prefer, .chip.context { background:var(--accent-soft); color:var(--accent) }
+  h1 { font:600 26px/1.2 Georgia, "Times New Roman", serif; letter-spacing:-.005em; margin:0 }
   .id { font-size:12px; color:var(--ink-3); font-variant-numeric:tabular-nums }
   h2 { font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); margin:8px 0 4px; font-weight:600 }
   p { margin:0; white-space:pre-wrap }
@@ -48,19 +69,12 @@
   ul { margin:0; padding-left:18px; color:var(--ink-2); font-size:13px }
   li { margin:3px 0; word-break:break-word }
   code { font:12px ui-monospace, "JetBrains Mono", monospace; background:#f2f1ec; padding:1px 4px; border-radius:4px }
-  .edit { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; font-size:12px; color:var(--ink-2); margin-top:auto; padding-top:10px }
-  .edit .savebtn { align-self:end; border:0; border-radius:8px; padding:7px 12px; background:var(--accent-soft); color:var(--accent); font-weight:600; cursor:pointer; justify-self:start }
-  .edit label { display:flex; flex-direction:column; gap:3px }
-  .edit label.wide { grid-column:1 / -1 }
-  .edit textarea { border:1px solid var(--line); background:var(--paper); border-radius:6px; padding:6px 8px; color:var(--ink); font:inherit; font-size:13px; resize:vertical; user-select:text }
-  .edit select, .edit input { border:1px solid var(--line); background:var(--paper); border-radius:6px; padding:5px 8px; color:var(--ink) }
   .stamp { position:absolute; top:26px; font-size:34px; font-weight:800; letter-spacing:.06em; padding:4px 14px; border:4px solid; border-radius:10px; opacity:0; transform:rotate(-14deg); pointer-events:none; transition:opacity .1s }
   .stamp.yes { right:28px; color:var(--yes); border-color:var(--yes) }
   .stamp.no { left:28px; color:var(--no); border-color:var(--no); transform:rotate(14deg) }
   footer { display:flex; justify-content:center; gap:10px; padding:14px 20px 18px; flex-wrap:wrap }
   footer button, .side.mobile { border:0; border-radius:999px; padding:10px 18px; font-weight:600; cursor:pointer; background:var(--card); color:var(--ink) }
   kbd { font:11px ui-monospace, monospace; opacity:.6; margin-left:6px }
-  .side kbd { color:#fff }
   footer .side.mobile { display:none }
   @media (max-width:900px) {
     main { grid-template-columns:1fr; gap:0 }
@@ -72,7 +86,7 @@
   .toast.on { opacity:1 }
   .done { text-align:center; color:var(--ink-2) }
   .done b { display:block; font-size:28px; color:var(--ink); margin-bottom:8px }
-  @media (max-width:640px) { .card { padding:18px } h1 { font-size:20px } .edit { grid-template-columns:1fr 1fr } }
+  @media (max-width:640px) { .card { padding:18px } h1 { font-size:20px } }
 </style>
 </head>
 <body>
@@ -91,17 +105,25 @@
   </div>
 </div>
 <main>
-  <button class="side no" onclick="act('retire')">Retire <kbd>←</kbd></button>
+  <button class="side no" onclick="act('retire')"><span class="arrow">←</span>Retire</button>
   <div class="stack" id="stack"></div>
-  <button class="side yes" onclick="act('promote')">Promote <kbd>→</kbd></button>
+  <button class="side yes" onclick="act('promote')">Promote<span class="arrow">→</span></button>
 </main>
 <footer>
-  <button class="side no mobile" onclick="act('retire')">Retire</button>
+  <button class="side no mobile" onclick="act('retire')"><span class="arrow">←</span>Retire</button>
   <button onclick="act('skip')">Skip <kbd>↓</kbd></button>
   <button onclick="undo()">Undo <kbd>Z</kbd></button>
-  <button class="side yes mobile" onclick="act('promote')">Promote</button>
+  <button class="side yes mobile" onclick="act('promote')">Promote<span class="arrow">→</span></button>
 </footer>
 <div class="toast" id="toast"></div>
+<div class="modal-bg" id="notebg" onclick="if (event.target === this) closeNote()">
+  <div class="modal">
+    <h3>Add note</h3>
+    <div class="id" id="notetitle"></div>
+    <textarea id="notetext" placeholder="Reword, narrow, merge with…, why you kept or dropped it. Saved into the file, dated."></textarea>
+    <div class="row"><button onclick="closeNote()">Cancel <kbd>Esc</kbd></button><button class="primary" onclick="saveNote()">Save note <kbd>⌘↵</kbd></button></div>
+  </div>
+</div>
 <script>
 let all = [], queue = [], skipped = new Set(), history = [], tallies = { confirmed: 0, retired: 0 };
 const $ = (s) => document.querySelector(s);
@@ -138,27 +160,31 @@ function cardEl(c, i) {
   el.className = "card" + (i === 1 ? " next" : i === 2 ? " next2" : "");
   el.dataset.id = c.id;
   const ev = c.evidence.map((e) => `<li>${md(e)}</li>`).join("");
+  const opt = (list, cur) => list.map((s) => `<option ${s === cur ? "selected" : ""}>${s}</option>`).join("");
+  const scopes = [...new Set(["universal", "personal", "project:" + (c.occurrences[0] || "x"), c.scope])];
+  const sec = (title, body, open) => body ? `<details ${open ? "open" : ""}><summary>${title}</summary>${body}</details>` : "";
   el.innerHTML = `
     <div class="stamp yes">PROMOTE</div><div class="stamp no">RETIRE</div>
-    <div class="chips"><span class="chip ${esc(c.stance)}">${esc(c.stance)}</span><span class="chip dim">${esc(c.dimension)}</span><span class="chip dim">${esc(c.scope)}</span>${c.kind !== "harvested" ? `<span class="chip">${esc(c.kind)}</span>` : ""}${c.component ? `<span class="chip">${esc(c.component)}</span>` : ""}
-      <span class="chip dim">${c.occurrences.length}× · conf ${c.confidence}</span>${skipped.has(c.id) ? '<span class="chip dim">skipped earlier</span>' : ""}</div>
+    <div class="chips">
+      <select class="chip ${esc(c.stance)}" name="stance" title="stance" onchange="this.className='chip '+this.value">${opt(["always","never","prefer","avoid","context"], c.stance)}</select>
+      <span class="chip dim">${esc(c.dimension)}</span>
+      <select class="chip dim" name="scope" title="scope">${opt(scopes, c.scope)}</select>
+      <input class="chip dim" name="confidence" type="number" min="1" max="10" value="${c.confidence}" title="confidence (1–10)">
+      <span class="chip dim">${c.occurrences.length}×</span>
+      ${c.kind !== "harvested" ? `<span class="chip">${esc(c.kind)}</span>` : ""}${c.component ? `<span class="chip">${esc(c.component)}</span>` : ""}
+      ${skipped.has(c.id) ? '<span class="chip dim">skipped earlier</span>' : ""}
+      <button class="addnote" onclick="openNote()">Add note <kbd>N</kbd></button>
+    </div>
     <h1>${esc(c.title)}</h1>
     <div class="id">${esc(c.id)} · seen in ${esc(c.occurrences.join(", "))}</div>
     ${c.review_note ? `<div class="note">${md(c.review_note)}</div>` : ""}
-    <h2>Rule</h2><p>${md(c.rule)}</p>
-    ${c.why ? `<h2>Why</h2><p>${md(c.why)}</p>` : ""}
-    ${c.examples ? `<h2>Examples</h2><p>${md(c.examples)}</p>` : ""}
-    ${c.exceptions ? `<h2>Exceptions</h2><p>${md(c.exceptions)}</p>` : ""}
-    <h2>Evidence (${c.evidence.length})</h2><ul>${ev}</ul>
-    ${c.seeAlso ? `<h2>See also</h2><p>${md(c.seeAlso)}</p>` : ""}
-    ${c.notes ? `<h2>Review notes</h2><p>${md(c.notes)}</p>` : ""}
-    <div class="edit">
-      <label class="wide">notes / changes to make <textarea name="note" rows="2" placeholder="Reword, narrow, merge with…, why you kept or dropped it. Saved into the file with your verdict (or press S to save without deciding)."></textarea></label>
-      <label>stance <select name="stance">${["always","never","prefer","avoid","context"].map((s) => `<option ${s === c.stance ? "selected" : ""}>${s}</option>`).join("")}</select></label>
-      <label>scope <select name="scope">${["universal","personal","project:" + (c.occurrences[0] || "x")].map((s) => `<option ${s === c.scope ? "selected" : ""}>${s}</option>`).join("")}</select></label>
-      <label>confidence <input name="confidence" type="number" min="1" max="10" value="${c.confidence}"></label>
-      <button class="savebtn" onclick="saveNote()">Save note <kbd>S</kbd></button>
-    </div>`;
+    ${sec("Rule", `<p>${md(c.rule)}</p>`, true)}
+    ${sec("Why", c.why && `<p>${md(c.why)}</p>`)}
+    ${sec("Examples", c.examples && `<p>${md(c.examples)}</p>`)}
+    ${sec("Exceptions", c.exceptions && `<p>${md(c.exceptions)}</p>`)}
+    ${sec(`Evidence (${c.evidence.length})`, `<ul>${ev}</ul>`)}
+    ${sec("See also", c.seeAlso && `<p>${md(c.seeAlso)}</p>`)}
+    ${sec("Review notes", c.notes && `<p>${md(c.notes)}</p>`)}`;
   return el;
 }
 function edits(el, c) {
@@ -167,7 +193,6 @@ function edits(el, c) {
   if (g("stance") && g("stance") !== c.stance) e.stance = g("stance");
   if (g("scope") && g("scope") !== c.scope) e.scope = g("scope");
   if (g("confidence") && Number(g("confidence")) !== Number(c.confidence)) e.confidence = Number(g("confidence"));
-  if (g("note") && g("note").trim()) e.note = g("note").trim();
   return Object.keys(e).length ? e : undefined;
 }
 async function act(action) {
@@ -184,14 +209,15 @@ async function act(action) {
   tallies[action === "promote" ? "confirmed" : "retired"]++;
   setTimeout(rebuild, 280);
 }
+function openNote() { const c = queue[0]; if (!c) return; $("#notebg").classList.add("on"); $("#notetitle").textContent = c.id + " · " + c.title; const t = $("#notetext"); t.value = ""; setTimeout(() => t.focus(), 0); }
+function closeNote() { $("#notebg").classList.remove("on"); }
 async function saveNote() {
   const c = queue[0]; if (!c) return;
-  const el = $("#stack").firstElementChild;
-  const e = edits(el, c);
-  if (!e) { toast("Nothing to save"); return; }
-  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: c.id, action: "note", edits: e }) })).json();
+  const note = $("#notetext").value.trim();
+  if (!note) { closeNote(); return; }
+  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: c.id, action: "note", edits: { note } }) })).json();
   if (!r.ok) { toast("Error: " + r.error); return; }
-  toast("Saved to " + c.id); await load();
+  closeNote(); toast("Note saved to " + c.id); await load();
 }
 async function undo() {
   const h = history.pop(); if (!h) { toast("Nothing to undo"); return; }
@@ -206,9 +232,11 @@ async function compile() {
 }
 function toast(m) { const t = $("#toast"); t.textContent = m; t.classList.add("on"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("on"), 2200); }
 document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") { closeNote(); return; }
+  if ($("#notebg").classList.contains("on")) { if ((e.metaKey || e.ctrlKey) && e.key === "Enter") saveNote(); return; }
   if (["INPUT","SELECT","TEXTAREA"].includes(e.target.tagName)) return;
   if (e.key === "ArrowRight") act("promote"); else if (e.key === "ArrowLeft") act("retire"); else if (e.key === "ArrowDown") act("skip");
-  else if (e.key.toLowerCase() === "z") undo(); else if (e.key.toLowerCase() === "c") compile(); else if (e.key.toLowerCase() === "s") saveNote();
+  else if (e.key.toLowerCase() === "z") undo(); else if (e.key.toLowerCase() === "c") compile(); else if (e.key.toLowerCase() === "n") openNote();
 });
 $("#fdim").onchange = rebuild; $("#fscope").onchange = rebuild; $("#fkind").onchange = rebuild;
 
@@ -217,7 +245,7 @@ function attachDrag(el) {
   if (!el || !el.dataset.id) return;
   let sx = 0, sy = 0, dx = 0, dy = 0, on = false;
   const yes = el.querySelector(".stamp.yes"), no = el.querySelector(".stamp.no");
-  el.addEventListener("pointerdown", (e) => { if (e.target.closest(".edit, a, ul, textarea")) return; on = true; sx = e.clientX; sy = e.clientY; el.setPointerCapture(e.pointerId); el.style.transition = "none"; });
+  el.addEventListener("pointerdown", (e) => { if (e.target.closest("a, ul, select, input, button, summary")) return; on = true; sx = e.clientX; sy = e.clientY; el.setPointerCapture(e.pointerId); el.style.transition = "none"; });
   el.addEventListener("pointermove", (e) => { if (!on) return; dx = e.clientX - sx; dy = e.clientY - sy; el.style.transform = `translate(${dx}px, ${dy}px) rotate(${dx / 18}deg)`; yes.style.opacity = Math.min(1, Math.max(0, dx / 120)); no.style.opacity = Math.min(1, Math.max(0, -dx / 120)); });
   const end = () => { if (!on) return; on = false; el.style.transition = ""; yes.style.opacity = 0; no.style.opacity = 0;
     if (dx > 140) act("promote"); else if (dx < -140) act("retire"); else if (dy > 160) act("skip"); else el.style.transform = ""; dx = dy = 0; };
