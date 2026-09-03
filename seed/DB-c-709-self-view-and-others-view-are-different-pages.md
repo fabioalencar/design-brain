@@ -17,11 +17,15 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The self view contains settings, private fields and edit controls; the view others get contains only what the person has chosen to expose. When some fields are visible to others and some are not, the self view labels each field's visibility and offers a "view as others" preview rather than making the person guess.
+The self view contains settings, private fields and edit controls; the view others get contains only what the person has chosen to expose.
+
+When some fields are visible to others and some are not, the self view labels each field's visibility and offers a "view as others" preview rather than making the person guess.
 
 ## Why
 
-Inferred from the references: Apple's privacy guidance asks products to make clear what is shared and with whom; NN/g's status heuristic asks the interface to show the current state, which for a profile means showing what is public. Confidence is moderate because no cited page prescribes the preview mechanism itself.
+Inferred from the references: Apple's privacy guidance asks products to make clear what is shared and with whom; NN/g's status heuristic asks the interface to show the current state, which for a profile means showing what is public.
+
+Confidence is moderate because no cited page prescribes the preview mechanism itself.
 
 ## Examples
 

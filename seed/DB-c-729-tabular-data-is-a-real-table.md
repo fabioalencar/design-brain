@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Records with the same fields are shown as rows under a single header row, using table semantics (table, th, scope) so columns can be scanned, compared and sorted. Cards are for heterogeneous items where the image or summary is the point; they are not used to present rows of identical fields.
+Records with the same fields are shown as rows under a single header row, using table semantics (table, th, scope) so columns can be scanned, compared and sorted.
+
+Cards are for heterogeneous items where the image or summary is the point; they are not used to present rows of identical fields.
 
 ## Why
 

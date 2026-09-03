@@ -16,7 +16,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The density options are compact, default and comfortable. The shared table component ships with a fixed set of row heights and a density control (in the table toolbar or the view settings) whose choice persists per user and per view. Pages do not invent their own row heights; the default density is set once for the product.
+The shared table component ships with a fixed set of row heights (compact, default and comfortable) and a density control whose choice persists per user and per view.
+
+The control sits in the table toolbar or the view settings. Pages do not invent their own row heights; the default density is set once for the product.
 
 ## Why
 

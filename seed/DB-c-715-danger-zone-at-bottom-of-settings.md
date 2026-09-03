@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Reset, delete, archive, transfer and disable-integration actions are collected in one labelled section at the end of the settings page, visually separated (border or background step) and using destructive button styling. Each action names its consequence next to the button and confirms before running. Nothing destructive appears inline among ordinary controls.
+Reset, delete, archive, transfer and disable-integration actions are collected in one labelled section at the end of the settings page, visually separated (border or background step) and using destructive button styling.
+
+Each action names its consequence next to the button and confirms before running. Nothing destructive appears inline among ordinary controls.
 
 ## Why
 

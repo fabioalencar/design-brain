@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Progress toward a goal is shown as distance remaining, and any progress the user has already earned is credited up front. The last steps are made short so completion accelerates.
+Progress toward a goal is shown as distance remaining, and any progress the user has already earned is credited up front.
+
+The last steps are made short so completion accelerates.
 
 ## Why
 

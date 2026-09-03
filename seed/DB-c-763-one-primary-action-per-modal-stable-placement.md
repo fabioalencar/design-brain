@@ -18,7 +18,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The footer holds at most two buttons: one filled primary that names the outcome ("Delete project", "Send invoice"), and one secondary "Cancel". The primary always sits in the same corner across the product. A destructive primary uses the destructive colour and its label repeats the verb, never "OK" or "Yes". Three-button modals are split into two decisions.
+The footer holds at most two buttons: one filled primary that names the outcome ("Delete project", "Send invoice"), and one secondary "Cancel".
+
+The primary always sits in the same corner across the product. A destructive primary uses the destructive colour and its label repeats the verb, never "OK" or "Yes". Three-button modals are split into two decisions.
 
 ## Why
 

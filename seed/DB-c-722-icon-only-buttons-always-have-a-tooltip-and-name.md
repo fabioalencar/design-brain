@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-An icon button without a visible label always carries a tooltip with a verb phrase ("Archive", "Copy link") and the same string as its accessible name. The tooltip text is the label, not a description, and it matches the wording used for that action elsewhere in the product.
+An icon button without a visible label always carries a tooltip with a verb phrase ("Archive", "Copy link") and the same string as its accessible name.
+
+The tooltip text is the label, not a description, and it matches the wording used for that action elsewhere in the product.
 
 ## Why
 

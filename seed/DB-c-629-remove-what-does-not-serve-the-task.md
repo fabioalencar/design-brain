@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Between two designs that achieve the same result, choose the one with fewer elements, states and rules. Review each element by asking what breaks if it is removed; if nothing, remove it.
+Between two designs that achieve the same result, choose the one with fewer elements, states and rules.
+
+Review each element by asking what breaks if it is removed; if nothing, remove it.
 
 ## Why
 

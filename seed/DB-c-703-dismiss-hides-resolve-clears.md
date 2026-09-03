@@ -17,7 +17,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A close control on a notification removes it from view and nothing else. If the notification represents work (approve, review, fix), the action lives on the notification and completing it is what retires the notification everywhere, including the badge and the list. Never let a close button silently mark something done, and never make the user finish the task to get rid of the message.
+A close control on a notification removes it from view and nothing else.
+
+If the notification represents work (approve, review, fix), the action lives on the notification and completing it is what retires the notification everywhere, including the badge and the list.
+
+Never let a close button silently mark something done, and never make the user finish the task to get rid of the message.
 
 ## Why
 

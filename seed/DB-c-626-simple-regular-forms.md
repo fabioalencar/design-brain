@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Layouts use a small number of aligned, regular forms; overlapping, ambiguous or ornate arrangements are avoided. If a viewer can misread the structure, the structure is wrong.
+Layouts use a small number of aligned, regular forms; overlapping, ambiguous or ornate arrangements are avoided.
+
+If a viewer can misread the structure, the structure is wrong.
 
 ## Why
 

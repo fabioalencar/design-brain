@@ -17,7 +17,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A drawer also serves secondary flows that return to where they started. Use a drawer when the person needs the context of the underlying page (the list, the map, the board) while looking at or changing one thing: previewing a row, quick-editing fields, a filter tray, a short create form. Use a page instead when the item has its own navigation, many sections or an audit trail, and a modal only for a blocking decision.
+Use a drawer when the person needs the context of the underlying page (the list, the map, the board) while looking at or changing one thing; a drawer also serves secondary flows that return to where they started.
+
+Typical cases: previewing a row, quick-editing fields, a filter tray, a short create form.
+
+Use a page instead when the item has its own navigation, many sections or an audit trail, and a modal only for a blocking decision.
 
 ## Why
 

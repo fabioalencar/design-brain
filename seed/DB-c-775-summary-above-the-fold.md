@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Directly under the header sits a compact summary: the five to eight fields that answer "what is this and where does it stand", laid out as a key-value list or a two-column strip. Long text, related lists and history come after. A person who only needs the summary never scrolls.
+Directly under the header sits a compact summary: the five to eight fields that answer "what is this and where does it stand", laid out as a key-value list or a two-column strip.
+
+Long text, related lists and history come after. A person who only needs the summary never scrolls.
 
 ## Why
 

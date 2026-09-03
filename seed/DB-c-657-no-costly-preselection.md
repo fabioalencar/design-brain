@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-An option that adds cost, shares data, extends a commitment or reduces privacy starts off. Defaults may favour the user's likely intent, never the business's revenue at the user's expense.
+An option that adds cost, shares data, extends a commitment or reduces privacy starts off.
+
+Defaults may favour the user's likely intent, never the business's revenue at the user's expense.
 
 ## Why
 

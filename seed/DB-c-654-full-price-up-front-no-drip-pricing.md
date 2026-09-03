@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The price shown on the first screen where a price appears is the price the user will pay, including mandatory fees and taxes, or is clearly marked as excluding a named, estimated amount. Nothing new is added on the payment screen.
+The price shown on the first screen where a price appears is the price the user will pay, including mandatory fees and taxes, or is clearly marked as excluding a named, estimated amount.
+
+Nothing new is added on the payment screen.
 
 ## Why
 

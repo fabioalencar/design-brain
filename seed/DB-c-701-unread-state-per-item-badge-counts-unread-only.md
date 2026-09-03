@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Unread is a per-item state rendered on the item (weight, dot, or tinted row) and cleared when that item is opened or explicitly marked. The count badge on the entry point counts unread items only, disappears at zero, and never counts items the user has already seen.
+Unread is a per-item state rendered on the item (weight, dot, or tinted row) and cleared when that item is opened or explicitly marked.
+
+The count badge on the entry point counts unread items only, disappears at zero, and never counts items the user has already seen.
 
 ## Why
 

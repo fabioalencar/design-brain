@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The filters that matter most are shown open, either in a left panel for catalog-like data or a toolbar row above a table for a handful of filters. Extra, rarely used filters may sit behind a "More filters" control. A design where every filter is behind one button hides the fact that filtering exists.
+The filters that matter most are shown open, either in a left panel for catalog-like data or a toolbar row above a table for a handful of filters.
+
+Extra, rarely used filters may sit behind a "More filters" control. A design where every filter is behind one button hides the fact that filtering exists.
 
 ## Why
 

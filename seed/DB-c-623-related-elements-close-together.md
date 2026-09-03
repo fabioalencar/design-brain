@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Spacing communicates relationship: the gap between a label and its field is smaller than the gap between fields, and the gap between fields is smaller than the gap between sections. Distance, not lines, does most of the grouping.
+Spacing communicates relationship: the gap between a label and its field is smaller than the gap between fields, and the gap between fields is smaller than the gap between sections.
+
+Distance, not lines, does most of the grouping.
 
 ## Why
 

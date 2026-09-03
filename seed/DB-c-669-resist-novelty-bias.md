@@ -15,7 +15,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A novel interaction is adopted only when it measurably outperforms the familiar one for the user's task. "It is fresher" or "everyone else does the boring thing" is a reason to prototype, not to ship.
+A novel interaction is adopted only when it measurably outperforms the familiar one for the user's task.
+
+"It is fresher" or "everyone else does the boring thing" is a reason to prototype, not to ship.
 
 ## Why
 

@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Every checkbox or toggle asks one thing, phrased so that checking it means yes to that thing. No "Untick to not receive", no mixed opt-in and opt-out boxes side by side, no legalese where a sentence will do.
+Every checkbox or toggle asks one thing, phrased so that checking it means yes to that thing.
+
+No "Untick to not receive", no mixed opt-in and opt-out boxes side by side, no legalese where a sentence will do.
 
 ## Why
 

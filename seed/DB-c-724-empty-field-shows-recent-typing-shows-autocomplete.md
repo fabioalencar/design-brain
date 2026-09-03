@@ -17,7 +17,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-On focus with nothing typed, the dropdown lists the person's recent searches (removable) and a few suggested queries. While typing, it shows a short list of query completions with the typed part visually distinguished, optionally with a few direct entity hits in a separate group. Suggestions are limited to roughly ten, keyboard-navigable, and never replace the typed text until chosen.
+On focus with nothing typed, the dropdown lists the person's recent searches (removable) and a few suggested queries.
+
+While typing, it shows a short list of query completions with the typed part visually distinguished, optionally with a few direct entity hits in a separate group.
+
+Suggestions are limited to roughly ten, keyboard-navigable, and never replace the typed text until chosen.
 
 ## Why
 

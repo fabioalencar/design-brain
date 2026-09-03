@@ -16,7 +16,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A new profile exposes only what the product needs to function (name, avatar, role). Email, phone, location, activity and similar fields start hidden or limited, and each has its own visibility control. Never bundle visibility into one master toggle that flips everything, and never widen a default retroactively without telling the person.
+A new profile exposes only what the product needs to function (name, avatar, role).
+
+Email, phone, location, activity and similar fields start hidden or limited, and each has its own visibility control.
+
+Never bundle visibility into one master toggle that flips everything, and never widen a default retroactively without telling the person.
 
 ## Why
 

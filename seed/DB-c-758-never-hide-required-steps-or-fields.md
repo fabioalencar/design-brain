@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Anything the person must fill in or confirm to proceed is visible without opening anything. Disclosure holds optional inputs, explanations and rarely changed settings. If validation fails inside a collapsed section, the section opens and the error is announced; a collapsed section with a required empty field is a design defect.
+Anything the person must fill in or confirm to proceed is visible without opening anything.
+
+Disclosure holds optional inputs, explanations and rarely changed settings. If validation fails inside a collapsed section, the section opens and the error is announced; a collapsed section with a required empty field is a design defect.
 
 ## Why
 

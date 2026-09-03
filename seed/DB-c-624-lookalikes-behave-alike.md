@@ -14,7 +14,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Visual sameness (colour, shape, size, type) is reserved for elements with the same function. Links look like links everywhere; things that are not clickable do not borrow the link style; two different actions do not share one appearance.
+Visual sameness (colour, shape, size, type) is reserved for elements with the same function.
+
+- links look like links everywhere
+- things that are not clickable do not borrow the link style
+- two different actions do not share one appearance
 
 ## Why
 

@@ -16,7 +16,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Every delta reads as "+12% vs previous 30 days" or "−3 vs target": the direction, the magnitude, and the thing it is compared to, in that order. The window matches the card's own period. A number without an anchor (previous period, target, baseline) is not a KPI and is shown as a plain count without a trend.
+Every delta reads as "+12% vs previous 30 days" or "−3 vs target": the direction, the magnitude, and the thing it is compared to, in that order.
+
+The window matches the card's own period. A number without an anchor (previous period, target, baseline) is not a KPI and is shown as a plain count without a trend.
 
 ## Why
 

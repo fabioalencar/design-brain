@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A field the user can change shows an edit affordance at rest (a "Change" link, a pencil, or a hover-plus-focus field outline); a field they cannot change shows none and, when it matters, says who controls it ("managed by your organisation"). Pick one editing model per page: inline per field with save/cancel on the field, or a single Edit that switches the whole page to a form.
+A field the user can change shows an edit affordance at rest; a field they cannot change shows none and, when it matters, says who controls it ("managed by your organisation").
+
+The affordance is a "Change" link, a pencil, or a hover-plus-focus field outline. Pick one editing model per page: inline per field with save/cancel on the field, or a single Edit that switches the whole page to a form.
 
 ## Why
 

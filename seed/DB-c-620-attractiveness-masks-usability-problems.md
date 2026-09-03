@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-When evaluating a polished design, weigh observed task failures over stated satisfaction. Test rough versions early, and in reviews of finished work look for problems the participants forgave.
+When evaluating a polished design, weigh observed task failures over stated satisfaction.
+
+Test rough versions early, and in reviews of finished work look for problems the participants forgave.
 
 ## Why
 

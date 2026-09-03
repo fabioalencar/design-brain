@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Frequent tasks get a faster route (keyboard shortcuts, bulk actions, saved presets, type-ahead) layered on top of the visible novice path, never replacing it. Accelerators are discoverable from the slow path.
+Frequent tasks get a faster route (keyboard shortcuts, bulk actions, saved presets, type-ahead) layered on top of the visible novice path, never replacing it.
+
+Accelerators are discoverable from the slow path.
 
 ## Why
 

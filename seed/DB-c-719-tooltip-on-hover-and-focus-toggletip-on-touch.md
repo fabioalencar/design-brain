@@ -18,7 +18,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Hover and focus are the same trigger: tabbing to the element shows the tooltip, and its text is associated with the element for screen readers. Because touch has no hover, the same information is either always visible on small screens or exposed through a tap-to-open toggletip with an explicit icon. A hover-only tooltip is a bug.
+Hover and focus are the same trigger: tabbing to the element shows the tooltip, and its text is associated with the element for screen readers.
+
+Because touch has no hover, the same information is either always visible on small screens or exposed through a tap-to-open toggletip with an explicit icon. A hover-only tooltip is a bug.
 
 ## Why
 

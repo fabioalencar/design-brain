@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A setting that has been changed from its default shows the default value in its description ("Default: 30 days") or marks the control as modified, and a "Restore default" affordance sits with it or at the group level. A global reset of all settings, if offered, lives in the danger zone and confirms.
+A setting that has been changed from its default shows the default value in its description ("Default: 30 days") or marks the control as modified, and a "Restore default" affordance sits with it or at the group level.
+
+A global reset of all settings, if offered, lives in the danger zone and confirms.
 
 ## Why
 

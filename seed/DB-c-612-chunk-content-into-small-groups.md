@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Long strings and lists are broken into labelled groups of a few items. Anything the user must carry from one step to the next is shown again rather than remembered.
+Long strings and lists are broken into labelled groups of a few items.
+
+Anything the user must carry from one step to the next is shown again rather than remembered.
 
 ## Why
 

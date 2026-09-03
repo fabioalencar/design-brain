@@ -15,7 +15,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The first sketch, screenshot or AI-generated layout shown in a project is not the baseline everything else is judged against. Produce several distinct options before iterating, and show stakeholders alternatives side by side rather than one candidate to approve.
+The first sketch, screenshot or AI-generated layout shown in a project is not the baseline everything else is judged against.
+
+Produce several distinct options before iterating, and show stakeholders alternatives side by side rather than one candidate to approve.
 
 ## Why
 

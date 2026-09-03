@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Actions, options and the context needed to decide are visible or one obvious step away. The user should not have to remember a value from a previous screen, a hidden gesture or a menu path.
+Actions, options and the context needed to decide are visible or one obvious step away.
+
+The user should not have to remember a value from a previous screen, a hidden gesture or a menu path.
 
 ## Why
 

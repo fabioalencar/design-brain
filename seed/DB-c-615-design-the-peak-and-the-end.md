@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Identify the most intense moment and the final moment of each journey and polish those first: the success screen, the confirmation, the moment an error strikes. Do not spend the polish budget evenly.
+Identify the most intense moment and the final moment of each journey and polish those first: the success screen, the confirmation, the moment an error strikes.
+
+Do not spend the polish budget evenly.
 
 ## Why
 

@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Free trials and introductory prices state, at sign-up and on the receipt, when and how much the user will be charged next, and send a reminder before the first paid charge. Recurring billing is never buried in terms.
+Free trials and introductory prices state, at sign-up and on the receipt, when and how much the user will be charged next, and send a reminder before the first paid charge.
+
+Recurring billing is never buried in terms.
 
 ## Why
 

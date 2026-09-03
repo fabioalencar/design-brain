@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Group notifications by source and type into one expandable row that states the count ("3 comments on Invoice 204"). Anything below the needs-action tier is batched into a digest on a schedule the user can see and change, instead of arriving one by one.
+Group notifications by source and type into one expandable row that states the count ("3 comments on Invoice 204").
+
+Anything below the needs-action tier is batched into a digest on a schedule the user can see and change, instead of arriving one by one.
 
 ## Why
 

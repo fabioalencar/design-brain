@@ -14,7 +14,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Everything a pointer can do, Tab, Shift+Tab, Enter, Space, Escape and the arrow keys can do. Focus order follows reading order, the focused element is always visibly marked, and focus can never get stuck inside a component.
+Everything a pointer can do, Tab, Shift+Tab, Enter, Space, Escape and the arrow keys can do.
+
+- focus order follows reading order
+- the focused element is always visibly marked
+- focus can never get stuck inside a component
 
 ## Why
 

@@ -16,7 +16,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A highlight card answers one question with one value. The comparison or trend attached to that value is context, not a second metric. When two values need to be read together (revenue and margin, opened and clicked) they become two adjacent cards or a compact table row where alignment does the comparing.
+A highlight card answers one question with one value.
+
+The comparison or trend attached to that value is context, not a second metric. When two values need to be read together (revenue and margin, opened and clicked) they become two adjacent cards or a compact table row where alignment does the comparing.
 
 ## Why
 

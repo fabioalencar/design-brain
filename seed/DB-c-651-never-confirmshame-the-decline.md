@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The option to say no is worded as plainly as the option to say yes: "No thanks", "Not now", "Close". No "No, I don't want to save money", no mocking, no emotional framing on the refusal.
+The option to say no is worded as plainly as the option to say yes: "No thanks", "Not now", "Close".
+
+No "No, I don't want to save money", no mocking, no emotional framing on the refusal.
 
 ## Why
 

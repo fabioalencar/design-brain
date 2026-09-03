@@ -17,7 +17,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A visible "N results" sits at the top of the results and changes as each filter is toggled. Where filtering is batched (mobile trays, expensive queries), the Apply button carries the projected count ("Show 42 results") so nobody applies a filter set that returns nothing. The count and the chips are the two feedback channels; a filter that changes neither is broken.
+A visible "N results" sits at the top of the results and changes as each filter is toggled.
+
+Where filtering is batched (mobile trays, expensive queries), the Apply button carries the projected count ("Show 42 results") so nobody applies a filter set that returns nothing.
+
+The count and the chips are the two feedback channels; a filter that changes neither is broken.
 
 ## Why
 

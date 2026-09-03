@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A table of records shows a pagination control with the current range ("1–50 of 1,204"), a page-size choice, and previous/next, so people can reach the footer, bookmark a page, and reason about how much there is. Infinite scroll is used only for time-ordered feeds where reaching the end is not a goal.
+A table of records shows a pagination control with the current range ("1–50 of 1,204"), a page-size choice, and previous/next, so people can reach the footer, bookmark a page, and reason about how much there is.
+
+Infinite scroll is used only for time-ordered feeds where reaching the end is not a goal.
 
 ## Why
 

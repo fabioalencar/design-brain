@@ -16,7 +16,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A sortable header has three states. First click sorts ascending (A to Z, oldest, smallest), second descending, third returns the table to its declared default order and removes the indicator. Text columns start ascending; date and numeric columns may start descending when the newest or largest is what people look for, as long as the choice is consistent per type.
+A sortable header has three states: first click sorts ascending (A to Z, oldest, smallest), second descending, third returns the table to its declared default order and removes the indicator.
+
+Text columns start ascending; date and numeric columns may start descending when the newest or largest is what people look for, as long as the choice is consistent per type.
 
 ## Why
 

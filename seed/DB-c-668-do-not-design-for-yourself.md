@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-"I would understand this" is not evidence. Decisions about comprehension, discoverability and preference are checked against people from the target group, and the team's own fluency with the product is treated as a distortion to correct for.
+"I would understand this" is not evidence.
+
+Decisions about comprehension, discoverability and preference are checked against people from the target group, and the team's own fluency with the product is treated as a distortion to correct for.
 
 ## Why
 

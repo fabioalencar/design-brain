@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Every record that can change has a history section at the end of the page: a reverse-chronological list where each entry names the actor (person or system), the change (field, old value, new value, or the action taken) and the timestamp. System events and comments share the trail in one order. The trail is read-only and never editable.
+Every record that can change has a history section at the end of the page: a reverse-chronological list where each entry names the actor (person or system), the change (field, old value, new value, or the action taken) and the timestamp.
+
+System events and comments share the trail in one order. The trail is read-only and never editable.
 
 ## Why
 

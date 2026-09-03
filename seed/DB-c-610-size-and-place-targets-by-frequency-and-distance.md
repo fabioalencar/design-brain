@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Targets used most are largest and closest to where the pointer or thumb already is; targets that must not be hit by accident are smaller or further away. Padding counts toward the target, so the whole row or card is clickable when it looks clickable.
+Targets used most are largest and closest to where the pointer or thumb already is; targets that must not be hit by accident are smaller or further away.
+
+Padding counts toward the target, so the whole row or card is clickable when it looks clickable.
 
 ## Why
 

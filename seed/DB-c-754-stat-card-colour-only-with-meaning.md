@@ -17,11 +17,17 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A card's background, border and icon stay neutral. Colour appears only on the trend, in one of three tones (better, worse, no change) decided by the metric's own direction (a rising cost is worse), and it is always paired with the sign and an arrow so the meaning survives without colour. Rainbow card sets and per-card accent tints are not used.
+A card's background, border and icon stay neutral; rainbow card sets and per-card accent tints are not used.
+
+Colour appears only on the trend, in one of three tones (better, worse, no change) decided by the metric's own direction (a rising cost is worse), and it is always paired with the sign and an arrow so the meaning survives without colour.
 
 ## Why
 
-Inferred from the references: NN/g shows colour is pre-attentive and therefore should be spent only where it signals something; WCAG requires a non-colour carrier; Material's colour usage reserves colour for meaning and hierarchy rather than decoration.
+Inferred from the references:
+
+- NN/g shows colour is pre-attentive and therefore should be spent only where it signals something
+- WCAG requires a non-colour carrier
+- Material's colour usage reserves colour for meaning and hierarchy rather than decoration
 
 ## Examples
 

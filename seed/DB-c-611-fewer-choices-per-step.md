@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Each screen or menu presents the few options relevant to the moment. When many are needed, group them, stage them, or recommend a default so the user decides among a handful, not dozens.
+Each screen or menu presents the few options relevant to the moment.
+
+When many are needed, group them, stage them, or recommend a default so the user decides among a handful, not dozens.
 
 ## Why
 

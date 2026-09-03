@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A KPI or highlight card reads number first: the value in display size with tabular figures and tight leading, the metric name beneath it in a smaller muted style, and any delta or sparkline as the third element. The label never outweighs the number and the card carries no decorative icon larger than the type.
+A KPI or highlight card reads number first: the value in display size with tabular figures and tight leading, the metric name beneath it in a smaller muted style, and any delta or sparkline as the third element.
+
+The label never outweighs the number and the card carries no decorative icon larger than the type.
 
 ## Why
 

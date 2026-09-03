@@ -17,7 +17,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A flow that needs a second dialog is redesigned: the modal's body swaps to the next step with a back control, the confirmation happens inline inside the same modal, or the whole task becomes a page or drawer. Stacked modals break focus management, dimming and the Escape contract.
+A flow that needs a second dialog is redesigned, because stacked modals break focus management, dimming and the Escape contract.
+
+- the modal's body swaps to the next step with a back control
+- the confirmation happens inline inside the same modal
+- the whole task becomes a page or drawer
 
 ## Why
 

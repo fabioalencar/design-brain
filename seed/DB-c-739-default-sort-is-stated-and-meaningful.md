@@ -17,11 +17,17 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Every table or list ships with a declared default order chosen for the view's job (newest first for activity, needs-attention first for queues, alphabetical for reference lists), and the sorted column shows its indicator on first load so the order is legible. "Whatever the query returned" is not a default.
+Every table or list ships with a declared default order chosen for the view's job (newest first for activity, needs-attention first for queues, alphabetical for reference lists).
+
+The sorted column shows its indicator on first load so the order is legible. "Whatever the query returned" is not a default.
 
 ## Why
 
-Inferred from the references: Baymard finds that the first sort a person sees shapes whether they trust the list at all; NN/g's table tasks (find, compare) depend on an order the person can predict; Carbon's sorted-by-default state exists for this.
+Inferred from the references:
+
+- Baymard finds that the first sort a person sees shapes whether they trust the list at all
+- NN/g's table tasks (find, compare) depend on an order the person can predict
+- Carbon's sorted-by-default state exists for this
 
 ## Examples
 

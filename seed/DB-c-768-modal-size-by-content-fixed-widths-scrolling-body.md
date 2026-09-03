@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The design system defines a few modal widths (small for confirmations, medium for a short form, large for a picker) and a modal picks one; it does not set its own width. Height is content-driven up to a viewport-relative maximum, after which only the body scrolls and the title and action buttons stay visible. A modal that needs to fill the screen is a page.
+The design system defines a few modal widths (small for confirmations, medium for a short form, large for a picker) and a modal picks one; it does not set its own width.
+
+Height is content-driven up to a viewport-relative maximum, after which only the body scrolls and the title and action buttons stay visible. A modal that needs to fill the screen is a page.
 
 ## Why
 

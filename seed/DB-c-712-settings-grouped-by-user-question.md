@@ -17,11 +17,15 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Group settings under headings a person would search for ("Notifications", "Who can see my work", "Billing") and order groups by how often they are touched. A group never mirrors a backend service, a database table or a team boundary. Each group has a one-line description only when the heading alone is ambiguous.
+Group settings under headings a person would search for ("Notifications", "Who can see my work", "Billing") and order groups by how often they are touched.
+
+A group never mirrors a backend service, a database table or a team boundary. Each group has a one-line description only when the heading alone is ambiguous.
 
 ## Why
 
-Inferred from the references: Apple asks for settings organised by what people are trying to do and to keep rarely used ones out of the way; Polaris lays settings out in titled groups with descriptions on the left and controls on the right. Recognition beats recall, so headings must match the user's vocabulary.
+Inferred from the references: Apple asks for settings organised by what people are trying to do and to keep rarely used ones out of the way; Polaris lays settings out in titled groups with descriptions on the left and controls on the right.
+
+Recognition beats recall, so headings must match the user's vocabulary.
 
 ## Examples
 

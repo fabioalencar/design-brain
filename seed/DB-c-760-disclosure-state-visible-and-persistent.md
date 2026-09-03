@@ -17,11 +17,17 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A disclosure trigger shows whether it is open with an icon that changes orientation and, where the text is a verb, a label that flips ("Show" / "Hide"). It carries aria-expanded. Sections a person opened stay open through re-renders, validation and navigation within the same page, and an accordion that remembers its state across visits says so by behaving the same on return.
+A disclosure trigger shows whether it is open with an icon that changes orientation and, where the text is a verb, a label that flips ("Show" / "Hide"); it carries aria-expanded.
+
+Sections a person opened stay open through re-renders, validation and navigation within the same page, and an accordion that remembers its state across visits says so by behaving the same on return.
 
 ## Why
 
-Inferred from the references: the ARIA disclosure pattern requires an expanded state exposed on the trigger; GOV.UK's accordion stores open sections in session storage so returning users find them as left; Carbon specifies the chevron rotation and open states.
+Inferred from the references:
+
+- the ARIA disclosure pattern requires an expanded state exposed on the trigger
+- GOV.UK's accordion stores open sections in session storage so returning users find them as left
+- Carbon specifies the chevron rotation and open states
 
 ## Examples
 

@@ -16,7 +16,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Settings are visited to change one thing, so every setting is reachable in at most two clicks from the settings entry point and the whole group is visible at once. Wizards are for one-time, ordered tasks (initial setup, import); after setup, the same values are exposed as ordinary settings.
+Settings are visited to change one thing, so every setting is reachable in at most two clicks from the settings entry point and the whole group is visible at once.
+
+Wizards are for one-time, ordered tasks (initial setup, import); after setup, the same values are exposed as ordinary settings.
 
 ## Why
 

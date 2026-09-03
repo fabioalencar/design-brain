@@ -17,7 +17,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-When a collection is large and described by several independent attributes (type, status, owner, date, tag), each attribute becomes a facet listing its values with counts; values within one facet combine with OR, facets combine with AND. Small lists with one or two dimensions use simple filters or a segmented control instead. On mobile, facets open in a tray with the count on the apply button.
+When a collection is large and described by several independent attributes (type, status, owner, date, tag), each attribute becomes a facet listing its values with counts.
+
+Values within one facet combine with OR, facets combine with AND. Small lists with one or two dimensions use simple filters or a segmented control instead.
+
+On mobile, facets open in a tray with the count on the apply button.
 
 ## Why
 

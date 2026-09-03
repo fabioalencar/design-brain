@@ -17,7 +17,12 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Text and identifiers align left; quantities, amounts and percentages align right and use tabular (monospaced) figures so digits stack; dates align left in a fixed format; the header cell takes the same alignment as the cells beneath it. Centre alignment is reserved for short fixed-width symbols such as status icons or checkboxes.
+Each column aligns by its type, and the header cell takes the same alignment as the cells beneath it.
+
+- text and identifiers align left
+- quantities, amounts and percentages align right and use tabular (monospaced) figures so digits stack
+- dates align left in a fixed format
+- centre alignment is reserved for short fixed-width symbols such as status icons or checkboxes
 
 ## Why
 

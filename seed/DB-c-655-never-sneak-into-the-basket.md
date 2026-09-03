@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The basket contains only what the user chose. Insurance, warranties, tips, round-ups and bundled extras are opt-in, unchecked by default, and removable in one click.
+The basket contains only what the user chose.
+
+Insurance, warranties, tips, round-ups and bundled extras are opt-in, unchecked by default, and removable in one click.
 
 ## Why
 

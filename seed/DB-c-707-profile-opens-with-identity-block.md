@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The top of a profile, in both self view and others' view, is one block: avatar, display name, the role or handle that disambiguates them, and at most one status (active, away, deactivated). Everything else sits below in sections. An avatar without an image renders initials on a deterministic colour, never a broken image or a generic silhouette by default.
+The top of a profile, in both self view and others' view, is one block: avatar, display name, the role or handle that disambiguates them, and at most one status (active, away, deactivated).
+
+Everything else sits below in sections. An avatar without an image renders initials on a deterministic colour, never a broken image or a generic silhouette by default.
 
 ## Why
 

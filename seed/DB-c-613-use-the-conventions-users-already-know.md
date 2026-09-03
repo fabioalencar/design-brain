@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Common patterns (navigation placement, cart icon, form layout, link styling) follow what users meet on the sites they spend most of their time on. Invent only where the convention fails the task, and then keep the familiar parts intact.
+Common patterns (navigation placement, cart icon, form layout, link styling) follow what users meet on the sites they spend most of their time on.
+
+Invent only where the convention fails the task, and then keep the familiar parts intact.
 
 ## Why
 

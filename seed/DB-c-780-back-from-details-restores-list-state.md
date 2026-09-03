@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The back link in the header and the browser back button both return to the list exactly as it was left, which requires the list's state to be in the URL or restored from history. The row that was opened stays visible and may be briefly highlighted. Losing the person's place after every detail view makes triage work impossible.
+The back link in the header and the browser back button both return to the list exactly as it was left, which requires the list's state to be in the URL or restored from history.
+
+The row that was opened stays visible and may be briefly highlighted. Losing the person's place after every detail view makes triage work impossible.
 
 ## Why
 

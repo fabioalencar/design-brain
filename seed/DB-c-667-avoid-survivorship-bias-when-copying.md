@@ -15,7 +15,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Before adopting a pattern because a successful product uses it, check whether the pattern caused the success, whether products that failed used it too, and whether the borrowing context matches. Visible winners are a biased sample.
+Before adopting a pattern because a successful product uses it, check whether the pattern caused the success, whether products that failed used it too, and whether the borrowing context matches.
+
+Visible winners are a biased sample.
 
 ## Why
 

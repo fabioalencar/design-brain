@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Paid placements are visibly marked as such and never mimic a download button, a navigation item, a result or a piece of editorial content. Sponsored results carry a label the reader sees before they click.
+Paid placements are visibly marked as such and never mimic a download button, a navigation item, a result or a piece of editorial content.
+
+Sponsored results carry a label the reader sees before they click.
 
 ## Why
 

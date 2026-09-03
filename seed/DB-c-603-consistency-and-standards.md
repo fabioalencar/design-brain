@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-One concept has one name, one control and one location across the product, and the product follows the platform's conventions unless there is a documented reason not to. Internal consistency and platform consistency are both checked.
+One concept has one name, one control and one location across the product, and the product follows the platform's conventions unless there is a documented reason not to.
+
+Internal consistency and platform consistency are both checked.
 
 ## Why
 

@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Roadmap and fix priorities are set from counted evidence (support volume, analytics, test findings across sessions), not from the complaint that is loudest or freshest in memory. A vivid anecdote earns an investigation, not a slot.
+Roadmap and fix priorities are set from counted evidence (support volume, analytics, test findings across sessions), not from the complaint that is loudest or freshest in memory.
+
+A vivid anecdote earns an investigation, not a slot.
 
 ## Why
 

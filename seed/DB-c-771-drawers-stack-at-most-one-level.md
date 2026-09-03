@@ -17,11 +17,15 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A drawer may open one dependent surface (a confirmation modal or a picker popover). It does not open a second drawer beside or over itself. Navigating deeper from a drawer swaps its body and shows a back affordance in the drawer header, or leaves the drawer for a full page.
+A drawer may open one dependent surface (a confirmation modal or a picker popover) but never a second drawer beside or over itself.
+
+Navigating deeper from a drawer swaps its body and shows a back affordance in the drawer header, or leaves the drawer for a full page.
 
 ## Why
 
-Inferred from the references: Atlassian and Material describe the drawer or side sheet as a single supplementary layer; NN/g's overlay research shows each additional layer costs orientation and makes closing unpredictable. Confidence is moderate because the one-level cap is a synthesis of these rather than a quoted limit.
+Inferred from the references: Atlassian and Material describe the drawer or side sheet as a single supplementary layer; NN/g's overlay research shows each additional layer costs orientation and makes closing unpredictable.
+
+Confidence is moderate because the one-level cap is a synthesis of these rather than a quoted limit.
 
 ## Examples
 

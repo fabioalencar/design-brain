@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-When presenting alternatives, describe each with the same structure, the same level of polish, and both its gains and its losses. Do not name one "the safe option" and another "the bold one", or show your favourite finished and the rest as sketches.
+When presenting alternatives, describe each with the same structure, the same level of polish, and both its gains and its losses.
+
+Do not name one "the safe option" and another "the bold one", or show your favourite finished and the rest as sketches.
 
 ## Why
 

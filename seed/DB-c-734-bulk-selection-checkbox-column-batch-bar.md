@@ -17,7 +17,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-When rows can be acted on together, the first column is a checkbox, the header checkbox selects or clears the visible page and shows an indeterminate state for partial selection, and selecting anything reveals a batch action bar that reads "N selected" with the available actions and a cancel. Selecting across pages is an explicit extra step ("Select all 1,204"), never implicit.
+When rows can be acted on together, the first column is a checkbox and selecting anything reveals a batch action bar.
+
+The header checkbox selects or clears the visible page and shows an indeterminate state for partial selection. The batch action bar reads "N selected" with the available actions and a cancel.
+
+Selecting across pages is an explicit extra step ("Select all 1,204"), never implicit.
 
 ## Why
 

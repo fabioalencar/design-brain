@@ -14,7 +14,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Body text meets at least 4.5:1 against its background, large text and UI component boundaries at least 3:1, and every pointer target is at least 24 by 24 CSS pixels or has equivalent spacing. This is a floor for every palette, theme and component, not a target to aim at.
+WCAG 2.2 AA is a floor for every palette, theme and component, not a target to aim at.
+
+- body text meets at least 4.5:1 against its background
+- large text and UI component boundaries meet at least 3:1
+- every pointer target is at least 24 by 24 CSS pixels or has equivalent spacing
 
 ## Why
 

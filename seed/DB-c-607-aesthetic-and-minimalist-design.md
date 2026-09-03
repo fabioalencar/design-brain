@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Remove or demote anything that does not serve the current task. Decoration, secondary information and rarely used controls are cut or folded so the primary content and action carry the screen.
+Remove or demote anything that does not serve the current task.
+
+Decoration, secondary information and rarely used controls are cut or folded so the primary content and action carry the screen.
 
 ## Why
 

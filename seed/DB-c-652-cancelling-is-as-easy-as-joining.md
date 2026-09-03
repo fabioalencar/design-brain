@@ -15,7 +15,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Any subscription, account or setting a user can enable in the product can be disabled in the product, through the same channel, in comparable steps. No phone-only cancellation, no hidden path, no mandatory retention interview before the button appears.
+Any subscription, account or setting a user can enable in the product can be disabled in the product, through the same channel, in comparable steps.
+
+No phone-only cancellation, no hidden path, no mandatory retention interview before the button appears.
 
 ## Why
 

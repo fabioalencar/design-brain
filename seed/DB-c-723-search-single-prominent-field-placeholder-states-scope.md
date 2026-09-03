@@ -17,11 +17,17 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A single text field with a search icon and enough width for a typical query sits in a consistent place (header or top of the list). Its placeholder names the searchable scope and fields ("Search orders by number, customer or SKU"), not the word "Search". Advanced syntax and extra options appear only after the field, never instead of it.
+A single text field with a search icon and enough width for a typical query sits in a consistent place (header or top of the list).
+
+Its placeholder names the searchable scope and fields ("Search orders by number, customer or SKU"), not the word "Search". Advanced syntax and extra options appear only after the field, never instead of it.
 
 ## Why
 
-Inferred from the references: NN/g finds that a visible box outperforms a link or icon and that a wide box invites better queries; Apple asks placeholder text to hint at what the search covers; Carbon's pattern fixes placement and scope wording.
+Inferred from the references:
+
+- NN/g finds that a visible box outperforms a link or icon and that a wide box invites better queries
+- Apple asks placeholder text to hint at what the search covers
+- Carbon's pattern fixes placement and scope wording
 
 ## Examples
 

@@ -15,7 +15,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A pricing or plan table does not include an option whose only purpose is to make a neighbour look better. Each tier is a real fit for a real segment, and the differences between tiers are stated in the user's terms.
+A pricing or plan table does not include an option whose only purpose is to make a neighbour look better.
+
+Each tier is a real fit for a real segment, and the differences between tiers are stated in the user's terms.
 
 ## Why
 

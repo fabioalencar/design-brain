@@ -17,7 +17,16 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The no-results view repeats the query, keeps it in the field for editing, and states plainly that nothing matched it. It then offers concrete ways out: a spelling correction, removing active filters or narrowing scope, a broader query, or a link to browse. It never shows an unrelated set of items as if they were results, and never a blank area.
+The no-results view repeats the query, keeps it in the field for editing, and states plainly that nothing matched it.
+
+It then offers concrete ways out:
+
+- a spelling correction
+- removing active filters or narrowing scope
+- a broader query
+- a link to browse
+
+It never shows an unrelated set of items as if they were results, and never a blank area.
 
 ## Why
 

@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-When a modal opens, focus lands on the first sensible element (the first field, or the least destructive button for confirmations) and Tab cycles only within the modal while the page behind is inert. When it closes for any reason, focus returns to the trigger, and the trigger is still where it was. The modal has an accessible name from its title.
+When a modal opens, focus lands on the first sensible element (the first field, or the least destructive button for confirmations) and Tab cycles only within the modal while the page behind is inert.
+
+When it closes for any reason, focus returns to the trigger, and the trigger is still where it was. The modal has an accessible name from its title.
 
 ## Why
 

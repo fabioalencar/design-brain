@@ -16,7 +16,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-When a drawer displays a record (an order, a person, a ticket), the address bar updates to that record's URL while the list stays underneath, the browser back button closes the drawer, and pasting the URL elsewhere reproduces list plus drawer. Drawers for transient tasks (filters, a picker) do not get URLs.
+When a drawer displays a record (an order, a person, a ticket), the address bar updates to that record's URL while the list stays underneath.
+
+The browser back button closes the drawer, and pasting the URL elsewhere reproduces list plus drawer. Drawers for transient tasks (filters, a picker) do not get URLs.
 
 ## Why
 

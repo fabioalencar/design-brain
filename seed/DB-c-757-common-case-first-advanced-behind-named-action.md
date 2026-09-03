@@ -17,7 +17,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A screen opens with the controls most people need most of the time. The rest is reachable through one visible control labelled with its contents ("Show delivery options", "Advanced: retries and timeouts"), not a bare "More" or "Advanced". The split is decided by observed frequency of use, and there are at most two levels of disclosure.
+A screen opens with the controls most people need most of the time.
+
+The rest is reachable through one visible control labelled with its contents ("Show delivery options", "Advanced: retries and timeouts"), not a bare "More" or "Advanced".
+
+The split is decided by observed frequency of use, and there are at most two levels of disclosure.
 
 ## Why
 

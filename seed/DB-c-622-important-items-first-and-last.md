@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-In menus, navigation bars and lists, the items that matter most sit at the ends; the middle holds the least critical. Do not bury a key destination among many siblings.
+In menus, navigation bars and lists, the items that matter most sit at the ends; the middle holds the least critical.
+
+Do not bury a key destination among many siblings.
 
 ## Why
 

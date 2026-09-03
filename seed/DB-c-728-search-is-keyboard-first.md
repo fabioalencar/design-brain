@@ -17,11 +17,19 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A single documented shortcut ("/" or Cmd/Ctrl+K) focuses the search field from anywhere in the app. With suggestions open, Up and Down move the highlight, Enter runs the highlighted or typed query, Escape closes suggestions and a second Escape clears the field. The field is the search combobox pattern, so screen readers announce suggestion count and selection.
+A single documented shortcut ("/" or Cmd/Ctrl+K) focuses the search field from anywhere in the app.
+
+With suggestions open, Up and Down move the highlight, Enter runs the highlighted or typed query, Escape closes suggestions and a second Escape clears the field.
+
+The field is the search combobox pattern, so screen readers announce suggestion count and selection.
 
 ## Why
 
-Inferred from the references: the ARIA combobox pattern defines the arrow/Enter/Escape contract; NN/g's keyboard guidance requires that every pointer path has a keyboard equivalent; Baymard lists keyboard navigation of suggestions as a baseline pattern.
+Inferred from the references:
+
+- the ARIA combobox pattern defines the arrow/Enter/Escape contract
+- NN/g's keyboard guidance requires that every pointer path has a keyboard equivalent
+- Baymard lists keyboard navigation of suggestions as a baseline pattern
 
 ## Examples
 

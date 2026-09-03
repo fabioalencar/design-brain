@@ -17,11 +17,17 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Opening a section pushes only the content beneath it; the trigger stays where the pointer or focus is, and nothing above it changes. The expansion is a short eased height transition or instant, never a slide that scrolls the page. Disclosed content is not moved to a different region, a modal or a new page.
+Opening a section pushes only the content beneath it; the trigger stays where the pointer or focus is, and nothing above it changes.
+
+The expansion is a short eased height transition or instant, never a slide that scrolls the page. Disclosed content is not moved to a different region, a modal or a new page.
 
 ## Why
 
-Inferred from the references: NN/g frames disclosure as staying in context so the person keeps their place; GOV.UK's details reveals directly under the summary; NN/g's motion guidance keeps state-change animation short so the layout settles before the person reads.
+Inferred from the references:
+
+- NN/g frames disclosure as staying in context so the person keeps their place
+- GOV.UK's details reveals directly under the summary
+- NN/g's motion guidance keeps state-change animation short so the layout settles before the person reads
 
 ## Examples
 

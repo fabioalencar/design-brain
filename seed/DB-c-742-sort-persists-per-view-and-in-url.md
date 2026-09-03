@@ -17,11 +17,15 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Changing the sort updates a query parameter; navigating into a row and back, or reloading, restores the same order; saved views store their sort with their filters. Sort is remembered per view, not globally, because the useful order differs by page.
+Changing the sort updates a query parameter, and sort is remembered per view, not globally, because the useful order differs by page.
+
+Navigating into a row and back, or reloading, restores the same order; saved views store their sort with their filters.
 
 ## Why
 
-Inferred from the references: NN/g argues that state in the URL makes views bookmarkable and shareable; Polaris bundles sort with filters in saved views so a working set can be returned to. Confidence is moderate because the per-view persistence rule is a synthesis rather than a single published guideline.
+Inferred from the references: NN/g argues that state in the URL makes views bookmarkable and shareable; Polaris bundles sort with filters in saved views so a working set can be returned to.
+
+Confidence is moderate because the per-view persistence rule is a synthesis rather than a single published guideline.
 
 ## Examples
 

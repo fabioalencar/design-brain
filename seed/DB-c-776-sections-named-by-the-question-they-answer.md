@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Headings read as the person's questions ("Where is it going", "Who is responsible", "What has changed") or plain nouns they use ("Shipping", "Owner", "History"), in the order those questions are asked. A heading never exposes a table name, an object type or an internal module. Fields are grouped under the question they serve even when they live in different tables.
+Headings read as the person's questions ("Where is it going", "Who is responsible", "What has changed") or plain nouns they use ("Shipping", "Owner", "History"), in the order those questions are asked.
+
+A heading never exposes a table name, an object type or an internal module. Fields are grouped under the question they serve even when they live in different tables.
 
 ## Why
 

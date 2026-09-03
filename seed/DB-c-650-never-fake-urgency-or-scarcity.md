@@ -15,7 +15,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A timer, "only N left", "M people are viewing" or "offer ends soon" appears only when it is true, verifiable and tied to a real constraint. No resetting countdowns, no invented stock levels, no urgency copy on evergreen offers.
+A timer, "only N left", "M people are viewing" or "offer ends soon" appears only when it is true, verifiable and tied to a real constraint.
+
+No resetting countdowns, no invented stock levels, no urgency copy on evergreen offers.
 
 ## Why
 

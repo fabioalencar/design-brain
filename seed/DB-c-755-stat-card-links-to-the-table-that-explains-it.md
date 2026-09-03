@@ -17,11 +17,17 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Clicking a highlight card opens the list, table or report whose rows sum to the number, with the same period and filters pre-applied. The card shows a subtle affordance (hover state, chevron or "View") so the link is discoverable, and the whole card is the target. A number that cannot be drilled into is labelled as an estimate or rollup.
+Clicking a highlight card opens the list, table or report whose rows sum to the number, with the same period and filters pre-applied.
+
+The card shows a subtle affordance (hover state, chevron or "View") so the link is discoverable, and the whole card is the target. A number that cannot be drilled into is labelled as an estimate or rollup.
 
 ## Why
 
-Inferred from the references: the dashboard pattern's tiles exist as entry points into detail; NN/g notes that people ask "why" as soon as they see an unexpected value, and a dead-end tile leaves that unanswered; Material defines the clickable card and its states.
+Inferred from the references:
+
+- the dashboard pattern's tiles exist as entry points into detail
+- NN/g notes that people ask "why" as soon as they see an unexpected value, and a dead-end tile leaves that unanswered
+- Material defines the clickable card and its states
 
 ## Examples
 

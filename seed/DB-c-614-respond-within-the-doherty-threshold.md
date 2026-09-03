@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Interactions return a visible result within roughly 400 ms. When the real work takes longer, the interface acknowledges immediately (optimistic update, skeleton, progress) so the user never faces a frozen screen.
+Interactions return a visible result within roughly 400 ms.
+
+When the real work takes longer, the interface acknowledges immediately (optimistic update, skeleton, progress) so the user never faces a frozen screen.
 
 ## Why
 

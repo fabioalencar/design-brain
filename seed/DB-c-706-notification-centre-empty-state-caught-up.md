@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-When there are no notifications, the panel shows one short line that says nothing needs attention (and, if filters are applied, that the filter is the reason) plus at most one action such as notification settings. It keeps the panel's size so opening and closing does not jump. Never an empty white rectangle or a spinner that resolves to nothing.
+When there are no notifications, the panel shows one short line that says nothing needs attention (and, if filters are applied, that the filter is the reason) plus at most one action such as notification settings.
+
+It keeps the panel's size so opening and closing does not jump. Never an empty white rectangle or a spinner that resolves to nothing.
 
 ## Why
 

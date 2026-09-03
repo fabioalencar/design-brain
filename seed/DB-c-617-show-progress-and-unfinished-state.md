@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Multi-step tasks display which steps are done and which remain, and interrupted work is preserved and surfaced on return. Incomplete state is visible, not lost.
+Multi-step tasks display which steps are done and which remain, and interrupted work is preserved and surfaced on return.
+
+Incomplete state is visible, not lost.
 
 ## Why
 

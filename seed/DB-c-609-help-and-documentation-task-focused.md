@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Documentation exists, is findable from the screen it describes, and is written as short task steps rather than a feature tour. In-context hints appear at the moment of need; a full reference is one click away.
+Documentation exists, is findable from the screen it describes, and is written as short task steps rather than a feature tour.
+
+In-context hints appear at the moment of need; a full reference is one click away.
 
 ## Why
 

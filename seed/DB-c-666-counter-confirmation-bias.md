@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Research tasks, review checklists and success criteria are written before seeing results and include the ways the design could be wrong. Sessions are observed for failures, quotes that contradict the hypothesis are recorded, and the reviewer states what would change their mind.
+Research tasks, review checklists and success criteria are written before seeing results and include the ways the design could be wrong.
+
+Sessions are observed for failures, quotes that contradict the hypothesis are recorded, and the reviewer states what would change their mind.
 
 ## Why
 

@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Feedback for something the user did (saved, sent, deleted) appears where they did it: an inline status, a brief toast, or the changed record itself. It does not enter the notification centre, does not increment the badge, and is not pushed. Notifications are reserved for events caused by other people, the system, or time.
+Feedback for something the user did (saved, sent, deleted) appears where they did it: an inline status, a brief toast, or the changed record itself.
+
+It does not enter the notification centre, does not increment the badge, and is not pushed. Notifications are reserved for events caused by other people, the system, or time.
 
 ## Why
 

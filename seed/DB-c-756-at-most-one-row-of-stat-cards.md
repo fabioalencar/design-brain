@@ -16,7 +16,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A page shows the three to five numbers that decide what to do next as one row of equal-width cards above the working content. If more numbers are needed, they belong in a metrics table with columns for value, change and window, where alignment carries the comparison. Stacking rows of cards turns a summary into a wall.
+A page shows the three to five numbers that decide what to do next as one row of equal-width cards above the working content.
+
+If more numbers are needed, they belong in a metrics table with columns for value, change and window, where alignment carries the comparison. Stacking rows of cards turns a summary into a wall.
 
 ## Why
 

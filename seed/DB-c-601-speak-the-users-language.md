@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Labels, messages and groupings use the words and order the user already knows from their domain, not internal names, database fields or engineering shorthand. Information appears in the sequence the real-world task follows.
+Labels, messages and groupings use the words and order the user already knows from their domain, not internal names, database fields or engineering shorthand.
+
+Information appears in the sequence the real-world task follows.
 
 ## Why
 

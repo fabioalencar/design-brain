@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Where the user is choosing between options that affect their money, data or rights, the options are equally legible and reachable. A bright "Accept" beside a grey text "Decline", or a close button hidden in the background, is misdirection.
+Where the user is choosing between options that affect their money, data or rights, the options are equally legible and reachable.
+
+A bright "Accept" beside a grey text "Decline", or a close button hidden in the background, is misdirection.
 
 ## Why
 

@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Per-row actions are collected in an overflow (kebab) menu in the last column so the row stays scannable. If one action is used far more than the others (open, approve), it may be exposed as an inline icon button or made the row-click target, but never more than one. Destructive actions sit last in the menu, separated.
+Per-row actions are collected in an overflow (kebab) menu in the last column so the row stays scannable.
+
+If one action is used far more than the others (open, approve), it may be exposed as an inline icon button or made the row-click target, but never more than one. Destructive actions sit last in the menu, separated.
 
 ## Why
 

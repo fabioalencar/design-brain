@@ -17,11 +17,15 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A result row states the matched terms in context (a bold snippet) and, when the match was not in the title, names the field ("matched in notes"). When search spans entity types, results are grouped by type with counts. A result that gives no clue why it appeared is treated as a ranking bug.
+A result row states the matched terms in context (a bold snippet) and, when the match was not in the title, names the field ("matched in notes").
+
+When search spans entity types, results are grouped by type with counts. A result that gives no clue why it appeared is treated as a ranking bug.
 
 ## Why
 
-Inferred from the references: NN/g's suggestion guidance and Carbon's search pattern both recommend highlighting the matched text so people can judge relevance without opening each hit; Baymard's query-type research shows matches on non-title fields are common and confusing when unexplained. Confidence is moderate because none of the cited pages states the field-naming rule outright.
+Inferred from the references: NN/g's suggestion guidance and Carbon's search pattern both recommend highlighting the matched text so people can judge relevance without opening each hit; Baymard's query-type research shows matches on non-title fields are common and confusing when unexplained.
+
+Confidence is moderate because none of the cited pages states the field-naming rule outright.
 
 ## Examples
 

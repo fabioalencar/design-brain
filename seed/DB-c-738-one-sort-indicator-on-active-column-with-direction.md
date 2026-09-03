@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-One column at a time carries a visible up or down arrow and the aria-sort attribute; other sortable headers show a muted arrow only on hover or keyboard focus so the table does not fill with chevrons. The header is a button, so it is clickable and focusable across its full width.
+One column at a time carries a visible up or down arrow and the aria-sort attribute; other sortable headers show a muted arrow only on hover or keyboard focus so the table does not fill with chevrons.
+
+The header is a button, so it is clickable and focusable across its full width.
 
 ## Why
 

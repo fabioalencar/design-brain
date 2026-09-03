@@ -17,7 +17,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Toggles and single-choice controls that take effect on their own save immediately and confirm with a brief inline state ("Saved" or the control's new position is enough). Pages built from text fields and related choices use one Save button that appears or enables only when something changed, with the unsaved state visible (a save bar, a dirty marker) and a warning on navigating away. A page never mixes the two: a person must not have to guess which controls needed the button.
+A page never mixes immediate save and explicit save: a person must not have to guess which controls needed the button.
+
+Toggles and single-choice controls that take effect on their own save immediately and confirm with a brief inline state ("Saved" or the control's new position is enough).
+
+Pages built from text fields and related choices use one Save button that appears or enables only when something changed, with the unsaved state visible (a save bar, a dirty marker) and a warning on navigating away.
 
 ## Why
 

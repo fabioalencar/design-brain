@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Any table taller than the viewport pins its header row so column meaning is never lost; any table wider than its container scrolls horizontally inside its own container with the row-identifying column pinned on the left. The page itself never scrolls horizontally because of a table.
+Any table taller than the viewport pins its header row so column meaning is never lost; any table wider than its container scrolls horizontally inside its own container with the row-identifying column pinned on the left.
+
+The page itself never scrolls horizontally because of a table.
 
 ## Why
 

@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Every action the user takes gets a visible response within a beat: a pressed state, a spinner, a progress indicator, a confirmation. The interface never leaves the user guessing whether something happened or is still happening.
+Every action the user takes gets a visible response within a beat: a pressed state, a spinner, a progress indicator, a confirmation.
+
+The interface never leaves the user guessing whether something happened or is still happening.
 
 ## Why
 

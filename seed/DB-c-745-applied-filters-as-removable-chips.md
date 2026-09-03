@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Every active filter is echoed as a chip ("Status: Open", "Owner: Ana") in a row between the filter controls and the results, and each chip has a remove control that lifts that one filter. The chip row is the one place a person can see the whole applied set regardless of where the filters were set.
+Every active filter is echoed as a chip ("Status: Open", "Owner: Ana") in a row between the filter controls and the results, and each chip has a remove control that lifts that one filter.
+
+The chip row is the one place a person can see the whole applied set regardless of where the filters were set.
 
 ## Why
 

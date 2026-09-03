@@ -15,7 +15,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Feeds have a visible end, pagination or a "you're caught up" marker; autoplay is off by default; notifications and pull-to-refresh do not deliver unpredictable rewards designed to keep people checking. Engagement is a by-product of value, not a target of the mechanics.
+Engagement is a by-product of value, not a target of the mechanics.
+
+- feeds have a visible end, pagination or a "you're caught up" marker
+- autoplay is off by default
+- notifications and pull-to-refresh do not deliver unpredictable rewards designed to keep people checking
 
 ## Why
 

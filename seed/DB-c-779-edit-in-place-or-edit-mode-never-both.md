@@ -17,11 +17,20 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Records with many independently changed fields (status, owner, due date) use inline editing per field with immediate save and a visible edit affordance. Records that are edited as a whole and validated together (an address, a contract) use one Edit action that opens a form (page or drawer) with Save and Cancel. Mixing the two on a page leaves the person unsure which fields changed and when they were saved.
+A page edits its record either in place, field by field, or through one Edit mode, never both.
+
+- records with many independently changed fields (status, owner, due date) use inline editing per field with immediate save and a visible edit affordance
+- records that are edited as a whole and validated together (an address, a contract) use one Edit action that opens a form (page or drawer) with Save and Cancel
+
+Mixing the two on a page leaves the person unsure which fields changed and when they were saved.
 
 ## Why
 
-Inferred from the references: Atlassian's inline edit defines the per-field model with confirm and cancel; GOV.UK's check-answers pattern defines the model where each change link opens the question page and returns; the in-place editor pattern records the trade-off between the two.
+Inferred from the references:
+
+- Atlassian's inline edit defines the per-field model with confirm and cancel
+- GOV.UK's check-answers pattern defines the model where each change link opens the question page and returns
+- the in-place editor pattern records the trade-off between the two
 
 ## Examples
 

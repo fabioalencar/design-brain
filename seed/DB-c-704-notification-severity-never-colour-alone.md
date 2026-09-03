@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Every notification variant pairs its colour with a status icon and a leading status word or title ("Error", "Success", "Important"). Someone who cannot see the colour must still know the severity from the shape and the text.
+Every notification variant pairs its colour with a status icon and a leading status word or title ("Error", "Success", "Important").
+
+Someone who cannot see the colour must still know the severity from the shape and the text.
 
 ## Why
 

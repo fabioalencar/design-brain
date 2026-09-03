@@ -18,11 +18,23 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Everything that is not such a decision is inline, a drawer or a page. A modal interrupts, so it is reserved for confirming a destructive or irreversible action, capturing one piece of input the flow cannot proceed without, or reporting a blocking error. Viewing details, editing a record, onboarding tips, marketing and long forms do not qualify. If the person could reasonably want to do something else first, it is not a modal.
+A modal interrupts, so it is reserved for a decision that blocks the flow; everything else is inline, a drawer or a page.
+
+The accepted cases:
+
+- confirming a destructive or irreversible action
+- capturing one piece of input the flow cannot proceed without
+- reporting a blocking error
+
+Viewing details, editing a record, onboarding tips, marketing and long forms do not qualify. If the person could reasonably want to do something else first, it is not a modal.
 
 ## Why
 
-Inferred from the references: NN/g's definitions restrict modals to cases where the interruption is warranted and documents the cost of overlay overuse; Apple's modality guidance asks to minimise modality and use it only for focused, self-contained tasks; Carbon's dialog pattern lists the accepted purposes.
+Inferred from the references:
+
+- NN/g's definitions restrict modals to cases where the interruption is warranted and documents the cost of overlay overuse
+- Apple's modality guidance asks to minimise modality and use it only for focused, self-contained tasks
+- Carbon's dialog pattern lists the accepted purposes
 
 ## Examples
 

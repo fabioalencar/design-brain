@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Help text, a record's details, a preview, a comparison, a checklist or anything the person will look at while typing or clicking elsewhere goes in a non-modal surface: a side panel, a drawer, an inline section, a popover or a separate page. The test is whether they would want the thing open and the page still usable at the same time.
+Help text, a record's details, a preview, a comparison, a checklist or anything the person will look at while typing or clicking elsewhere goes in a non-modal surface: a side panel, a drawer, an inline section, a popover or a separate page.
+
+The test is whether they would want the thing open and the page still usable at the same time.
 
 ## Why
 

@@ -18,11 +18,19 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A confirmation or informational modal closes on Escape, on the close icon, on the backdrop, and on Cancel, all meaning the same thing: nothing happens. A modal holding a form the person has typed into does not close on the backdrop, and Escape or the close icon triggers a discard confirmation instead. A modal is never un-closable; a blocking error still offers a way out.
+A confirmation or informational modal closes on Escape, on the close icon, on the backdrop, and on Cancel, all meaning the same thing: nothing happens.
+
+A modal holding a form the person has typed into does not close on the backdrop, and Escape or the close icon triggers a discard confirmation instead.
+
+A modal is never un-closable; a blocking error still offers a way out.
 
 ## Why
 
-Inferred from the references: the ARIA dialog pattern makes Escape a required close; Carbon and Atlassian describe backdrop and Escape dismissal and the exception for unsaved changes; NN/g's cancel-versus-close piece is why the meaning of closing must be unambiguous.
+Inferred from the references:
+
+- the ARIA dialog pattern makes Escape a required close
+- Carbon and Atlassian describe backdrop and Escape dismissal and the exception for unsaved changes
+- NN/g's cancel-versus-close piece is why the meaning of closing must be unambiguous
 
 ## Examples
 

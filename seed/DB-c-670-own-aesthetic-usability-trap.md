@@ -15,7 +15,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-When reviewing your own or a peer's work, separate the two questions: does it look right, and does it work? Assess the second with a task walk-through or a test, not a glance. A beautiful mockup is a hypothesis about usability, not evidence of it.
+When reviewing your own or a peer's work, separate the two questions: does it look right, and does it work?
+
+Assess the second with a task walk-through or a test, not a glance. A beautiful mockup is a hypothesis about usability, not evidence of it.
 
 ## Why
 

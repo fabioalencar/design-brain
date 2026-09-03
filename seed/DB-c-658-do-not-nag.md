@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-When the user dismisses a request (notifications, rating, upgrade, app install), the product remembers and does not ask again in that session, and rarely thereafter. Repeat prompts are capped, spaced and offer a permanent "don't ask again".
+When the user dismisses a request (notifications, rating, upgrade, app install), the product remembers and does not ask again in that session, and rarely thereafter.
+
+Repeat prompts are capped, spaced and offer a permanent "don't ask again".
 
 ## Why
 

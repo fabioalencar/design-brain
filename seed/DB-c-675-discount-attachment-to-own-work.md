@@ -15,7 +15,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A component, pattern or page you built is valued by the same evidence as one you did not: test results, fit to the rule set, cost to maintain. When comparing your work with a library or a colleague's, ask someone without a stake to judge, or set the criteria before looking.
+A component, pattern or page you built is valued by the same evidence as one you did not: test results, fit to the rule set, cost to maintain.
+
+When comparing your work with a library or a colleague's, ask someone without a stake to judge, or set the criteria before looking.
 
 ## Why
 

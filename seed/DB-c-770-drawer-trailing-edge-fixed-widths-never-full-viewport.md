@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A detail drawer opens from the right (trailing) edge with a narrow, medium or wide width defined once by the system, leaving a visible strip of the page it sits over. Navigation drawers, by contrast, come from the leading edge. A drawer never takes the full width on desktop; on mobile it may become a full-screen sheet with a visible back control.
+A detail drawer opens from the right (trailing) edge with a narrow, medium or wide width defined once by the system, leaving a visible strip of the page it sits over.
+
+Navigation drawers, by contrast, come from the leading edge. A drawer never takes the full width on desktop; on mobile it may become a full-screen sheet with a visible back control.
 
 ## Why
 

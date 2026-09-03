@@ -17,7 +17,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Tooltip text is a clarification a person can live without: a definition, a keyboard shortcut, the full text of a truncated label. It is one sentence, roughly under 150 characters, plain text with no headings, lists or images. Required instructions, validation rules, prices, deadlines and errors go in visible page copy or helper text, never in a tooltip.
+Tooltip text is a clarification a person can live without: a definition, a keyboard shortcut, the full text of a truncated label.
+
+It is one sentence, roughly under 150 characters, plain text with no headings, lists or images.
+
+Required instructions, validation rules, prices, deadlines and errors go in visible page copy or helper text, never in a tooltip.
 
 ## Why
 

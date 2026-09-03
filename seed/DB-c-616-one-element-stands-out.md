@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Emphasis is scarce: a single element per view is allowed to break the pattern (colour, size, weight). If several things are highlighted, nothing is.
+Emphasis is scarce: a single element per view is allowed to break the pattern (colour, size, weight).
+
+If several things are highlighted, nothing is.
 
 ## Why
 

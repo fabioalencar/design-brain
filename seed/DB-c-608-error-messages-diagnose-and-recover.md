@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-An error names the problem in the user's words, states the cause when known, and proposes the next step. No codes alone, no blame, no vague "something went wrong". The message appears where the problem is.
+An error names the problem in the user's words, states the cause when known, and proposes the next step.
+
+No codes alone, no blame, no vague "something went wrong". The message appears where the problem is.
 
 ## Why
 

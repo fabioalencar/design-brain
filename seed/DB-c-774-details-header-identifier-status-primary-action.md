@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The header shows the human identifier (name or number), a status badge, breadcrumb or back link, and a single primary action for the record's most common next step, with the rest in a secondary actions menu. Nothing else competes in the header. The identifier is the page title and the browser title.
+The header shows the human identifier (name or number), a status badge, breadcrumb or back link, and a single primary action for the record's most common next step, with the rest in a secondary actions menu.
+
+Nothing else competes in the header. The identifier is the page title and the browser title.
 
 ## Why
 

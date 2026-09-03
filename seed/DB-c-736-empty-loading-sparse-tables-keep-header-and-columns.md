@@ -17,7 +17,13 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The column set is defined by the view, not by the data that happened to load. While loading, the header renders and the body shows skeleton rows at the expected height; when no rows exist, the header stays and the body holds one sentence and one action; when a cell has no value, it renders the app's single empty marker rather than dropping or collapsing the column. Layout does not jump between these states.
+The column set is defined by the view, not by the data that happened to load.
+
+- while loading, the header renders and the body shows skeleton rows at the expected height
+- when no rows exist, the header stays and the body holds one sentence and one action
+- when a cell has no value, it renders the app's single empty marker rather than dropping or collapsing the column
+
+Layout does not jump between these states.
 
 ## Why
 

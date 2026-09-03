@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Testimonials, ratings, purchase notifications and user counts come from real, identifiable data. No stock-photo customers, no generated reviews, no "someone in Lisbon just bought" toasts without a live event behind them.
+Testimonials, ratings, purchase notifications and user counts come from real, identifiable data.
+
+No stock-photo customers, no generated reviews, no "someone in Lisbon just bought" toasts without a live event behind them.
 
 ## Why
 

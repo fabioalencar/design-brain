@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Once settings need more than two screens or more than roughly forty individual controls, add a search field at the top of the settings area that matches on setting labels, group names and synonyms, and jumps to the control with it highlighted. The field is always visible on the settings landing page, not hidden behind an icon.
+Once settings need more than two screens or more than roughly forty individual controls, add a search field at the top of the settings area.
+
+The field matches on setting labels, group names and synonyms, and jumps to the control with it highlighted. It is always visible on the settings landing page, not hidden behind an icon.
 
 ## Why
 

@@ -14,7 +14,12 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Design the input so the wrong value is hard to enter: constrain formats, supply sensible defaults, disable what does not apply, and ask for confirmation only where the consequence is severe. Error prevention beats error messages.
+Design the input so the wrong value is hard to enter; error prevention beats error messages.
+
+- constrain formats
+- supply sensible defaults
+- disable what does not apply
+- ask for confirmation only where the consequence is severe
 
 ## Why
 

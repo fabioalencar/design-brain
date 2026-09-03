@@ -15,7 +15,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A struck-through "was" price, a "compare at" figure or a monthly figure next to an annual one reflects a price that was actually charged or is actually available. Price per unit is not cherry-picked to shrink the number.
+A struck-through "was" price, a "compare at" figure or a monthly figure next to an annual one reflects a price that was actually charged or is actually available.
+
+Price per unit is not cherry-picked to shrink the number.
 
 ## Why
 

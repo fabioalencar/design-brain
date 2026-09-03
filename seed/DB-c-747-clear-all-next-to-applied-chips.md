@@ -17,7 +17,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A single text button "Clear all" (or "Clear filters") appears at the end of the applied-chip row and removes every filter, restoring the default view and default sort. It is hidden or disabled when nothing is applied. It never resets search text or the selected saved view unless it says so.
+A single text button "Clear all" (or "Clear filters") appears at the end of the applied-chip row and removes every filter, restoring the default view and default sort.
+
+It is hidden or disabled when nothing is applied. It never resets search text or the selected saved view unless it says so.
 
 ## Why
 

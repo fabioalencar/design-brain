@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A shared background, border or container reads as one group and separates it from its surroundings. Use it for groups that must be distinct from dense neighbours; do not wrap everything, or the regions stop meaning anything.
+A shared background, border or container reads as one group and separates it from its surroundings.
+
+Use it for groups that must be distinct from dense neighbours; do not wrap everything, or the regions stop meaning anything.
 
 ## Why
 

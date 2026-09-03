@@ -17,11 +17,20 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Define a small set of urgency tiers (blocking, needs action, informational, passive) and map each tier to one channel: blocking goes to a modal or full-width banner, needs-action to an inline or toast notification with an action, informational to the notification centre, passive to a badge or status indicator. A message never fires on two channels at once, and a tier never borrows a louder channel to get attention.
+Define a small set of urgency tiers (blocking, needs action, informational, passive) and map each tier to one channel.
+
+- blocking goes to a modal or full-width banner
+- needs-action goes to an inline or toast notification with an action
+- informational goes to the notification centre
+- passive goes to a badge or status indicator
+
+A message never fires on two channels at once, and a tier never borrows a louder channel to get attention.
 
 ## Why
 
-Inferred from the references: NN/g separates indicators, validations and notifications by how much they interrupt; Carbon's notification pattern assigns inline, toast, actionable and modal variants by severity and by whether the user must act. One channel per tier keeps interruption proportional and stops the product from training people to ignore everything.
+Inferred from the references: NN/g separates indicators, validations and notifications by how much they interrupt; Carbon's notification pattern assigns inline, toast, actionable and modal variants by severity and by whether the user must act.
+
+One channel per tier keeps interruption proportional and stops the product from training people to ignore everything.
 
 ## Examples
 

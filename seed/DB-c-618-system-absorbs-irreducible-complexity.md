@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-When a task has complexity that cannot be removed, the product carries it: smart defaults, inference, pre-filled data, sensible fallbacks. The user is asked only for what only they know.
+When a task has complexity that cannot be removed, the product carries it: smart defaults, inference, pre-filled data, sensible fallbacks.
+
+The user is asked only for what only they know.
 
 ## Why
 

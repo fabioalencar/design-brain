@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-When presenting products, plans or settings, show a short set with a recommended default and make the rest reachable by filtering or expanding. Options are ordered and differentiated, never a flat wall of equals.
+When presenting products, plans or settings, show a short set with a recommended default and make the rest reachable by filtering or expanding.
+
+Options are ordered and differentiated, never a flat wall of equals.
 
 ## Why
 

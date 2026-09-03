@@ -18,7 +18,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A tooltip is transient and has no focus of its own, so it cannot contain anything a person needs to click, type into or select. When the content needs an action (a "Learn more" link, a confirm button, a form), use a popover or toggletip that opens on click, takes focus, and closes on Escape or an explicit close.
+A tooltip is transient and has no focus of its own, so it cannot contain anything a person needs to click, type into or select.
+
+When the content needs an action (a "Learn more" link, a confirm button, a form), use a popover or toggletip that opens on click, takes focus, and closes on Escape or an explicit close.
 
 ## Why
 

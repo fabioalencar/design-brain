@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Every element on a screen is checked for the mental work it demands: reading, comparing, remembering, decoding. Anything that adds load without adding to the task is removed, deferred, or converted into a default.
+Every element on a screen is checked for the mental work it demands: reading, comparing, remembering, decoding.
+
+Anything that adds load without adding to the task is removed, deferred, or converted into a default.
 
 ## Why
 

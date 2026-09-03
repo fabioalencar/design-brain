@@ -17,7 +17,11 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Open after a short pause (a few hundred milliseconds) so passing the pointer across a toolbar does not flash tooltips; once one is open, moving to an adjacent trigger opens the next without the delay. The tooltip is dismissable with Escape without moving focus, remains visible while the pointer is over the tooltip itself, and does not close on its own before the person has read it. It never covers the element it describes.
+Open a tooltip after a short pause (a few hundred milliseconds) so passing the pointer across a toolbar does not flash tooltips; once one is open, moving to an adjacent trigger opens the next without the delay.
+
+The tooltip is dismissable with Escape without moving focus, remains visible while the pointer is over the tooltip itself, and does not close on its own before the person has read it.
+
+It never covers the element it describes.
 
 ## Why
 

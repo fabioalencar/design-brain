@@ -17,7 +17,13 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Every applied filter, the search text, the sort and the page are query parameters. Opening the link reproduces the view; the browser back button undoes the last filter change; a saved view is a named URL. Filters held only in component state are lost on refresh and cannot be handed to a colleague.
+Every applied filter, the search text, the sort and the page are query parameters.
+
+- opening the link reproduces the view
+- the browser back button undoes the last filter change
+- a saved view is a named URL
+
+Filters held only in component state are lost on refresh and cannot be handed to a colleague.
 
 ## Why
 

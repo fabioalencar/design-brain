@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Messaging states what the user gains or what actually changes. It does not frame declining as losing a benefit they never had, invent "missing out", or describe a downgrade as forfeiting possessions.
+Messaging states what the user gains or what actually changes.
+
+It does not frame declining as losing a benefit they never had, invent "missing out", or describe a downgrade as forfeiting possessions.
 
 ## Why
 

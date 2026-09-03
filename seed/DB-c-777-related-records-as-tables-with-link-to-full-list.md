@@ -17,11 +17,17 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Children and siblings of the record (line items, contacts, linked tickets) are shown as a small table with the same columns and behaviour as the main list for that type, capped at a handful of rows, with a "View all N" link that opens the full list already filtered to this record. They are not shown as card piles or comma-separated names.
+Children and siblings of the record (line items, contacts, linked tickets) are shown as a small table with the same columns and behaviour as the main list for that type.
+
+The table is capped at a handful of rows, with a "View all N" link that opens the full list already filtered to this record. They are not shown as card piles or comma-separated names.
 
 ## Why
 
-Inferred from the references: NN/g's table tasks apply to related records just as to top-level lists; Polaris's resource details layout embeds related resources as lists with a path to their index; Carbon's data table is designed to be reused at small sizes for this.
+Inferred from the references:
+
+- NN/g's table tasks apply to related records just as to top-level lists
+- Polaris's resource details layout embeds related resources as lists with a path to their index
+- Carbon's data table is designed to be reused at small sizes for this
 
 ## Examples
 

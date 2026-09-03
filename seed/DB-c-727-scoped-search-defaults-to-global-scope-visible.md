@@ -16,7 +16,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A search launched from a section may pre-select that section's scope, but the scope is shown as a chip or selector next to the field and can be widened in one click. When a scoped search returns nothing, the zero-results state says which scope was searched and offers the global search with the same query. The global search is always reachable from the same field.
+A search launched from a section may pre-select that section's scope, but the scope is shown as a chip or selector next to the field and can be widened in one click.
+
+When a scoped search returns nothing, the zero-results state says which scope was searched and offers the global search with the same query. The global search is always reachable from the same field.
 
 ## Why
 

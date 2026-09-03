@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Every flow has a visible way out, and every consequential action can be undone or cancelled. Mistaken actions are recoverable without a support ticket.
+Every flow has a visible way out, and every consequential action can be undone or cancelled.
+
+Mistaken actions are recoverable without a support ticket.
 
 ## Why
 

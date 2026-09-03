@@ -14,7 +14,9 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A direction is kept or dropped on what it will deliver from here, never on what it cost to get here. Exploration artefacts are made cheap and disposable so that throwing them away does not hurt, and the question "would we choose this if we started today?" is asked at each review.
+A direction is kept or dropped on what it will deliver from here, never on what it cost to get here.
+
+Exploration artefacts are made cheap and disposable so that throwing them away does not hurt, and the question "would we choose this if we started today?" is asked at each review.
 
 ## Why
 
