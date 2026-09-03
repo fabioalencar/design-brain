@@ -1,6 +1,6 @@
 ---
 id: DB-c-750
-title: "Catalog-like data with many items and many attributes uses faceted filtering with per-facet counts and multi-select within a facet"
+title: Catalog-like data with many items and attributes uses faceted filtering
 dimension: components
 scope: universal
 stance: context

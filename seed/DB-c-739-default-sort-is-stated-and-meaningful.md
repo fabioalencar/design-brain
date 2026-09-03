@@ -1,6 +1,6 @@
 ---
 id: DB-c-739
-title: "The default sort of a list is meaningful and visible, never insertion or database order"
+title: The default sort of a list is meaningful and visible, never database order
 dimension: components
 scope: universal
 stance: always

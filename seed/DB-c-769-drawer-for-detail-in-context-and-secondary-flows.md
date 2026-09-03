@@ -1,6 +1,6 @@
 ---
 id: DB-c-769
-title: "A drawer is for viewing or editing one item while the list stays in view, and for secondary flows that return to where they started"
+title: A drawer is for one item viewed or edited while the list stays in view
 dimension: components
 scope: universal
 stance: context
@@ -17,7 +17,7 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-Use a drawer when the person needs the context of the underlying page (the list, the map, the board) while looking at or changing one thing: previewing a row, quick-editing fields, a filter tray, a short create form. Use a page instead when the item has its own navigation, many sections or an audit trail, and a modal only for a blocking decision.
+A drawer also serves secondary flows that return to where they started. Use a drawer when the person needs the context of the underlying page (the list, the map, the board) while looking at or changing one thing: previewing a row, quick-editing fields, a filter tray, a short create form. Use a page instead when the item has its own navigation, many sections or an audit trail, and a modal only for a blocking decision.
 
 ## Why
 

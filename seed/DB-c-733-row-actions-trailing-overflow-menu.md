@@ -1,6 +1,6 @@
 ---
 id: DB-c-733
-title: "Row actions live in a trailing overflow menu on the row, with at most one action exposed inline"
+title: Row actions live in a trailing overflow menu, with at most one exposed inline
 dimension: components
 scope: universal
 stance: prefer

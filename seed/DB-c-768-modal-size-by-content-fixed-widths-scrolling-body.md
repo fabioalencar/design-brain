@@ -1,6 +1,6 @@
 ---
 id: DB-c-768
-title: "Modal size follows its content from a fixed set of widths; height grows to a maximum and then the body scrolls with header and footer pinned"
+title: Modal width comes from a fixed set; past a maximum height only the body scrolls
 dimension: layout
 scope: universal
 stance: prefer

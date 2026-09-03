@@ -1,6 +1,6 @@
 ---
 id: DB-c-732
-title: "Row density is a user choice exposed on the table (compact, default, comfortable), not a per-page decision"
+title: Row density is a user choice exposed on the table, not a per-page decision
 dimension: spacing
 scope: universal
 stance: prefer
@@ -16,7 +16,7 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-The shared table component ships with a fixed set of row heights and a density control (in the table toolbar or the view settings) whose choice persists per user and per view. Pages do not invent their own row heights; the default density is set once for the product.
+The density options are compact, default and comfortable. The shared table component ships with a fixed set of row heights and a density control (in the table toolbar or the view settings) whose choice persists per user and per view. Pages do not invent their own row heights; the default density is set once for the product.
 
 ## Why
 

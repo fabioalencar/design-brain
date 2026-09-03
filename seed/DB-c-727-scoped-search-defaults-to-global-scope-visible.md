@@ -1,6 +1,6 @@
 ---
 id: DB-c-727
-title: "Search defaults to the widest scope and shows the current scope as a visible, changeable control; scope never narrows silently"
+title: Search defaults to the widest scope and never narrows it silently
 dimension: components
 scope: universal
 stance: always

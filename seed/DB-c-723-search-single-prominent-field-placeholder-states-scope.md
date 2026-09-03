@@ -1,6 +1,6 @@
 ---
 id: DB-c-723
-title: "Search is one prominent, open field whose placeholder says what can be searched; on desktop it is never collapsed behind an icon"
+title: Search is one prominent open field, never collapsed behind an icon on desktop
 dimension: components
 scope: universal
 stance: always

@@ -1,6 +1,6 @@
 ---
 id: DB-c-628
-title: "Minimise extraneous cognitive load: show only what the task needs, when it needs it"
+title: Minimise extraneous cognitive load; show only what the task needs, when needed
 dimension: layout
 scope: universal
 stance: always

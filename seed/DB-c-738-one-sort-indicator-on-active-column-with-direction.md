@@ -1,6 +1,6 @@
 ---
 id: DB-c-738
-title: "Only the active sort column shows an indicator, and the indicator shows direction; inactive sortable columns reveal their affordance on hover and focus"
+title: Only the active sort column shows an indicator, and it shows direction
 dimension: components
 scope: universal
 stance: always

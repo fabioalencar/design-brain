@@ -1,6 +1,6 @@
 ---
 id: DB-c-729
-title: "Tabular data is rendered as a real table with a header row; a grid of cards is not a substitute"
+title: Tabular data is a real table with a header row; a grid of cards is no substitute
 dimension: components
 scope: universal
 stance: always

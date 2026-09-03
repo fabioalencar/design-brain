@@ -1,6 +1,6 @@
 ---
 id: DB-c-709
-title: "The profile the user sees of themselves and the profile others see are different views, with a preview of the public view when visibility matters"
+title: The self view of a profile and the view others see are different views
 dimension: layout
 scope: universal
 stance: prefer

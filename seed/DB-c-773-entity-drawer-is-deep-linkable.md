@@ -1,6 +1,6 @@
 ---
 id: DB-c-773
-title: "A drawer that shows an entity has a URL, and opening that URL opens the list with the drawer already open"
+title: An entity drawer has a URL; opening that URL opens the list with the drawer open
 dimension: process
 scope: universal
 stance: prefer

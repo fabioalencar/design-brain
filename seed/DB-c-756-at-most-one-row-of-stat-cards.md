@@ -1,6 +1,6 @@
 ---
 id: DB-c-756
-title: "At most one row of stat cards sits at the top of a page; beyond that the numbers become a table"
+title: At most one row of stat cards sits at the top of a page; more become a table
 dimension: layout
 scope: universal
 stance: avoid

@@ -1,6 +1,6 @@
 ---
 id: DB-c-766
-title: "Escape and click-outside close a modal, unless closing would lose unsaved input, in which case click-outside is disabled and Escape asks"
+title: Escape and click-outside close a modal unless closing would lose unsaved input
 dimension: components
 scope: universal
 stance: always

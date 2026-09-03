@@ -1,6 +1,6 @@
 ---
 id: DB-c-745
-title: "Applied filters are listed as removable chips above the results, each with its own clear"
+title: Applied filters are listed as removable chips above the results
 dimension: components
 scope: universal
 stance: always

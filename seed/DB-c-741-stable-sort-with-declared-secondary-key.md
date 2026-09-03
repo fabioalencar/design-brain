@@ -1,6 +1,6 @@
 ---
 id: DB-c-741
-title: "Sorting is stable: ties keep a declared secondary order, so rows never reshuffle between renders"
+title: "Sorting is stable: ties keep a declared secondary order and never reshuffle"
 dimension: process
 scope: universal
 stance: always

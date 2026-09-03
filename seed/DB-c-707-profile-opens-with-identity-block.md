@@ -1,6 +1,6 @@
 ---
 id: DB-c-707
-title: "A profile page opens with an identity block of avatar, name, role or handle, and one status; the avatar falls back to initials"
+title: A profile page opens with one identity block; the avatar falls back to initials
 dimension: layout
 scope: universal
 stance: always

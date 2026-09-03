@@ -1,6 +1,6 @@
 ---
 id: DB-c-702
-title: "Notifications of the same kind from the same source are grouped, and low-urgency ones roll into a scheduled digest"
+title: Same-source notifications are grouped; low-urgency ones roll into a digest
 dimension: components
 scope: universal
 stance: prefer

@@ -1,6 +1,6 @@
 ---
 id: DB-c-724
-title: "Focusing the empty search field shows recent and suggested queries; typing shows autocomplete that completes queries, not just lists results"
+title: An empty search field shows recent queries; typing shows query autocomplete
 dimension: components
 scope: universal
 stance: prefer

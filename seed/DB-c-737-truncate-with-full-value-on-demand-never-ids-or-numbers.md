@@ -1,6 +1,6 @@
 ---
 id: DB-c-737
-title: "Long cell text truncates with an ellipsis and exposes the full value on hover, focus or expand; identifiers and numbers never truncate"
+title: Long cell text truncates with the full value on demand; IDs and numbers never do
 dimension: copy
 scope: universal
 stance: always

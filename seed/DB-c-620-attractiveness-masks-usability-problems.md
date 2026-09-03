@@ -1,6 +1,6 @@
 ---
 id: DB-c-620
-title: "Treat attractiveness as a mask: a pretty design hides usability problems in testing"
+title: Treat attractiveness as a mask that hides usability problems in testing
 dimension: process
 scope: universal
 stance: always

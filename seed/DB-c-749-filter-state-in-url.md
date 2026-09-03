@@ -1,6 +1,6 @@
 ---
 id: DB-c-749
-title: "Filter state is encoded in the URL so a filtered view survives reload and back, and can be shared as a link"
+title: Filter state is encoded in the URL so a filtered view survives and can be shared
 dimension: process
 scope: universal
 stance: always

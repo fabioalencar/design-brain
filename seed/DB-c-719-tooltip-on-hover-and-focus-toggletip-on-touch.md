@@ -1,6 +1,6 @@
 ---
 id: DB-c-719
-title: "A tooltip opens on hover and on keyboard focus, and its content has a tap-reachable equivalent on touch"
+title: A tooltip opens on hover and focus, and its content is tap-reachable on touch
 dimension: components
 scope: universal
 stance: always

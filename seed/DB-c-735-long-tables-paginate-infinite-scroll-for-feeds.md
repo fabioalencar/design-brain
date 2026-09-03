@@ -1,6 +1,6 @@
 ---
 id: DB-c-735
-title: "Long tables paginate with a stated page size and total; infinite scroll is reserved for feeds"
+title: Long tables paginate with page size and total; infinite scroll is only for feeds
 dimension: components
 scope: universal
 stance: prefer

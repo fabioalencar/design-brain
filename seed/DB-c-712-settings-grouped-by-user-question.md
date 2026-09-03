@@ -1,6 +1,6 @@
 ---
 id: DB-c-712
-title: "Settings are grouped by the question the user is asking, not by the system module that implements them"
+title: Settings are grouped by the user's question, not by the implementing module
 dimension: layout
 scope: universal
 stance: always

@@ -1,6 +1,6 @@
 ---
 id: DB-c-775
-title: "The summary the person came for (key fields, status, totals) is above the fold; everything else follows in sections"
+title: The summary the person came for is above the fold; everything else follows below
 dimension: layout
 scope: universal
 stance: always

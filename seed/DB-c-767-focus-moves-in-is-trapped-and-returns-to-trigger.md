@@ -1,6 +1,6 @@
 ---
 id: DB-c-767
-title: "On open, focus moves into the modal and is trapped there; on close it returns to the element that opened it"
+title: Focus enters the modal and is trapped; on close it returns to the trigger
 dimension: components
 scope: universal
 stance: always

@@ -1,6 +1,6 @@
 ---
 id: DB-c-726
-title: "Zero results is a designed state: it keeps the query editable, says nothing matched, and offers recovery"
+title: "Zero results is a designed state: keep the query editable and offer recovery"
 dimension: copy
 scope: universal
 stance: always

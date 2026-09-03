@@ -1,6 +1,6 @@
 ---
 id: DB-c-753
-title: "A trend on a stat card names its comparison window and anchor; a bare arrow or percentage is never shown"
+title: A trend on a stat card names its comparison window and anchor
 dimension: copy
 scope: universal
 stance: always

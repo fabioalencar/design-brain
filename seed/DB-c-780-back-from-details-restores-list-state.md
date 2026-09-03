@@ -1,6 +1,6 @@
 ---
 id: DB-c-780
-title: "Back from a details page returns to the list with the same scroll position, sort, filters, page and selection"
+title: Back from a details page restores the list's scroll, sort, filters and selection
 dimension: process
 scope: universal
 stance: always

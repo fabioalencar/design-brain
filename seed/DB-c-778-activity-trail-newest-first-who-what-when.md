@@ -1,6 +1,6 @@
 ---
 id: DB-c-778
-title: "A details page carries an activity trail, newest first, recording who changed what and when"
+title: A details page carries an activity trail, newest first, with who, what and when
 dimension: components
 scope: universal
 stance: always

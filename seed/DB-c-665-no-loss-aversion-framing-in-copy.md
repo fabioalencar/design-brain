@@ -1,6 +1,6 @@
 ---
 id: DB-c-665
-title: "Copy does not weaponise loss aversion: no threats of losing what the user does not have"
+title: Copy does not weaponise loss aversion; no threats of losing what one never had
 dimension: copy
 scope: universal
 stance: never

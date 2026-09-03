@@ -1,6 +1,6 @@
 ---
 id: DB-c-656
-title: "Consent questions are single, plain and positive; no double negatives or trick wording"
+title: Consent questions are single, plain and positive; no double negatives or tricks
 dimension: copy
 scope: universal
 stance: never

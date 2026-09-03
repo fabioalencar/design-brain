@@ -1,6 +1,6 @@
 ---
 id: DB-c-715
-title: "Dangerous settings sit in a clearly separated zone at the bottom of the page, styled as destructive and confirmed on use"
+title: Dangerous settings sit in a separated zone at the bottom, styled as destructive
 dimension: layout
 scope: universal
 stance: always

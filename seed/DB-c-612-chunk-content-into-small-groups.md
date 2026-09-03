@@ -1,6 +1,6 @@
 ---
 id: DB-c-612
-title: "Chunk content into small groups; do not make users hold more than a few items in memory"
+title: Chunk content into small groups; users never hold more than a few items in mind
 dimension: layout
 scope: universal
 stance: always

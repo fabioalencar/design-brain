@@ -1,6 +1,6 @@
 ---
 id: DB-c-747
-title: "One Clear all resets every filter and sits beside the applied chips, present only when something is applied"
+title: One Clear all resets every filter and sits beside the applied chips
 dimension: components
 scope: universal
 stance: always

@@ -1,6 +1,6 @@
 ---
 id: DB-c-730
-title: "Columns align by data type, text left and numbers right with tabular figures, and each header aligns with its column"
+title: "Columns align by data type: text left, numbers right with tabular figures"
 dimension: typography
 scope: universal
 stance: always

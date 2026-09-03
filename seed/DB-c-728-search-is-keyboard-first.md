@@ -1,6 +1,6 @@
 ---
 id: DB-c-728
-title: "Search is keyboard-first: a shortcut focuses the field, arrows move through suggestions, Enter submits, Escape clears and closes"
+title: "Search is keyboard-first: shortcut to focus, arrows, Enter and Escape to drive"
 dimension: components
 scope: universal
 stance: always

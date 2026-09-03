@@ -1,6 +1,6 @@
 ---
 id: DB-c-604
-title: "Prevent errors before they happen with constraints, good defaults and confirmation on risky steps"
+title: Prevent errors with constraints, good defaults and confirmation on risky steps
 dimension: components
 scope: universal
 stance: always

@@ -1,6 +1,6 @@
 ---
 id: DB-c-765
-title: "No modal opens on top of a modal; a second step replaces the content in place or the flow moves to a page"
+title: No modal opens on top of a modal; a second step replaces the content in place
 dimension: components
 scope: universal
 stance: never

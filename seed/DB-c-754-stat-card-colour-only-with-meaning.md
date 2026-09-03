@@ -1,6 +1,6 @@
 ---
 id: DB-c-754
-title: "Colour on a stat card only encodes meaning (better, worse, neutral); decorative colour on cards is dropped"
+title: Colour on a stat card only encodes meaning; decorative colour is dropped
 dimension: color
 scope: universal
 stance: never

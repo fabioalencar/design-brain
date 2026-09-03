@@ -1,6 +1,6 @@
 ---
 id: DB-c-704
-title: "Notification severity is never carried by colour alone; an icon and a word carry it too"
+title: Notification severity is never carried by colour alone
 dimension: color
 scope: universal
 stance: never

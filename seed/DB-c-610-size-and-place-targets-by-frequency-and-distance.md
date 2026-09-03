@@ -1,6 +1,6 @@
 ---
 id: DB-c-610
-title: "Size and place interactive targets by frequency and distance so they are easy to hit"
+title: Size and place interactive targets by frequency and distance
 dimension: layout
 scope: universal
 stance: always

@@ -1,6 +1,6 @@
 ---
 id: DB-c-705
-title: "The user is never notified of their own action; the result of what they just did is inline feedback, not a notification"
+title: The user is never notified of their own action; that result is inline feedback
 dimension: components
 scope: universal
 stance: never

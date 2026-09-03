@@ -1,6 +1,6 @@
 ---
 id: DB-c-776
-title: "Sections on a details page are named by the question they answer, not by the data model"
+title: Details page sections are named by the question they answer, not the data model
 dimension: copy
 scope: universal
 stance: prefer

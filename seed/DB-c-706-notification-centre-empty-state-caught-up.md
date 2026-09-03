@@ -1,6 +1,6 @@
 ---
 id: DB-c-706
-title: "The notification centre has a designed empty state that says the user is caught up, never a blank panel"
+title: Notification centre empty state says the user is caught up, never a blank panel
 dimension: copy
 scope: universal
 stance: always

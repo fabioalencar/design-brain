@@ -1,6 +1,6 @@
 ---
 id: DB-c-661
-title: "Never use visual weight to steer: accept and decline get honest, comparable emphasis"
+title: Never use visual weight to steer; accept and decline get comparable emphasis
 dimension: components
 scope: universal
 stance: never

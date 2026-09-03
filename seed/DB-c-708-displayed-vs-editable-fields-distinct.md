@@ -1,6 +1,6 @@
 ---
 id: DB-c-708
-title: "Displayed and editable profile fields are visually distinct, and editing is either per-field inline or one explicit edit mode, never ambiguous"
+title: Editable and displayed profile fields are distinct; one editing model per page
 dimension: components
 scope: universal
 stance: always

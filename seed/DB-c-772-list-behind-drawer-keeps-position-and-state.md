@@ -1,6 +1,6 @@
 ---
 id: DB-c-772
-title: "The list behind a drawer keeps its scroll position, selection, sort and filters; closing the drawer returns exactly to where the person was"
+title: The list behind a drawer keeps its scroll position, selection, sort and filters
 dimension: components
 scope: universal
 stance: always

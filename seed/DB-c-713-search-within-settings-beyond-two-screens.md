@@ -1,6 +1,6 @@
 ---
 id: DB-c-713
-title: "When settings span more than two screens, a search field inside settings finds any setting by its label"
+title: Settings that span more than two screens get a search field that finds by label
 dimension: components
 scope: universal
 stance: prefer

@@ -1,6 +1,6 @@
 ---
 id: DB-c-762
-title: "A modal is used only for a decision that must be made before the flow can continue; everything else is inline, a drawer or a page"
+title: A modal is only for a decision that must be made before the flow can continue
 dimension: components
 scope: universal
 stance: always
@@ -18,7 +18,7 @@ last_seen: 2026-09-03
 ---
 ## Rule
 
-A modal interrupts, so it is reserved for confirming a destructive or irreversible action, capturing one piece of input the flow cannot proceed without, or reporting a blocking error. Viewing details, editing a record, onboarding tips, marketing and long forms do not qualify. If the person could reasonably want to do something else first, it is not a modal.
+Everything that is not such a decision is inline, a drawer or a page. A modal interrupts, so it is reserved for confirming a destructive or irreversible action, capturing one piece of input the flow cannot proceed without, or reporting a blocking error. Viewing details, editing a record, onboarding tips, marketing and long forms do not qualify. If the person could reasonably want to do something else first, it is not a modal.
 
 ## Why
 

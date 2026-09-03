@@ -1,6 +1,6 @@
 ---
 id: DB-c-718
-title: "A tooltip carries supplementary information only, in one short plain-text sentence; anything needed to complete the task is in the page"
+title: A tooltip carries only supplementary information in one short plain sentence
 dimension: copy
 scope: universal
 stance: always

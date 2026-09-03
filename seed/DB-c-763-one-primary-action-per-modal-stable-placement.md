@@ -1,6 +1,6 @@
 ---
 id: DB-c-763
-title: "A modal has one primary action in a fixed position, a plain secondary, and destructive styling when the action destroys"
+title: A modal has one primary action in a fixed position and a plain secondary
 dimension: components
 scope: universal
 stance: always

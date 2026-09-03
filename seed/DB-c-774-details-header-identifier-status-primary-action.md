@@ -1,6 +1,6 @@
 ---
 id: DB-c-774
-title: "A details page opens with a header carrying the record's identifier, its status, and the one primary action"
+title: A details page opens with the record's identifier, status and one primary action
 dimension: layout
 scope: universal
 stance: always

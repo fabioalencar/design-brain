@@ -1,6 +1,6 @@
 ---
 id: DB-c-770
-title: "Drawers slide from the trailing edge in one of a few fixed widths and never cover the whole desktop viewport"
+title: Drawers open from the trailing edge in fixed widths, never full-width on desktop
 dimension: layout
 scope: universal
 stance: always

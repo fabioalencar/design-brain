@@ -1,6 +1,6 @@
 ---
 id: DB-c-748
-title: "Filter options that would return zero results are shown disabled with their count, not removed from the list"
+title: Filter options that would return zero results are disabled, not removed
 dimension: components
 scope: universal
 stance: prefer

@@ -1,6 +1,6 @@
 ---
 id: DB-c-711
-title: "Profile privacy defaults to the least exposure; sharing more is a per-field opt-in the user makes"
+title: Profile privacy defaults to least exposure; sharing more is a per-field opt-in
 dimension: process
 scope: universal
 stance: always

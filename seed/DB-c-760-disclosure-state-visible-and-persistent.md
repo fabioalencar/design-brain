@@ -1,6 +1,6 @@
 ---
 id: DB-c-760
-title: "Disclosure state is visible (a chevron that turns, a label that changes) and persists while the person stays on the page"
+title: Disclosure state is visible and persists while the person stays on the page
 dimension: components
 scope: universal
 stance: always

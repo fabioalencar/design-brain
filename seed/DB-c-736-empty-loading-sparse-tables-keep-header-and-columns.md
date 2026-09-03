@@ -1,6 +1,6 @@
 ---
 id: DB-c-736
-title: "Empty, loading and sparse tables keep the same header and column set; loading shows skeleton rows, empty shows a message in the body, missing cells show one marker"
+title: Empty, loading and sparse tables keep the same header and column set
 dimension: components
 scope: universal
 stance: always

@@ -1,6 +1,6 @@
 ---
 id: DB-c-674
-title: "Present options to stakeholders in neutral frames; do not sell one by how it is worded"
+title: Present options to stakeholders in neutral frames; never sell one by its wording
 dimension: process
 scope: universal
 stance: avoid

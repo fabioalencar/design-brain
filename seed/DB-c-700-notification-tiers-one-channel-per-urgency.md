@@ -1,6 +1,6 @@
 ---
 id: DB-c-700
-title: "Notifications are tiered by urgency and each tier gets exactly one delivery channel"
+title: Notifications are tiered by urgency and each tier gets one delivery channel
 dimension: components
 scope: universal
 stance: always

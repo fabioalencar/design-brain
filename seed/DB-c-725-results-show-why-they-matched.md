@@ -1,6 +1,6 @@
 ---
 id: DB-c-725
-title: "Each search result shows why it matched: the query terms highlighted and the field they were found in"
+title: "Each search result shows why it matched: highlighted terms and the matched field"
 dimension: components
 scope: universal
 stance: prefer

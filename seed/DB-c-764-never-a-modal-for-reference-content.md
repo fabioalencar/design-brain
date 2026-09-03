@@ -1,6 +1,6 @@
 ---
 id: DB-c-764
-title: "Content the user needs to reference while working elsewhere is never placed in a modal"
+title: Content the user references while working elsewhere is never placed in a modal
 dimension: components
 scope: universal
 stance: never

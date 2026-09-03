@@ -1,6 +1,6 @@
 ---
 id: DB-c-777
-title: "Related records on a details page appear as compact tables with a link to the full filtered list"
+title: Related records on a details page are compact tables linking to the full list
 dimension: components
 scope: universal
 stance: always

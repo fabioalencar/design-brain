@@ -1,6 +1,6 @@
 ---
 id: DB-c-779
-title: "A details page edits single fields in place or switches the whole record into an edit mode, never both on one page"
+title: A details page edits fields in place or switches to an edit mode, never both
 dimension: components
 scope: universal
 stance: always

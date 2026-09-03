@@ -1,6 +1,6 @@
 ---
 id: DB-c-624
-title: "Elements that look alike are treated alike, so only functional peers share a style"
+title: Elements that look alike are treated alike; only functional peers share a style
 dimension: components
 scope: universal
 stance: always

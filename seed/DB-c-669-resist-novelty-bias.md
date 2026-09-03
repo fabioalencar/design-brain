@@ -1,6 +1,6 @@
 ---
 id: DB-c-669
-title: "Resist novelty bias: a new pattern must beat the learned one in testing, not in taste"
+title: Resist novelty bias; a new pattern must beat the learned one in testing
 dimension: process
 scope: universal
 stance: avoid

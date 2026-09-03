@@ -1,6 +1,6 @@
 ---
 id: DB-c-771
-title: "Drawers stack at most one level; a further step replaces the drawer's content with a back control"
+title: Drawers stack at most one level; a further step replaces the drawer's content
 dimension: components
 scope: universal
 stance: avoid

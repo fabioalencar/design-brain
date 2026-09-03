@@ -1,6 +1,6 @@
 ---
 id: DB-c-757
-title: "The common case is shown first and advanced options sit behind an explicit action whose label says what it reveals"
+title: The common case is shown first; advanced options sit behind a named action
 dimension: layout
 scope: universal
 stance: always

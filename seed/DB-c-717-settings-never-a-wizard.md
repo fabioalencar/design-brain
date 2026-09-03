@@ -1,6 +1,6 @@
 ---
 id: DB-c-717
-title: "Settings are a flat, browsable page or a shallow group list, never a step-by-step wizard"
+title: Settings are a flat page or a shallow group list, never a step-by-step wizard
 dimension: layout
 scope: universal
 stance: never

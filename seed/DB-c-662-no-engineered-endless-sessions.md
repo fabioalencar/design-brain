@@ -1,6 +1,6 @@
 ---
 id: DB-c-662
-title: "Do not engineer endless sessions: infinite scroll and variable rewards get stopping cues"
+title: Do not engineer endless sessions; feeds and variable rewards get stopping cues
 dimension: components
 scope: universal
 stance: avoid

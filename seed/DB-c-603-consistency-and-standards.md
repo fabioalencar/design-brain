@@ -1,6 +1,6 @@
 ---
 id: DB-c-603
-title: "Be consistent: the same word, control and placement mean the same thing everywhere"
+title: The same word, control and placement mean the same thing everywhere
 dimension: components
 scope: universal
 stance: always

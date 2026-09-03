@@ -1,6 +1,6 @@
 ---
 id: DB-c-721
-title: "A tooltip never holds interactive content; links, buttons and inputs go in a popover"
+title: A tooltip never holds interactive content; links and buttons go in a popover
 dimension: components
 scope: universal
 stance: never

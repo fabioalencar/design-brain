@@ -1,6 +1,6 @@
 ---
 id: DB-c-740
-title: "Clicking a sortable header cycles ascending, descending, then back to the default order"
+title: A sortable header cycles ascending, descending, then back to the default order
 dimension: components
 scope: universal
 stance: prefer

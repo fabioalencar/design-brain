@@ -1,6 +1,6 @@
 ---
 id: DB-c-743
-title: "For any set larger than one page, sorting runs on the server over the whole set, never over the rows already loaded"
+title: Sorting a set larger than one page runs on the server over the whole set
 dimension: process
 scope: universal
 stance: always

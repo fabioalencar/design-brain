@@ -1,6 +1,6 @@
 ---
 id: DB-c-673
-title: "Do not let the most recent complaint set the priority; weigh frequency and impact"
+title: Do not let the most recent complaint set priority; weigh frequency and impact
 dimension: process
 scope: universal
 stance: avoid

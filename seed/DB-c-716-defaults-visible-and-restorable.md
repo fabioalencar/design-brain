@@ -1,6 +1,6 @@
 ---
 id: DB-c-716
-title: "Every setting shows its default and offers a way to restore it, per setting or per group"
+title: Every setting shows its default and offers a way to restore it
 dimension: components
 scope: universal
 stance: prefer

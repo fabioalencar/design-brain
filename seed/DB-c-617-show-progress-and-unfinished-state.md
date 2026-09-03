@@ -1,6 +1,6 @@
 ---
 id: DB-c-617
-title: "Show progress and unfinished state so users are pulled to complete what they started"
+title: Show progress and unfinished state so users complete what they started
 dimension: components
 scope: universal
 stance: always

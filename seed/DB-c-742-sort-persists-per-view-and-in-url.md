@@ -1,6 +1,6 @@
 ---
 id: DB-c-742
-title: "Sort state persists with the view, restores on return, and is encoded in the URL so a sorted view can be shared"
+title: Sort state persists with the view and is encoded in the URL so it can be shared
 dimension: process
 scope: universal
 stance: prefer

@@ -1,6 +1,6 @@
 ---
 id: DB-c-720
-title: "A tooltip opens after a short delay, stays open while the pointer moves into it, and closes on Escape or on leaving"
+title: A tooltip opens after a delay, stays hoverable, closes on Escape or on leaving
 dimension: motion
 scope: universal
 stance: always

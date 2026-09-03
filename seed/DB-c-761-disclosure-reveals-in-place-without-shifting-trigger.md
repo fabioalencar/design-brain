@@ -1,6 +1,6 @@
 ---
 id: DB-c-761
-title: "Disclosure reveals content in place, below its trigger, without moving the trigger or shifting content above it"
+title: Disclosure reveals content in place below its trigger without moving the trigger
 dimension: motion
 scope: universal
 stance: always

@@ -1,6 +1,6 @@
 ---
 id: DB-c-744
-title: "Filters are visible on the page as a panel or bar; on desktop they are not hidden behind a single Filter button"
+title: On desktop, filters are visible as a panel or bar, not behind one Filter button
 dimension: layout
 scope: universal
 stance: prefer

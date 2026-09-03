@@ -1,6 +1,6 @@
 ---
 id: DB-c-751
-title: "In a stat card the number is the largest element and the label sits below it in secondary type"
+title: In a stat card the number is the largest element and the label sits below it
 dimension: typography
 scope: universal
 stance: always

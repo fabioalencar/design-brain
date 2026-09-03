@@ -1,6 +1,6 @@
 ---
 id: DB-c-722
-title: "Every icon-only button has a tooltip that names the action, and that name is also its accessible label"
+title: Every icon-only button has a tooltip naming the action, which is also its label
 dimension: components
 scope: universal
 stance: always

@@ -1,6 +1,6 @@
 ---
 id: DB-c-701
-title: "Each notification shows its own read or unread state, and the badge counts only unread items"
+title: Each notification shows its own read state; the badge counts only unread items
 dimension: components
 scope: universal
 stance: always

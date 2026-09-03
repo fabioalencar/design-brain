@@ -1,6 +1,6 @@
 ---
 id: DB-c-626
-title: "Compose screens from simple, regular shapes so the simplest reading is the correct one"
+title: Compose screens from simple, regular shapes so the simplest reading is correct
 dimension: layout
 scope: universal
 stance: always

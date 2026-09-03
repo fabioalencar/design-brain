@@ -1,6 +1,6 @@
 ---
 id: DB-c-659
-title: "Ads and sponsored items are labelled and styled distinctly from content and controls"
+title: Ads and sponsored items are labelled and styled apart from content and controls
 dimension: components
 scope: universal
 stance: never

@@ -1,6 +1,6 @@
 ---
 id: DB-c-703
-title: "Dismissing a notification only hides it; resolving the underlying item clears it, and the two are separate actions"
+title: Dismissing a notification only hides it; resolving the item clears it
 dimension: components
 scope: universal
 stance: always

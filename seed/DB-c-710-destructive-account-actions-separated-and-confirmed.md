@@ -1,6 +1,6 @@
 ---
 id: DB-c-710
-title: "Destructive account actions are separated from everyday settings and require an explicit, informed confirmation"
+title: Destructive account actions sit apart from everyday settings and are confirmed
 dimension: components
 scope: universal
 stance: always

@@ -1,6 +1,6 @@
 ---
 id: DB-c-759
-title: "Accordion for long independent sections read one at a time, tabs for parallel views of one object, stepper only for an ordered sequence"
+title: Choose accordion, tabs or stepper by how the content is read
 dimension: components
 scope: universal
 stance: context

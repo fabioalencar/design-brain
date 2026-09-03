@@ -1,6 +1,6 @@
 ---
 id: DB-c-731
-title: "The header row stays visible while the body scrolls, and on wide tables the identifying first column stays visible while scrolling sideways"
+title: Table header stays visible on scroll; wide tables pin the first column too
 dimension: layout
 scope: universal
 stance: always

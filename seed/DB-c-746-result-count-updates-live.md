@@ -1,6 +1,6 @@
 ---
 id: DB-c-746
-title: "The result count updates as filters change; if filters apply in a batch, the apply button shows the count it will return"
+title: The result count updates as filters change; a batched Apply shows its count
 dimension: components
 scope: universal
 stance: prefer

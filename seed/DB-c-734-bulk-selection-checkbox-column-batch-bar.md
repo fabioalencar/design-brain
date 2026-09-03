@@ -1,6 +1,6 @@
 ---
 id: DB-c-734
-title: "Bulk selection uses a leading checkbox column, a select-all in the header, and a batch action bar that states the selected count"
+title: Bulk selection uses a leading checkbox column, header select-all and a batch bar
 dimension: components
 scope: universal
 stance: always

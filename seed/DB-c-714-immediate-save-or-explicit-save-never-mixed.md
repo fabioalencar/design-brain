@@ -1,6 +1,6 @@
 ---
 id: DB-c-714
-title: "A settings page either saves each control immediately or has one explicit Save; the mode is signalled and never mixed on one page"
+title: A settings page saves each control immediately or has one Save, never both
 dimension: components
 scope: universal
 stance: always
