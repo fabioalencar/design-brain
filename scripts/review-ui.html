@@ -10,15 +10,22 @@
   * { box-sizing:border-box }
   html,body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.45 -apple-system, "Inter", system-ui, sans-serif; height:100% }
   body { display:flex; flex-direction:column; min-height:100vh; overflow:hidden }
-  header { display:flex; align-items:center; gap:16px; padding:12px 20px; font-size:13px; color:var(--ink-2) }
+  .wrap { width:min(1100px, 100%); margin:0 auto; padding:0 20px }
+  header { display:flex; align-items:center; gap:14px; padding:14px 0 6px; font-size:12px; color:var(--ink-2); font-variant-numeric:tabular-nums }
   header b { color:var(--ink); font-weight:600 }
   header span { white-space:nowrap }
-  .bar { flex:1; height:4px; background:var(--line); border-radius:2px; overflow:hidden }
+  header .bar { width:150px }
+  header .tally { margin-left:auto }
+  .bar { height:3px; background:var(--line); border-radius:2px; overflow:hidden }
   .bar i { display:block; height:100%; background:var(--accent); width:0; transition:width .3s }
   select, button { font:inherit }
-  select { border:0; background:var(--card); padding:4px 8px; border-radius:6px; color:var(--ink) }
-  main { flex:1; min-height:0; display:grid; place-items:center; position:relative; padding:0 20px 14px }
-  .stack { position:relative; width:min(720px, 100%); height:100%; max-height:760px }
+  .toolbar { display:flex; align-items:center; gap:8px; padding:10px 0 12px }
+  .toolbar select { border:0; background:var(--card); padding:7px 10px; border-radius:8px; color:var(--ink); font-size:14px }
+  .toolbar .compile { margin-left:auto; border:0; background:var(--card); border-radius:999px; padding:10px 18px; font-weight:600; color:var(--ink); cursor:pointer }
+  main { flex:1; min-height:0; display:grid; grid-template-columns:1fr minmax(0, 720px) 1fr; align-items:center; gap:16px; width:min(1100px, 100%); margin:0 auto; padding:0 20px }
+  .side { border:0; border-radius:999px; padding:12px 22px; font-weight:600; color:#fff; cursor:pointer; justify-self:center; white-space:nowrap }
+  .side.no { background:var(--no) } .side.yes { background:var(--yes) }
+  .stack { position:relative; width:100%; height:100%; max-height:820px; min-height:320px }
   .card { position:absolute; inset:0; background:var(--card); border-radius:14px; box-shadow:0 12px 40px rgba(20,20,30,.08); padding:26px 30px; overflow:auto;
           display:flex; flex-direction:column; gap:14px; transition:transform .35s cubic-bezier(.22,1,.36,1), opacity .3s; touch-action:none; user-select:none }
   .card { z-index:3 }
@@ -42,6 +49,7 @@
   li { margin:3px 0; word-break:break-word }
   code { font:12px ui-monospace, "JetBrains Mono", monospace; background:#f2f1ec; padding:1px 4px; border-radius:4px }
   .edit { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; font-size:12px; color:var(--ink-2); margin-top:auto; padding-top:10px }
+  .edit .savebtn { align-self:end; border:0; border-radius:8px; padding:7px 12px; background:var(--accent-soft); color:var(--accent); font-weight:600; cursor:pointer; justify-self:start }
   .edit label { display:flex; flex-direction:column; gap:3px }
   .edit label.wide { grid-column:1 / -1 }
   .edit textarea { border:1px solid var(--line); background:var(--paper); border-radius:6px; padding:6px 8px; color:var(--ink); font:inherit; font-size:13px; resize:vertical; user-select:text }
@@ -49,10 +57,17 @@
   .stamp { position:absolute; top:26px; font-size:34px; font-weight:800; letter-spacing:.06em; padding:4px 14px; border:4px solid; border-radius:10px; opacity:0; transform:rotate(-14deg); pointer-events:none; transition:opacity .1s }
   .stamp.yes { right:28px; color:var(--yes); border-color:var(--yes) }
   .stamp.no { left:28px; color:var(--no); border-color:var(--no); transform:rotate(14deg) }
-  footer { display:flex; justify-content:center; gap:10px; padding:0 20px 18px; flex-wrap:wrap }
-  footer button { border:0; border-radius:999px; padding:10px 18px; font-weight:600; cursor:pointer; color:#fff; background:var(--ink-2) }
-  footer .yes { background:var(--yes) } footer .no { background:var(--no) } footer .ghost { background:var(--card); color:var(--ink-2) }
-  footer kbd { font:11px ui-monospace, monospace; opacity:.7; margin-left:6px }
+  footer { display:flex; justify-content:center; gap:10px; padding:14px 20px 18px; flex-wrap:wrap }
+  footer button, .side.mobile { border:0; border-radius:999px; padding:10px 18px; font-weight:600; cursor:pointer; background:var(--card); color:var(--ink) }
+  kbd { font:11px ui-monospace, monospace; opacity:.6; margin-left:6px }
+  .side kbd { color:#fff }
+  footer .side.mobile { display:none }
+  @media (max-width:900px) {
+    main { grid-template-columns:1fr; gap:0 }
+    main .side { display:none }
+    footer .side.mobile { display:inline-block; color:#fff }
+    footer .side.mobile.no { background:var(--no) } footer .side.mobile.yes { background:var(--yes) }
+  }
   .toast { position:fixed; bottom:76px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:8px 14px; border-radius:8px; font-size:13px; opacity:0; transition:opacity .2s; pointer-events:none }
   .toast.on { opacity:1 }
   .done { text-align:center; color:var(--ink-2) }
@@ -61,23 +76,30 @@
 </style>
 </head>
 <body>
-<header>
-  <b>design-brain</b>
-  <span id="count">…</span>
-  <div class="bar"><i id="bar"></i></div>
-  <span id="tally"></span>
-  <select id="fdim"><option value="">all dimensions</option></select>
-  <select id="fscope"><option value="">all scopes</option><option>universal</option><option>personal</option></select>
-  <select id="fkind"><option value="">all kinds</option><option>harvested</option><option>heuristic</option><option>bias</option><option>practice</option></select>
-</header>
-<main><div class="stack" id="stack"></div></main>
+<div class="wrap">
+  <header>
+    <b>design-brain</b>
+    <span id="count">…</span>
+    <div class="bar"><i id="bar"></i></div>
+    <span id="tally" class="tally"></span>
+  </header>
+  <div class="toolbar">
+    <select id="fdim"><option value="">all dimensions</option></select>
+    <select id="fscope"><option value="">all scopes</option><option>universal</option><option>personal</option></select>
+    <select id="fkind"><option value="">all kinds</option><option>harvested</option><option>heuristic</option><option>bias</option><option>practice</option></select>
+    <button class="compile" onclick="compile()">Compile skills <kbd>C</kbd></button>
+  </div>
+</div>
+<main>
+  <button class="side no" onclick="act('retire')">Retire <kbd>←</kbd></button>
+  <div class="stack" id="stack"></div>
+  <button class="side yes" onclick="act('promote')">Promote <kbd>→</kbd></button>
+</main>
 <footer>
-  <button class="no" onclick="act('retire')">Retire <kbd>←</kbd></button>
-  <button class="ghost" onclick="act('skip')">Skip <kbd>↓</kbd></button>
-  <button class="yes" onclick="act('promote')">Promote <kbd>→</kbd></button>
-  <button class="ghost" onclick="saveNote()">Save note <kbd>S</kbd></button>
-  <button class="ghost" onclick="undo()">Undo <kbd>Z</kbd></button>
-  <button class="ghost" onclick="compile()">Compile skills <kbd>C</kbd></button>
+  <button class="side no mobile" onclick="act('retire')">Retire</button>
+  <button onclick="act('skip')">Skip <kbd>↓</kbd></button>
+  <button onclick="undo()">Undo <kbd>Z</kbd></button>
+  <button class="side yes mobile" onclick="act('promote')">Promote</button>
 </footer>
 <div class="toast" id="toast"></div>
 <script>
@@ -135,6 +157,7 @@ function cardEl(c, i) {
       <label>stance <select name="stance">${["always","never","prefer","avoid","context"].map((s) => `<option ${s === c.stance ? "selected" : ""}>${s}</option>`).join("")}</select></label>
       <label>scope <select name="scope">${["universal","personal","project:" + (c.occurrences[0] || "x")].map((s) => `<option ${s === c.scope ? "selected" : ""}>${s}</option>`).join("")}</select></label>
       <label>confidence <input name="confidence" type="number" min="1" max="10" value="${c.confidence}"></label>
+      <button class="savebtn" onclick="saveNote()">Save note <kbd>S</kbd></button>
     </div>`;
   return el;
 }
