@@ -36,13 +36,18 @@
   .card.gone-r { transform:translate(120%, -6%) rotate(12deg); opacity:0 }
   .card.gone-l { transform:translate(-120%, -6%) rotate(-12deg); opacity:0 }
   .card.gone-d { transform:translateY(120%); opacity:0 }
-  .chips { display:flex; gap:6px; flex-wrap:wrap; font-size:12px; align-items:center }
+  .chiprow { display:flex; align-items:flex-start; gap:10px }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; font-size:14px; align-items:center; flex:1; min-width:0 }
+  .info { display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; border-radius:50%; background:rgba(0,0,0,.08); color:inherit; font:600 11px/1 -apple-system, system-ui, sans-serif; cursor:help; position:relative; margin-left:1px }
+  .info::after { content:attr(data-tip); position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; font:400 13px/20px -apple-system, system-ui, sans-serif; padding:8px 10px; border-radius:8px; white-space:pre-line; width:max-content; max-width:280px; text-align:left; opacity:0; pointer-events:none; transition:opacity .12s; z-index:5 }
+  .info:hover::after, .info:focus-visible::after { opacity:1 }
+  .info:focus-visible { outline:2px solid var(--accent); outline-offset:1px }
   .chip { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:999px; background:var(--accent-soft); color:var(--accent); border:0; font:inherit; font-size:14px; line-height:24px; font-weight:600 }
   .chip em { font-style:normal; font-weight:500; opacity:.65 }
   .chip select, .chip input { appearance:none; -webkit-appearance:none; border:0; background:transparent; color:inherit; font:inherit; font-weight:600; padding:0; cursor:pointer }
   .chip select { padding-right:14px; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%23666' stroke-width='1.5'/></svg>"); background-repeat:no-repeat; background-position:right 0 center }
   .chip input { width:30px; cursor:text; font-variant-numeric:tabular-nums }
-  .addnote { margin-left:auto; border:0; background:var(--paper); color:var(--ink-2); border-radius:999px; padding:5px 12px; font-size:14px; line-height:24px; font-weight:600; cursor:pointer }
+  .addnote { flex:none; border:0; background:var(--paper); color:var(--ink-2); border-radius:999px; padding:5px 12px; font-size:14px; line-height:24px; font-weight:600; cursor:pointer }
   .addnote:hover { color:var(--ink) }
   section { border-top:1px solid var(--line); padding:12px 0 4px }
   section:first-of-type { border-top:0 }
@@ -60,6 +65,7 @@
   .chip.prefer, .chip.context { background:var(--accent-soft); color:var(--accent) }
   h1 { font:600 28px/38px Georgia, "Times New Roman", serif; letter-spacing:-.005em; margin:0 }
   .id { font-size:14px; line-height:24px; color:var(--ink-3); font-variant-numeric:tabular-nums }
+  .card .id { display:none }
   h2 { font-size:13px; line-height:23px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); margin:0 0 6px; font-weight:600 }
   p { margin:0; white-space:pre-wrap }
   .note { background:#fcf2df; color:#8c5a14; padding:8px 12px; border-radius:8px; font-size:15px; line-height:25px }
@@ -152,6 +158,11 @@ function render() {
   queue.slice(0, 3).forEach((c, i) => st.appendChild(cardEl(c, i)));
   attachDrag(st.firstElementChild);
 }
+function source(c) {
+  const n = Number(String(c.id).match(/(\d{3})$/)?.[1] ?? 0);
+  if (c.kind === "heuristic") return "heuristic"; if (c.kind === "bias") return "bias"; if (c.kind === "practice") return "practice";
+  if (n < 200) return "transcripts"; if (n < 300) return "forge record"; if (n < 400) return "design audits"; if (n < 500) return "repos and docs"; if (n < 600) return "imported project"; return "reference";
+}
 function cardEl(c, i) {
   const el = document.createElement("div");
   el.className = "card" + (i === 1 ? " next" : i === 2 ? " next2" : "");
@@ -162,14 +173,17 @@ function cardEl(c, i) {
   const sec = (title, body) => body ? `<section><h2>${title}</h2>${body}</section>` : "";
   el.innerHTML = `
     <div class="stamp yes">PROMOTE</div><div class="stamp no">RETIRE</div>
-    <div class="chips">
-      <span class="chip ${esc(c.stance)}"><em>stance</em><select name="stance" onchange="this.parentNode.className='chip '+this.value">${opt(["always","never","prefer","avoid","context"], c.stance)}</select></span>
-      <span class="chip dim"><em>dimension</em>${esc(c.dimension)}</span>
-      <span class="chip dim"><em>scope</em><select name="scope">${opt(scopes, c.scope)}</select></span>
-      <span class="chip dim"><em>confidence</em><input name="confidence" type="number" min="1" max="10" value="${c.confidence}"></span>
-      <span class="chip dim"><em>seen</em>${c.occurrences.length}×</span>
-      ${c.kind !== "harvested" ? `<span class="chip"><em>kind</em>${esc(c.kind)}</span>` : ""}${c.component ? `<span class="chip"><em>component</em>${esc(c.component)}</span>` : ""}
-      ${skipped.has(c.id) ? '<span class="chip dim">skipped earlier</span>' : ""}
+    <div class="chiprow">
+      <div class="chips">
+        <span class="chip ${esc(c.stance)}"><em>stance</em><select name="stance" onchange="this.parentNode.className='chip '+this.value">${opt(["always","never","prefer","avoid","context"], c.stance)}</select></span>
+        <span class="chip dim"><em>dimension</em>${esc(c.dimension)}</span>
+        <span class="chip dim"><em>confidence</em><input name="confidence" type="number" min="1" max="10" value="${c.confidence}"></span>
+        <span class="chip dim"><em>seen</em>${c.occurrences.length}×<span class="info" tabindex="0" data-tip="${esc(c.occurrences.join("\n"))}">i</span></span>
+        <span class="chip dim"><em>source</em>${esc(source(c))}<span class="info" tabindex="0" data-tip="${esc(c.id)}\n${esc(c.file)}">i</span></span>
+        ${c.kind !== "harvested" ? `<span class="chip"><em>kind</em>${esc(c.kind)}</span>` : ""}${c.component ? `<span class="chip"><em>component</em>${esc(c.component)}</span>` : ""}
+        ${skipped.has(c.id) ? '<span class="chip dim">skipped earlier</span>' : ""}
+        <span class="chip dim"><em>scope</em><select name="scope">${opt(scopes, c.scope)}</select></span>
+      </div>
       <button class="addnote" onclick="openNote()">Add note <kbd>N</kbd></button>
     </div>
     <h1>${esc(c.title)}</h1>
