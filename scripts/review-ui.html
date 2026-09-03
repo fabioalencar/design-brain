@@ -8,10 +8,10 @@
   :root { --paper:#f6f5f1; --ink:#15151a; --ink-2:#5b5b66; --ink-3:#9a9aa6; --line:#e6e4dd; --card:#ffffff;
           --accent:#5b48e8; --accent-soft:#ece9fc; --yes:#117a48; --yes-soft:#e2f4ea; --no:#b22a3d; --no-soft:#fbe8eb; }
   * { box-sizing:border-box }
-  html,body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.45 -apple-system, "Inter", system-ui, sans-serif; height:100% }
+  html,body { margin:0; background:var(--paper); color:var(--ink); font:17px/27px -apple-system, "Inter", system-ui, sans-serif; height:100% }
   body { display:flex; flex-direction:column; min-height:100vh; overflow:hidden }
   .wrap { width:min(720px, 100%); margin:0 auto; padding:0 20px; box-sizing:content-box }
-  header { display:flex; align-items:center; gap:14px; padding:14px 0 6px; font-size:12px; color:var(--ink-2); font-variant-numeric:tabular-nums }
+  header { display:flex; align-items:center; gap:14px; padding:14px 0 6px; font-size:14px; line-height:24px; color:var(--ink-2); font-variant-numeric:tabular-nums }
   header b { color:var(--ink); font-weight:600 }
   header span { white-space:nowrap }
   header .bar { width:150px }
@@ -20,7 +20,7 @@
   .bar i { display:block; height:100%; background:var(--accent); width:0; transition:width .3s }
   select, button { font:inherit }
   .toolbar { display:flex; align-items:center; gap:8px; padding:10px 0 12px }
-  .toolbar select { border:0; background:var(--card); padding:7px 10px; border-radius:8px; color:var(--ink); font-size:14px }
+  .toolbar select { border:0; background:var(--card); padding:7px 10px; border-radius:8px; color:var(--ink); font-size:16px; line-height:26px }
   .toolbar .compile { margin-left:auto; border:0; background:var(--card); border-radius:999px; padding:10px 18px; font-weight:600; color:var(--ink); cursor:pointer }
   main { flex:1; min-height:0; display:grid; grid-template-columns:1fr minmax(0, 720px) 1fr; align-items:center; gap:16px; width:min(1100px, 100%); margin:0 auto; padding:0 20px }
   .side { border:0; border-radius:999px; padding:12px 22px; font-weight:600; color:#fff; cursor:pointer; justify-self:center; white-space:nowrap; display:inline-flex; align-items:center; gap:10px; font-size:16px }
@@ -37,23 +37,20 @@
   .card.gone-l { transform:translate(-120%, -6%) rotate(-12deg); opacity:0 }
   .card.gone-d { transform:translateY(120%); opacity:0 }
   .chips { display:flex; gap:6px; flex-wrap:wrap; font-size:12px; align-items:center }
-  .chip { padding:3px 9px; border-radius:999px; background:var(--accent-soft); color:var(--accent); border:0; font:inherit; font-size:12px; font-weight:600; line-height:1.5 }
-  select.chip { appearance:none; -webkit-appearance:none; cursor:pointer; padding-right:22px; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%23666' stroke-width='1.5'/></svg>"); background-repeat:no-repeat; background-position:right 8px center }
-  input.chip { width:78px; cursor:text; font-variant-numeric:tabular-nums }
-  .addnote { margin-left:auto; border:0; background:var(--paper); color:var(--ink-2); border-radius:999px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer }
+  .chip { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:999px; background:var(--accent-soft); color:var(--accent); border:0; font:inherit; font-size:14px; line-height:24px; font-weight:600 }
+  .chip em { font-style:normal; font-weight:500; opacity:.65 }
+  .chip select, .chip input { appearance:none; -webkit-appearance:none; border:0; background:transparent; color:inherit; font:inherit; font-weight:600; padding:0; cursor:pointer }
+  .chip select { padding-right:14px; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%23666' stroke-width='1.5'/></svg>"); background-repeat:no-repeat; background-position:right 0 center }
+  .chip input { width:30px; cursor:text; font-variant-numeric:tabular-nums }
+  .addnote { margin-left:auto; border:0; background:var(--paper); color:var(--ink-2); border-radius:999px; padding:5px 12px; font-size:14px; line-height:24px; font-weight:600; cursor:pointer }
   .addnote:hover { color:var(--ink) }
-  details { border-top:1px solid var(--line); padding:6px 0 }
-  details:first-of-type { border-top:0 }
-  summary { list-style:none; cursor:pointer; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); font-weight:600; padding:6px 0; display:flex; align-items:center; gap:8px; user-select:none }
-  summary::-webkit-details-marker { display:none }
-  summary::before { content:""; width:6px; height:6px; border-right:1.5px solid var(--ink-3); border-bottom:1.5px solid var(--ink-3); transform:rotate(-45deg); transition:transform .15s }
-  details[open] > summary::before { transform:rotate(45deg) }
-  details > *:not(summary) { margin:4px 0 8px }
+  section { border-top:1px solid var(--line); padding:12px 0 4px }
+  section:first-of-type { border-top:0 }
   .modal-bg { position:fixed; inset:0; background:rgba(20,20,30,.35); display:none; align-items:center; justify-content:center; z-index:50 }
   .modal-bg.on { display:flex }
   .modal { background:var(--card); border-radius:14px; padding:22px 24px; width:min(560px, 92vw); box-shadow:0 20px 60px rgba(20,20,30,.2); display:flex; flex-direction:column; gap:12px }
   .modal h3 { margin:0; font-size:16px; font-weight:650 }
-  .modal textarea { border:1px solid var(--line); border-radius:8px; padding:10px; font:inherit; font-size:14px; min-height:120px; resize:vertical; background:var(--paper); color:var(--ink) }
+  .modal textarea { border:1px solid var(--line); border-radius:8px; padding:10px; font:inherit; font-size:16px; line-height:26px; min-height:120px; resize:vertical; background:var(--paper); color:var(--ink) }
   .modal .row { display:flex; justify-content:flex-end; gap:8px }
   .modal button { border:0; border-radius:999px; padding:9px 16px; font-weight:600; cursor:pointer; background:var(--paper); color:var(--ink) }
   .modal button.primary { background:var(--accent); color:#fff }
@@ -61,14 +58,14 @@
   .chip.never, .chip.avoid { background:var(--no-soft); color:var(--no) }
   .chip.always { background:var(--yes-soft); color:var(--yes) }
   .chip.prefer, .chip.context { background:var(--accent-soft); color:var(--accent) }
-  h1 { font:600 26px/1.2 Georgia, "Times New Roman", serif; letter-spacing:-.005em; margin:0 }
-  .id { font-size:12px; color:var(--ink-3); font-variant-numeric:tabular-nums }
-  h2 { font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); margin:8px 0 4px; font-weight:600 }
+  h1 { font:600 28px/38px Georgia, "Times New Roman", serif; letter-spacing:-.005em; margin:0 }
+  .id { font-size:14px; line-height:24px; color:var(--ink-3); font-variant-numeric:tabular-nums }
+  h2 { font-size:13px; line-height:23px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); margin:0 0 6px; font-weight:600 }
   p { margin:0; white-space:pre-wrap }
-  .note { background:#fcf2df; color:#8c5a14; padding:8px 12px; border-radius:8px; font-size:13px }
-  ul { margin:0; padding-left:18px; color:var(--ink-2); font-size:13px }
+  .note { background:#fcf2df; color:#8c5a14; padding:8px 12px; border-radius:8px; font-size:15px; line-height:25px }
+  ul { margin:0; padding-left:18px; color:var(--ink-2); font-size:15px; line-height:25px }
   li { margin:3px 0; word-break:break-word }
-  code { font:12px ui-monospace, "JetBrains Mono", monospace; background:#f2f1ec; padding:1px 4px; border-radius:4px }
+  code { font:14px/24px ui-monospace, "JetBrains Mono", monospace; background:#f2f1ec; padding:1px 4px; border-radius:4px }
   .stamp { position:absolute; top:26px; font-size:34px; font-weight:800; letter-spacing:.06em; padding:4px 14px; border:4px solid; border-radius:10px; opacity:0; transform:rotate(-14deg); pointer-events:none; transition:opacity .1s }
   .stamp.yes { right:28px; color:var(--yes); border-color:var(--yes) }
   .stamp.no { left:28px; color:var(--no); border-color:var(--no); transform:rotate(14deg) }
@@ -86,7 +83,7 @@
   .toast.on { opacity:1 }
   .done { text-align:center; color:var(--ink-2) }
   .done b { display:block; font-size:28px; color:var(--ink); margin-bottom:8px }
-  @media (max-width:640px) { .card { padding:18px } h1 { font-size:20px } }
+  @media (max-width:640px) { .card { padding:18px } h1 { font-size:22px; line-height:32px } }
 </style>
 </head>
 <body>
@@ -162,23 +159,23 @@ function cardEl(c, i) {
   const ev = c.evidence.map((e) => `<li>${md(e)}</li>`).join("");
   const opt = (list, cur) => list.map((s) => `<option ${s === cur ? "selected" : ""}>${s}</option>`).join("");
   const scopes = [...new Set(["universal", "personal", "project:" + (c.occurrences[0] || "x"), c.scope])];
-  const sec = (title, body, open) => body ? `<details ${open ? "open" : ""}><summary>${title}</summary>${body}</details>` : "";
+  const sec = (title, body) => body ? `<section><h2>${title}</h2>${body}</section>` : "";
   el.innerHTML = `
     <div class="stamp yes">PROMOTE</div><div class="stamp no">RETIRE</div>
     <div class="chips">
-      <select class="chip ${esc(c.stance)}" name="stance" title="stance" onchange="this.className='chip '+this.value">${opt(["always","never","prefer","avoid","context"], c.stance)}</select>
-      <span class="chip dim">${esc(c.dimension)}</span>
-      <select class="chip dim" name="scope" title="scope">${opt(scopes, c.scope)}</select>
-      <input class="chip dim" name="confidence" type="number" min="1" max="10" value="${c.confidence}" title="confidence (1–10)">
-      <span class="chip dim">${c.occurrences.length}×</span>
-      ${c.kind !== "harvested" ? `<span class="chip">${esc(c.kind)}</span>` : ""}${c.component ? `<span class="chip">${esc(c.component)}</span>` : ""}
+      <span class="chip ${esc(c.stance)}"><em>stance</em><select name="stance" onchange="this.parentNode.className='chip '+this.value">${opt(["always","never","prefer","avoid","context"], c.stance)}</select></span>
+      <span class="chip dim"><em>dimension</em>${esc(c.dimension)}</span>
+      <span class="chip dim"><em>scope</em><select name="scope">${opt(scopes, c.scope)}</select></span>
+      <span class="chip dim"><em>confidence</em><input name="confidence" type="number" min="1" max="10" value="${c.confidence}"></span>
+      <span class="chip dim"><em>seen</em>${c.occurrences.length}×</span>
+      ${c.kind !== "harvested" ? `<span class="chip"><em>kind</em>${esc(c.kind)}</span>` : ""}${c.component ? `<span class="chip"><em>component</em>${esc(c.component)}</span>` : ""}
       ${skipped.has(c.id) ? '<span class="chip dim">skipped earlier</span>' : ""}
       <button class="addnote" onclick="openNote()">Add note <kbd>N</kbd></button>
     </div>
     <h1>${esc(c.title)}</h1>
     <div class="id">${esc(c.id)} · seen in ${esc(c.occurrences.join(", "))}</div>
     ${c.review_note ? `<div class="note">${md(c.review_note)}</div>` : ""}
-    ${sec("Rule", `<p>${md(c.rule)}</p>`, true)}
+    ${sec("Rule", `<p>${md(c.rule)}</p>`)}
     ${sec("Why", c.why && `<p>${md(c.why)}</p>`)}
     ${sec("Examples", c.examples && `<p>${md(c.examples)}</p>`)}
     ${sec("Exceptions", c.exceptions && `<p>${md(c.exceptions)}</p>`)}
@@ -245,7 +242,7 @@ function attachDrag(el) {
   if (!el || !el.dataset.id) return;
   let sx = 0, sy = 0, dx = 0, dy = 0, on = false;
   const yes = el.querySelector(".stamp.yes"), no = el.querySelector(".stamp.no");
-  el.addEventListener("pointerdown", (e) => { if (e.target.closest("a, ul, select, input, button, summary")) return; on = true; sx = e.clientX; sy = e.clientY; el.setPointerCapture(e.pointerId); el.style.transition = "none"; });
+  el.addEventListener("pointerdown", (e) => { if (e.target.closest("a, ul, select, input, button")) return; on = true; sx = e.clientX; sy = e.clientY; el.setPointerCapture(e.pointerId); el.style.transition = "none"; });
   el.addEventListener("pointermove", (e) => { if (!on) return; dx = e.clientX - sx; dy = e.clientY - sy; el.style.transform = `translate(${dx}px, ${dy}px) rotate(${dx / 18}deg)`; yes.style.opacity = Math.min(1, Math.max(0, dx / 120)); no.style.opacity = Math.min(1, Math.max(0, -dx / 120)); });
   const end = () => { if (!on) return; on = false; el.style.transition = ""; yes.style.opacity = 0; no.style.opacity = 0;
     if (dx > 140) act("promote"); else if (dx < -140) act("retire"); else if (dy > 160) act("skip"); else el.style.transform = ""; dx = dy = 0; };
