@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>design-brain review</title>
 <style>
-  :root { --paper:#f6f5f1; --ink:#15151a; --ink-2:#5b5b66; --ink-3:#9a9aa6; --line:#e6e4dd; --card:#ffffff;
+  :root { --paper:#f6f5f1; --ink:#292929; --ink-2:#6b6b6b; --ink-3:#8f8f8f; --serif:Charter, "Source Serif Pro", "Iowan Old Style", Georgia, serif; --sans:-apple-system, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif; --line:#e6e4dd; --card:#ffffff;
           --accent:#5b48e8; --accent-soft:#ece9fc; --yes:#117a48; --yes-soft:#e2f4ea; --no:#b22a3d; --no-soft:#fbe8eb; }
   * { box-sizing:border-box }
-  html,body { margin:0; background:var(--paper); color:var(--ink); font:17px/27px -apple-system, "Inter", system-ui, sans-serif; height:100% }
+  html,body { margin:0; background:var(--paper); color:var(--ink); font:16px/24px var(--sans); height:100% }
   body { display:flex; flex-direction:column; min-height:100vh; overflow:hidden }
   .wrap { width:min(720px, 100%); margin:0 auto; padding:0 20px; box-sizing:content-box }
   header { display:flex; align-items:center; gap:14px; padding:14px 0 6px; font-size:14px; line-height:24px; color:var(--ink-2); font-variant-numeric:tabular-nums }
@@ -38,9 +38,9 @@
   .card.top { animation:settle .32s cubic-bezier(.22,1,.36,1) }
   @keyframes settle { from { transform:translateY(10px); opacity:.6 } to { transform:none; opacity:1 } }
   @media (prefers-reduced-motion: reduce) { .card, .card.top { animation:none; transition:none } }
-  .card .head { position:sticky; top:0; z-index:2; background:var(--card); padding:26px 36px 14px; transition:box-shadow .15s }
+  .card .head { position:sticky; top:0; z-index:2; background:var(--card); padding:28px 36px 16px; transition:box-shadow .15s }
   .card .head.stuck { box-shadow:0 1px 0 var(--line), 0 8px 16px -12px rgba(20,20,30,.25) }
-  .card .body { padding:4px 36px 40px; display:flex; flex-direction:column; gap:16px }
+  .card .body { padding:4px 36px 44px; display:flex; flex-direction:column; gap:18px }
   .card .body > section, .card .head > h1, .card .body > .note { max-width:66ch }
   .card { z-index:3 }
   .card.next { z-index:2; transform:scale(.96) translateY(14px); opacity:.6; pointer-events:none }
@@ -55,7 +55,7 @@
   .info::after { content:attr(data-tip); position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; font:400 13px/20px -apple-system, system-ui, sans-serif; padding:8px 10px; border-radius:8px; white-space:pre-line; width:max-content; max-width:280px; text-align:left; opacity:0; pointer-events:none; transition:opacity .12s; z-index:5 }
   .info:hover::after, .info:focus-visible::after { opacity:1 }
   .info:focus-visible { outline:2px solid var(--accent); outline-offset:1px }
-  .chip { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:999px; background:var(--accent-soft); color:var(--accent); border:0; font:inherit; font-size:14px; line-height:24px; font-weight:600 }
+  .chip { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:999px; background:var(--accent-soft); color:var(--accent); border:0; font:600 14px/24px var(--sans) }
   .chip.meta { background:transparent; color:var(--ink-2); padding:3px 4px; font-weight:500 }
   .chip.meta em { opacity:.55 }
   .chip.meta + .chip.meta::before { content:""; }
@@ -65,7 +65,7 @@
   .chip input { width:30px; cursor:text; font-variant-numeric:tabular-nums }
   .addnote { flex:none; border:0; background:var(--paper); color:var(--ink-2); border-radius:999px; padding:5px 12px; font-size:14px; line-height:24px; font-weight:600; cursor:pointer }
   .addnote:hover { color:var(--ink) }
-  section { border-top:1px solid var(--line); padding:18px 0 6px }
+  section { border-top:1px solid var(--line); padding:22px 0 8px }
   section:first-of-type { border-top:0 }
   .modal-bg { position:fixed; inset:0; background:rgba(20,20,30,.35); display:none; align-items:center; justify-content:center; z-index:50 }
   .modal-bg.on { display:flex }
@@ -79,18 +79,18 @@
   .chip.never, .chip.avoid { background:var(--no-soft); color:var(--no) }
   .chip.always { background:var(--yes-soft); color:var(--yes) }
   .chip.prefer, .chip.context { background:var(--accent-soft); color:var(--accent) }
-  h1 { font:600 28px/38px Georgia, "Times New Roman", serif; letter-spacing:-.005em; margin:0; text-wrap:balance }
+  h1 { font:700 34px/42px var(--sans); letter-spacing:-.016em; margin:0; text-wrap:balance; color:#242424 }
   .id { font-size:14px; line-height:24px; color:var(--ink-3); font-variant-numeric:tabular-nums }
   .card .id { display:none }
-  h2 { font-size:12px; line-height:22px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); margin:0 0 8px; font-weight:600 }
-  p { margin:0; white-space:pre-wrap; text-wrap:pretty }
-  p + p { margin-top:12px }
+  h2 { font:600 13px/22px var(--sans); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); margin:0 0 10px }
+  .card p { margin:0; white-space:pre-wrap; text-wrap:pretty; font:400 20px/32px var(--serif); letter-spacing:-.003em; color:var(--ink) }
+  .card p + p { margin-top:20px }
   section.quiet p, section.quiet li { color:var(--ink-2) }
-  .note { background:#fcf2df; color:#8c5a14; padding:8px 12px; border-radius:8px; font-size:15px; line-height:25px }
-  ul { margin:0; padding:0; list-style:none; color:var(--ink-2); font-size:15px; line-height:25px }
-  li { margin:0 0 10px; word-break:break-word; text-wrap:pretty }
-  li .src { display:inline-block; font:600 11px/18px -apple-system, system-ui, sans-serif; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3); background:#f2f1ec; padding:0 7px; border-radius:4px; margin-right:8px; vertical-align:1px }
-  li .ref { font:13px/25px ui-monospace, "JetBrains Mono", monospace; color:var(--ink-3); word-break:break-all }
+  .note { background:#fcf2df; color:#8c5a14; padding:10px 14px; border-radius:8px; font:400 17px/28px var(--serif) }
+  .card ul { margin:0; padding:0; list-style:none; color:var(--ink-2); font:400 18px/30px var(--serif); letter-spacing:-.003em }
+  .card li { margin:0 0 12px; word-break:break-word; text-wrap:pretty }
+  li .src { display:inline-block; font:600 11px/18px var(--sans); letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3); background:#f2f1ec; padding:0 7px; border-radius:4px; margin-right:8px; vertical-align:1px }
+  li .ref { font:13px/24px ui-monospace, "JetBrains Mono", monospace; color:var(--ink-3); word-break:break-all }
   li .quote { color:var(--ink); }
   li .who { font-weight:600; color:var(--ink-2); margin-right:6px }
   code { font:.88em/1 ui-monospace, "JetBrains Mono", monospace; background:#f2f1ec; color:var(--ink-2); padding:2px 5px; border-radius:4px }
@@ -111,7 +111,7 @@
   .toast.on { opacity:1 }
   .done { text-align:center; color:var(--ink-2) }
   .done b { display:block; font-size:28px; color:var(--ink); margin-bottom:8px }
-  @media (max-width:640px) { .card .head { padding:18px 18px 10px } .card .body { padding:0 18px 28px } h1 { font-size:22px; line-height:32px } }
+  @media (max-width:640px) { .card .head { padding:18px 18px 10px } .card .body { padding:0 18px 28px } h1 { font-size:26px; line-height:34px } .card p { font-size:18px; line-height:29px } }
 </style>
 </head>
 <body>
