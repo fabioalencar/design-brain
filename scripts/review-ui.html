@@ -20,7 +20,9 @@
   .bar i { display:block; height:100%; background:var(--accent); width:0; transition:width .3s }
   select, button { font:inherit }
   .toolbar { display:flex; align-items:center; gap:8px; padding:10px 0 12px }
-  .toolbar select { border:0; background:var(--card); padding:7px 10px; border-radius:8px; color:var(--ink); font-size:16px; line-height:26px }
+  .toolbar select { appearance:none; -webkit-appearance:none; border:1px solid var(--line); background:var(--card) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1.5 1.5l4.5 4.5 4.5-4.5' fill='none' stroke='%23777' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 12px center; box-shadow:0 1px 2px rgba(20,20,30,.05); padding:8px 34px 8px 12px; border-radius:8px; color:var(--ink); font-size:14px; line-height:20px; font-weight:500; cursor:pointer; transition:border-color .12s, box-shadow .12s }
+  .toolbar select:hover { border-color:#cfcdc5 }
+  .toolbar select:focus-visible { outline:0; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft) }
   .toolbar .compile { margin-left:auto; border:0; background:var(--card); border-radius:999px; padding:10px 18px; font-weight:600; color:var(--ink); cursor:pointer }
   main { flex:1; min-height:0; display:grid; grid-template-columns:1fr minmax(0, 720px) 1fr; align-items:center; gap:16px; width:min(1100px, 100%); margin:0 auto; padding:0 20px }
   .side { border:0; border-radius:999px; padding:12px 22px; font-weight:600; color:#fff; cursor:pointer; justify-self:center; white-space:nowrap; display:inline-flex; align-items:center; gap:10px; font-size:16px }
@@ -115,9 +117,9 @@
     <span id="tally" class="tally"></span>
   </header>
   <div class="toolbar">
-    <select id="fdim"><option value="">all dimensions</option></select>
-    <select id="fscope"><option value="">all scopes</option><option>universal</option><option>personal</option></select>
-    <select id="fkind"><option value="">all kinds</option><option>harvested</option><option>heuristic</option><option>bias</option><option>practice</option></select>
+    <select id="fdim"><option value="">All dimensions</option></select>
+    <select id="fscope"><option value="">All scopes</option><option>universal</option><option>personal</option></select>
+    <select id="fkind"><option value="">All kinds</option><option>harvested</option><option>heuristic</option><option>bias</option><option>practice</option></select>
     <button class="compile" onclick="compile()">Compile skills <kbd>C</kbd></button>
   </div>
 </div>
@@ -152,7 +154,7 @@ async function load() {
   const r = await (await fetch("/api/queue")).json();
   all = r.queue; tallies = { confirmed: r.confirmed, retired: r.retired };
   const dims = [...new Set(all.map((c) => c.dimension))].sort();
-  $("#fdim").innerHTML = '<option value="">all dimensions</option>' + dims.map((d) => `<option>${d}</option>`).join("");
+  $("#fdim").innerHTML = '<option value="">All dimensions</option>' + dims.map((d) => `<option>${d}</option>`).join("");
   rebuild();
 }
 function rebuild() {
