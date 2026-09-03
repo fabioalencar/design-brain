@@ -27,8 +27,13 @@
   .side .arrow { font-size:24px; line-height:1; font-weight:400 }
   .side.no { background:var(--no) } .side.yes { background:var(--yes) }
   .stack { position:relative; width:100%; height:100%; max-height:820px; min-height:320px }
-  .card { position:absolute; inset:0; background:var(--card); border-radius:14px; box-shadow:0 12px 40px rgba(20,20,30,.08); padding:26px 30px; overflow:auto;
-          display:flex; flex-direction:column; gap:14px; transition:transform .35s cubic-bezier(.22,1,.36,1), opacity .3s; touch-action:none; user-select:none }
+  .card { position:absolute; inset:0; background:var(--card); border-radius:16px; box-shadow:0 1px 2px rgba(20,20,30,.04), 0 16px 48px rgba(20,20,30,.07); padding:28px 36px 40px; overflow:auto;
+          display:flex; flex-direction:column; gap:16px; transition:transform .35s cubic-bezier(.22,1,.36,1), opacity .3s; touch-action:none; user-select:none;
+          mask-image:linear-gradient(to bottom, #000 calc(100% - 56px), transparent); -webkit-mask-image:linear-gradient(to bottom, #000 calc(100% - 56px), transparent) }
+  .card.top { animation:settle .32s cubic-bezier(.22,1,.36,1) }
+  @keyframes settle { from { transform:translateY(10px); opacity:.6 } to { transform:none; opacity:1 } }
+  @media (prefers-reduced-motion: reduce) { .card, .card.top { animation:none; transition:none } }
+  .card > section, .card > h1, .card > .note { max-width:66ch }
   .card { z-index:3 }
   .card.next { z-index:2; transform:scale(.96) translateY(14px); opacity:.6; pointer-events:none }
   .card.next > *, .card.next2 > * { visibility:hidden }
@@ -43,13 +48,16 @@
   .info:hover::after, .info:focus-visible::after { opacity:1 }
   .info:focus-visible { outline:2px solid var(--accent); outline-offset:1px }
   .chip { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:999px; background:var(--accent-soft); color:var(--accent); border:0; font:inherit; font-size:14px; line-height:24px; font-weight:600 }
+  .chip.meta { background:transparent; color:var(--ink-2); padding:3px 4px; font-weight:500 }
+  .chip.meta em { opacity:.55 }
+  .chip.meta + .chip.meta::before { content:""; }
   .chip em { font-style:normal; font-weight:500; opacity:.65 }
   .chip select, .chip input { appearance:none; -webkit-appearance:none; border:0; background:transparent; color:inherit; font:inherit; font-weight:600; padding:0; cursor:pointer }
   .chip select { padding-right:14px; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%23666' stroke-width='1.5'/></svg>"); background-repeat:no-repeat; background-position:right 0 center }
   .chip input { width:30px; cursor:text; font-variant-numeric:tabular-nums }
   .addnote { flex:none; border:0; background:var(--paper); color:var(--ink-2); border-radius:999px; padding:5px 12px; font-size:14px; line-height:24px; font-weight:600; cursor:pointer }
   .addnote:hover { color:var(--ink) }
-  section { border-top:1px solid var(--line); padding:12px 0 4px }
+  section { border-top:1px solid var(--line); padding:18px 0 6px }
   section:first-of-type { border-top:0 }
   .modal-bg { position:fixed; inset:0; background:rgba(20,20,30,.35); display:none; align-items:center; justify-content:center; z-index:50 }
   .modal-bg.on { display:flex }
@@ -63,15 +71,21 @@
   .chip.never, .chip.avoid { background:var(--no-soft); color:var(--no) }
   .chip.always { background:var(--yes-soft); color:var(--yes) }
   .chip.prefer, .chip.context { background:var(--accent-soft); color:var(--accent) }
-  h1 { font:600 28px/38px Georgia, "Times New Roman", serif; letter-spacing:-.005em; margin:0 }
+  h1 { font:600 28px/38px Georgia, "Times New Roman", serif; letter-spacing:-.005em; margin:6px 0 0; text-wrap:balance }
   .id { font-size:14px; line-height:24px; color:var(--ink-3); font-variant-numeric:tabular-nums }
   .card .id { display:none }
-  h2 { font-size:13px; line-height:23px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); margin:0 0 6px; font-weight:600 }
-  p { margin:0; white-space:pre-wrap }
+  h2 { font-size:12px; line-height:22px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); margin:0 0 8px; font-weight:600 }
+  p { margin:0; white-space:pre-wrap; text-wrap:pretty }
+  p + p { margin-top:12px }
+  section.quiet p, section.quiet li { color:var(--ink-2) }
   .note { background:#fcf2df; color:#8c5a14; padding:8px 12px; border-radius:8px; font-size:15px; line-height:25px }
-  ul { margin:0; padding-left:18px; color:var(--ink-2); font-size:15px; line-height:25px }
-  li { margin:3px 0; word-break:break-word }
-  code { font:14px/24px ui-monospace, "JetBrains Mono", monospace; background:#f2f1ec; padding:1px 4px; border-radius:4px }
+  ul { margin:0; padding:0; list-style:none; color:var(--ink-2); font-size:15px; line-height:25px }
+  li { margin:0 0 10px; word-break:break-word; text-wrap:pretty }
+  li .src { display:inline-block; font:600 11px/18px -apple-system, system-ui, sans-serif; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3); background:#f2f1ec; padding:0 7px; border-radius:4px; margin-right:8px; vertical-align:1px }
+  li .ref { font:13px/25px ui-monospace, "JetBrains Mono", monospace; color:var(--ink-3); word-break:break-all }
+  li .quote { color:var(--ink); }
+  li .who { font-weight:600; color:var(--ink-2); margin-right:6px }
+  code { font:.88em/1 ui-monospace, "JetBrains Mono", monospace; background:#f2f1ec; color:var(--ink-2); padding:2px 5px; border-radius:4px }
   .stamp { position:absolute; top:26px; font-size:34px; font-weight:800; letter-spacing:.06em; padding:4px 14px; border:4px solid; border-radius:10px; opacity:0; transform:rotate(-14deg); pointer-events:none; transition:opacity .1s }
   .stamp.yes { right:28px; color:var(--yes); border-color:var(--yes) }
   .stamp.no { left:28px; color:var(--no); border-color:var(--no); transform:rotate(14deg) }
@@ -158,6 +172,27 @@ function render() {
   queue.slice(0, 3).forEach((c, i) => st.appendChild(cardEl(c, i)));
   attachDrag(st.firstElementChild);
 }
+// evidence: `type:ref "quote"` → source tag, reference, quote
+function evLine(e) {
+  const m = String(e).match(/^([a-z]+):([^"]*?)\s*(?:"([\s\S]*)")?\s*$/i);
+  if (!m) return `<li>${md(e)}</li>`;
+  const [, type, ref, quote] = m;
+  const label = { transcript: "said", repo: "repo", ddr: "DDR", audit: "audit", commit: "commit", note: "note", reference: "source", learnings: "learning" }[type.toLowerCase()] ?? type;
+  const refHtml = ref.trim() ? `<span class="ref">${esc(ref.trim().replace(/^~\/Code\//, ""))}</span>` : "";
+  const q = quote ? `<span class="quote">${type.toLowerCase() === "transcript" ? "“" + md(quote) + "”" : md(quote)}</span>` : "";
+  return `<li><span class="src">${esc(label)}</span>${q}${q && refHtml ? "<br>" : ""}${refHtml}</li>`;
+}
+// examples: "- project — value — source" lines → rows with the first segment as a label
+function listify(text) {
+  if (!text) return "";
+  const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
+  if (!lines.every((l) => /^[-*]\s/.test(l))) return "";
+  return lines.map((l) => {
+    const body = l.replace(/^[-*]\s+/, "");
+    const parts = body.split(/\s[—–]\s/);
+    return parts.length > 1 ? `<li><span class="who">${md(parts[0])}</span>${md(parts.slice(1).join(" — "))}</li>` : `<li>${md(body)}</li>`;
+  }).join("");
+}
 function source(c) {
   const n = Number(String(c.id).match(/(\d{3})$/)?.[1] ?? 0);
   if (c.kind === "heuristic") return "heuristic"; if (c.kind === "bias") return "bias"; if (c.kind === "practice") return "practice";
@@ -165,23 +200,24 @@ function source(c) {
 }
 function cardEl(c, i) {
   const el = document.createElement("div");
-  el.className = "card" + (i === 1 ? " next" : i === 2 ? " next2" : "");
+  el.className = "card" + (i === 0 ? " top" : i === 1 ? " next" : " next2");
   el.dataset.id = c.id;
-  const ev = c.evidence.map((e) => `<li>${md(e)}</li>`).join("");
+  const ev = c.evidence.map(evLine).join("");
+  const exList = listify(c.examples), exBody = exList ? `<ul>${exList}</ul>` : c.examples && `<p>${md(c.examples)}</p>`;
   const opt = (list, cur) => list.map((s) => `<option ${s === cur ? "selected" : ""}>${s}</option>`).join("");
   const scopes = [...new Set(["universal", "personal", "project:" + (c.occurrences[0] || "x"), c.scope])];
-  const sec = (title, body) => body ? `<section><h2>${title}</h2>${body}</section>` : "";
+  const sec = (title, body, quiet) => body ? `<section class="${quiet ? "quiet" : ""}"><h2>${title}</h2>${body}</section>` : "";
   el.innerHTML = `
     <div class="stamp yes">PROMOTE</div><div class="stamp no">RETIRE</div>
     <div class="chiprow">
       <div class="chips">
         <span class="chip ${esc(c.stance)}"><em>stance</em><select name="stance" onchange="this.parentNode.className='chip '+this.value">${opt(["always","never","prefer","avoid","context"], c.stance)}</select></span>
-        <span class="chip dim"><em>dimension</em>${esc(c.dimension)}</span>
         <span class="chip dim"><em>confidence</em><input name="confidence" type="number" min="1" max="10" value="${c.confidence}"></span>
-        <span class="chip dim"><em>seen</em>${c.occurrences.length}×<span class="info" tabindex="0" data-tip="${esc(c.occurrences.join("\n"))}">i</span></span>
-        <span class="chip dim"><em>source</em>${esc(source(c))}<span class="info" tabindex="0" data-tip="${esc(c.id)}\n${esc(c.file)}">i</span></span>
-        ${c.kind !== "harvested" ? `<span class="chip"><em>kind</em>${esc(c.kind)}</span>` : ""}${c.component ? `<span class="chip"><em>component</em>${esc(c.component)}</span>` : ""}
-        ${skipped.has(c.id) ? '<span class="chip dim">skipped earlier</span>' : ""}
+        <span class="chip meta"><em>dimension</em>${esc(c.dimension)}</span>
+        <span class="chip meta"><em>seen</em>${c.occurrences.length}×<span class="info" tabindex="0" data-tip="${esc(c.occurrences.join("\n"))}">i</span></span>
+        <span class="chip meta"><em>source</em>${esc(source(c))}<span class="info" tabindex="0" data-tip="${esc(c.id)}\n${esc(c.file)}">i</span></span>
+        ${c.kind !== "harvested" ? `<span class="chip meta"><em>kind</em>${esc(c.kind)}</span>` : ""}${c.component ? `<span class="chip meta"><em>component</em>${esc(c.component)}</span>` : ""}
+        ${skipped.has(c.id) ? '<span class="chip meta">skipped earlier</span>' : ""}
         <span class="chip dim"><em>scope</em><select name="scope">${opt(scopes, c.scope)}</select></span>
       </div>
       <button class="addnote" onclick="openNote()">Add note <kbd>N</kbd></button>
@@ -190,11 +226,11 @@ function cardEl(c, i) {
     <div class="id">${esc(c.id)} · seen in ${esc(c.occurrences.join(", "))}</div>
     ${c.review_note ? `<div class="note">${md(c.review_note)}</div>` : ""}
     ${sec("Rule", `<p>${md(c.rule)}</p>`)}
-    ${sec("Why", c.why && `<p>${md(c.why)}</p>`)}
-    ${sec("Examples", c.examples && `<p>${md(c.examples)}</p>`)}
-    ${sec("Exceptions", c.exceptions && `<p>${md(c.exceptions)}</p>`)}
-    ${sec(`Evidence (${c.evidence.length})`, `<ul>${ev}</ul>`)}
-    ${sec("See also", c.seeAlso && `<p>${md(c.seeAlso)}</p>`)}
+    ${sec("Why", c.why && `<p>${md(c.why).replace(/\n\n/g, "</p><p>")}</p>`, true)}
+    ${sec("Examples", exBody, true)}
+    ${sec("Exceptions", c.exceptions && `<p>${md(c.exceptions)}</p>`, true)}
+    ${sec(`Evidence · ${c.evidence.length}`, `<ul>${ev}</ul>`, true)}
+    ${sec("See also", c.seeAlso && `<p>${md(c.seeAlso)}</p>`, true)}
     ${sec("Review notes", c.notes && `<p>${md(c.notes)}</p>`)}`;
   return el;
 }
