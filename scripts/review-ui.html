@@ -23,10 +23,9 @@
   .toolbar select { appearance:none; -webkit-appearance:none; border:1px solid var(--line); background:var(--card) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1.5 1.5l4.5 4.5 4.5-4.5' fill='none' stroke='%23777' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 12px center; box-shadow:0 1px 2px rgba(20,20,30,.05); padding:8px 34px 8px 12px; border-radius:8px; color:var(--ink); font-size:14px; line-height:20px; font-weight:500; cursor:pointer; transition:border-color .12s, box-shadow .12s }
   .toolbar select:hover { border-color:#cfcdc5 }
   .toolbar select:focus-visible { outline:0; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft) }
-  .toolbar .compile { margin-left:auto; border:1px solid var(--accent); background:var(--accent); color:#fff; border-radius:8px; padding:8px 14px; font-size:14px; line-height:20px; font-weight:600; cursor:pointer; box-shadow:0 1px 2px rgba(20,20,30,.08); transition:filter .12s, box-shadow .12s }
-  .toolbar .compile:hover { filter:brightness(1.06) }
-  .toolbar .compile:focus-visible { outline:0; box-shadow:0 0 0 3px var(--accent-soft) }
-  .toolbar .compile kbd { color:#fff; opacity:.7 }
+  .toolbar .compile { margin-left:auto; border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:8px; padding:8px 14px; font-size:14px; line-height:20px; font-weight:700; cursor:pointer; box-shadow:0 1px 2px rgba(20,20,30,.05); transition:border-color .12s, box-shadow .12s }
+  .toolbar .compile:hover { border-color:#cfcdc5 }
+  .toolbar .compile:focus-visible { outline:0; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft) }
   main { flex:1; min-height:0; display:grid; grid-template-columns:1fr minmax(0, 720px) 1fr; align-items:center; gap:16px; width:min(1100px, 100%); margin:0 auto; padding:0 20px }
   .side { border:0; border-radius:999px; padding:12px 22px; font-weight:600; color:#fff; cursor:pointer; justify-self:center; white-space:nowrap; display:inline-flex; align-items:center; gap:10px; font-size:16px }
   .side .arrow { font-size:24px; line-height:1; font-weight:400 }
@@ -49,14 +48,15 @@
   .card.gone-r { transform:translate(120%, -6%) rotate(12deg); opacity:0 }
   .card.gone-l { transform:translate(-120%, -6%) rotate(-12deg); opacity:0 }
   .card.gone-d { transform:translateY(120%); opacity:0 }
-  .chiprow { display:flex; align-items:flex-start }
-  .chips { display:flex; gap:6px; flex-wrap:wrap; font-size:14px; align-items:center; flex:1; min-width:0 }
+  .chiprow { display:flex; flex-direction:column; gap:10px }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; font-size:14px; align-items:center }
+  .chips.metarow { gap:4px 18px; color:var(--ink-2) }
   .info { display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; border-radius:50%; background:rgba(0,0,0,.08); color:inherit; font:600 11px/1 -apple-system, system-ui, sans-serif; cursor:help; position:relative; margin-left:1px }
   .info::after { content:attr(data-tip); position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; font:400 13px/20px -apple-system, system-ui, sans-serif; padding:8px 10px; border-radius:8px; white-space:pre-line; width:max-content; max-width:280px; text-align:left; opacity:0; pointer-events:none; transition:opacity .12s; z-index:5 }
   .info:hover::after, .info:focus-visible::after { opacity:1 }
   .info:focus-visible { outline:2px solid var(--accent); outline-offset:1px }
   .chip { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:999px; background:var(--accent-soft); color:var(--accent); border:0; font:600 14px/24px var(--sans) }
-  .chip.meta { background:transparent; color:var(--ink-2); padding:3px 4px; font-weight:500 }
+  .chip.meta { background:transparent; color:var(--ink-2); padding:0; font-weight:600 }
   .chip.meta em { opacity:.55 }
   .chip.meta.warn { color:#8c5a14 }
   .chip.meta + .chip.meta::before { content:""; }
@@ -225,13 +225,15 @@ function cardEl(c, i) {
       <div class="chips">
         <span class="chip ${esc(c.stance)}"><em>stance</em><select name="stance" onchange="this.parentNode.className='chip '+this.value">${opt(["always","never","prefer","avoid","context"], c.stance)}</select></span>
         <span class="chip dim"><em>confidence</em><input name="confidence" type="number" min="1" max="10" value="${c.confidence}"></span>
+        <span class="chip dim"><em>scope</em><select name="scope">${opt(scopes, c.scope)}</select></span>
+      </div>
+      <div class="chips metarow">
         <span class="chip meta"><em>dimension</em>${esc(c.dimension)}</span>
         <span class="chip meta"><em>seen</em>${c.occurrences.length}×<span class="info" tabindex="0" data-tip="${esc(c.occurrences.join("\n"))}">i</span></span>
         <span class="chip meta"><em>source</em>${esc(source(c))}<span class="info" tabindex="0" data-tip="${esc(c.id)}\n${esc(c.file)}">i</span></span>
         ${c.kind !== "harvested" ? `<span class="chip meta"><em>kind</em>${esc(c.kind)}</span>` : ""}${c.component ? `<span class="chip meta"><em>component</em>${esc(c.component)}</span>` : ""}
         ${skipped.has(c.id) ? '<span class="chip meta">skipped earlier</span>' : ""}
         ${c.longParas ? `<span class="chip meta warn"><em>needs rewrite</em>${c.longParas} long paragraph${c.longParas > 1 ? "s" : ""}<span class="info" tabindex="0" data-tip="A Rule or Why paragraph runs past five rows. Split it by idea or move detail to Examples.">i</span></span>` : ""}
-        <span class="chip dim"><em>scope</em><select name="scope">${opt(scopes, c.scope)}</select></span>
       </div>
     </div>
     <div class="id">${esc(c.id)} · seen in ${esc(c.occurrences.join(", "))}</div>
