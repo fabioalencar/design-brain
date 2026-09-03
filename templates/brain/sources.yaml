@@ -1,0 +1,16 @@
+# Project registry. scope drives what a harvester may claim as taste.
+# scope: personal (your own brands and unbranded work) | client:<slug> (constraints only, never taste)
+# transcripts: dir name under ~/.claude/projects (encoded path), if you use Claude Code
+language: en
+personal_brands: []
+projects: []
+  # - slug: my-site
+  #   path: ~/Code/my-site
+  #   scope: personal
+  #   sources: [css, tailwind, tokens]
+  #   transcripts: -Users-me-Code-my-site
+gstack:
+  projects_dir: ~/.gstack/projects
+  audits_glob: "*/designs/design-audit-*/*.md"
+  learnings_glob: "*/learnings.jsonl"
+transcripts_dir: ~/.claude/projects

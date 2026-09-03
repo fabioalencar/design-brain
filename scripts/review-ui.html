@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>design-brain review</title>
+<style>
+  :root { --paper:#f6f5f1; --ink:#15151a; --ink-2:#5b5b66; --ink-3:#9a9aa6; --line:#e6e4dd; --card:#ffffff;
+          --accent:#5b48e8; --accent-soft:#ece9fc; --yes:#117a48; --yes-soft:#e2f4ea; --no:#b22a3d; --no-soft:#fbe8eb; }
+  * { box-sizing:border-box }
+  html,body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.45 -apple-system, "Inter", system-ui, sans-serif; height:100% }
+  body { display:flex; flex-direction:column; min-height:100vh; overflow:hidden }
+  header { display:flex; align-items:center; gap:16px; padding:12px 20px; font-size:13px; color:var(--ink-2) }
+  header b { color:var(--ink); font-weight:600 }
+  header span { white-space:nowrap }
+  .bar { flex:1; height:4px; background:var(--line); border-radius:2px; overflow:hidden }
+  .bar i { display:block; height:100%; background:var(--accent); width:0; transition:width .3s }
+  select, button { font:inherit }
+  select { border:0; background:var(--card); padding:4px 8px; border-radius:6px; color:var(--ink) }
+  main { flex:1; min-height:0; display:grid; place-items:center; position:relative; padding:0 20px 14px }
+  .stack { position:relative; width:min(720px, 100%); height:100%; max-height:760px }
+  .card { position:absolute; inset:0; background:var(--card); border-radius:14px; box-shadow:0 12px 40px rgba(20,20,30,.08); padding:26px 30px; overflow:auto;
+          display:flex; flex-direction:column; gap:14px; transition:transform .35s cubic-bezier(.22,1,.36,1), opacity .3s; touch-action:none; user-select:none }
+  .card { z-index:3 }
+  .card.next { z-index:2; transform:scale(.96) translateY(14px); opacity:.6; pointer-events:none }
+  .card.next > *, .card.next2 > * { visibility:hidden }
+  .card.next2 { z-index:1; transform:scale(.92) translateY(28px); opacity:.3; pointer-events:none }
+  .card.gone-r { transform:translate(120%, -6%) rotate(12deg); opacity:0 }
+  .card.gone-l { transform:translate(-120%, -6%) rotate(-12deg); opacity:0 }
+  .card.gone-d { transform:translateY(120%); opacity:0 }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; font-size:12px }
+  .chip { padding:3px 9px; border-radius:999px; background:var(--accent-soft); color:var(--accent); font-weight:600 }
+  .chip.dim { background:#eeeef2; color:var(--ink-2) }
+  .chip.never, .chip.avoid { background:var(--no-soft); color:var(--no) }
+  .chip.always { background:var(--yes-soft); color:var(--yes) }
+  h1 { font-size:24px; line-height:1.2; letter-spacing:-.01em; margin:0; font-weight:650 }
+  .id { font-size:12px; color:var(--ink-3); font-variant-numeric:tabular-nums }
+  h2 { font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); margin:8px 0 4px; font-weight:600 }
+  p { margin:0; white-space:pre-wrap }
+  .note { background:#fcf2df; color:#8c5a14; padding:8px 12px; border-radius:8px; font-size:13px }
+  ul { margin:0; padding-left:18px; color:var(--ink-2); font-size:13px }
+  li { margin:3px 0; word-break:break-word }
+  code { font:12px ui-monospace, "JetBrains Mono", monospace; background:#f2f1ec; padding:1px 4px; border-radius:4px }
+  .edit { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; font-size:12px; color:var(--ink-2); margin-top:auto; padding-top:10px }
+  .edit label { display:flex; flex-direction:column; gap:3px }
+  .edit label.wide { grid-column:1 / -1 }
+  .edit textarea { border:1px solid var(--line); background:var(--paper); border-radius:6px; padding:6px 8px; color:var(--ink); font:inherit; font-size:13px; resize:vertical; user-select:text }
+  .edit select, .edit input { border:1px solid var(--line); background:var(--paper); border-radius:6px; padding:5px 8px; color:var(--ink) }
+  .stamp { position:absolute; top:26px; font-size:34px; font-weight:800; letter-spacing:.06em; padding:4px 14px; border:4px solid; border-radius:10px; opacity:0; transform:rotate(-14deg); pointer-events:none; transition:opacity .1s }
+  .stamp.yes { right:28px; color:var(--yes); border-color:var(--yes) }
+  .stamp.no { left:28px; color:var(--no); border-color:var(--no); transform:rotate(14deg) }
+  footer { display:flex; justify-content:center; gap:10px; padding:0 20px 18px; flex-wrap:wrap }
+  footer button { border:0; border-radius:999px; padding:10px 18px; font-weight:600; cursor:pointer; color:#fff; background:var(--ink-2) }
+  footer .yes { background:var(--yes) } footer .no { background:var(--no) } footer .ghost { background:var(--card); color:var(--ink-2) }
+  footer kbd { font:11px ui-monospace, monospace; opacity:.7; margin-left:6px }
+  .toast { position:fixed; bottom:76px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:8px 14px; border-radius:8px; font-size:13px; opacity:0; transition:opacity .2s; pointer-events:none }
+  .toast.on { opacity:1 }
+  .done { text-align:center; color:var(--ink-2) }
+  .done b { display:block; font-size:28px; color:var(--ink); margin-bottom:8px }
+  @media (max-width:640px) { .card { padding:18px } h1 { font-size:20px } .edit { grid-template-columns:1fr 1fr } }
+</style>
+</head>
+<body>
+<header>
+  <b>design-brain</b>
+  <span id="count">…</span>
+  <div class="bar"><i id="bar"></i></div>
+  <span id="tally"></span>
+  <select id="fdim"><option value="">all dimensions</option></select>
+  <select id="fscope"><option value="">all scopes</option><option>universal</option><option>personal</option></select>
+  <select id="fkind"><option value="">all kinds</option><option>harvested</option><option>heuristic</option><option>bias</option><option>practice</option></select>
+</header>
+<main><div class="stack" id="stack"></div></main>
+<footer>
+  <button class="no" onclick="act('retire')">Retire <kbd>←</kbd></button>
+  <button class="ghost" onclick="act('skip')">Skip <kbd>↓</kbd></button>
+  <button class="yes" onclick="act('promote')">Promote <kbd>→</kbd></button>
+  <button class="ghost" onclick="saveNote()">Save note <kbd>S</kbd></button>
+  <button class="ghost" onclick="undo()">Undo <kbd>Z</kbd></button>
+  <button class="ghost" onclick="compile()">Compile skills <kbd>C</kbd></button>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+let all = [], queue = [], skipped = new Set(), history = [], tallies = { confirmed: 0, retired: 0 };
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+const md = (s) => esc(s).replace(/`([^`]+)`/g, "<code>$1</code>").replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");
+try { skipped = new Set(JSON.parse(localStorage.getItem("db-skipped") || "[]")); } catch {}
+
+async function load() {
+  const r = await (await fetch("/api/queue")).json();
+  all = r.queue; tallies = { confirmed: r.confirmed, retired: r.retired };
+  const dims = [...new Set(all.map((c) => c.dimension))].sort();
+  $("#fdim").innerHTML = '<option value="">all dimensions</option>' + dims.map((d) => `<option>${d}</option>`).join("");
+  rebuild();
+}
+function rebuild() {
+  const fd = $("#fdim").value, fs = $("#fscope").value, fk = $("#fkind").value;
+  const vis = all.filter((c) => (!fd || c.dimension === fd) && (!fs || c.scope === fs) && (!fk || c.kind === fk));
+  queue = [...vis.filter((c) => !skipped.has(c.id)), ...vis.filter((c) => skipped.has(c.id))];
+  render();
+}
+function render() {
+  const total = all.length + tallies.confirmed + tallies.retired;
+  const done = tallies.confirmed + tallies.retired;
+  $("#count").textContent = `${queue.length} in queue`;
+  $("#tally").textContent = `${tallies.confirmed} promoted · ${tallies.retired} retired`;
+  $("#bar").style.width = total ? (100 * done / total) + "%" : "0";
+  const st = $("#stack"); st.innerHTML = "";
+  if (!queue.length) { st.innerHTML = `<div class="card done"><div><b>Queue empty</b>Nothing left under this filter. Press C to compile the confirmed set into skills.</div></div>`; return; }
+  queue.slice(0, 3).forEach((c, i) => st.appendChild(cardEl(c, i)));
+  attachDrag(st.firstElementChild);
+}
+function cardEl(c, i) {
+  const el = document.createElement("div");
+  el.className = "card" + (i === 1 ? " next" : i === 2 ? " next2" : "");
+  el.dataset.id = c.id;
+  const ev = c.evidence.map((e) => `<li>${md(e)}</li>`).join("");
+  el.innerHTML = `
+    <div class="stamp yes">PROMOTE</div><div class="stamp no">RETIRE</div>
+    <div class="chips"><span class="chip ${esc(c.stance)}">${esc(c.stance)}</span><span class="chip dim">${esc(c.dimension)}</span><span class="chip dim">${esc(c.scope)}</span>${c.kind !== "harvested" ? `<span class="chip">${esc(c.kind)}</span>` : ""}${c.component ? `<span class="chip">${esc(c.component)}</span>` : ""}
+      <span class="chip dim">${c.occurrences.length}× · conf ${c.confidence}</span>${skipped.has(c.id) ? '<span class="chip dim">skipped earlier</span>' : ""}</div>
+    <h1>${esc(c.title)}</h1>
+    <div class="id">${esc(c.id)} · seen in ${esc(c.occurrences.join(", "))}</div>
+    ${c.review_note ? `<div class="note">${md(c.review_note)}</div>` : ""}
+    <h2>Rule</h2><p>${md(c.rule)}</p>
+    ${c.why ? `<h2>Why</h2><p>${md(c.why)}</p>` : ""}
+    ${c.examples ? `<h2>Examples</h2><p>${md(c.examples)}</p>` : ""}
+    ${c.exceptions ? `<h2>Exceptions</h2><p>${md(c.exceptions)}</p>` : ""}
+    <h2>Evidence (${c.evidence.length})</h2><ul>${ev}</ul>
+    ${c.seeAlso ? `<h2>See also</h2><p>${md(c.seeAlso)}</p>` : ""}
+    ${c.notes ? `<h2>Review notes</h2><p>${md(c.notes)}</p>` : ""}
+    <div class="edit">
+      <label class="wide">notes / changes to make <textarea name="note" rows="2" placeholder="Reword, narrow, merge with…, why you kept or dropped it. Saved into the file with your verdict (or press S to save without deciding)."></textarea></label>
+      <label>stance <select name="stance">${["always","never","prefer","avoid","context"].map((s) => `<option ${s === c.stance ? "selected" : ""}>${s}</option>`).join("")}</select></label>
+      <label>scope <select name="scope">${["universal","personal","project:" + (c.occurrences[0] || "x")].map((s) => `<option ${s === c.scope ? "selected" : ""}>${s}</option>`).join("")}</select></label>
+      <label>confidence <input name="confidence" type="number" min="1" max="10" value="${c.confidence}"></label>
+    </div>`;
+  return el;
+}
+function edits(el, c) {
+  const g = (n) => el.querySelector(`[name=${n}]`)?.value;
+  const e = {};
+  if (g("stance") && g("stance") !== c.stance) e.stance = g("stance");
+  if (g("scope") && g("scope") !== c.scope) e.scope = g("scope");
+  if (g("confidence") && Number(g("confidence")) !== Number(c.confidence)) e.confidence = Number(g("confidence"));
+  if (g("note") && g("note").trim()) e.note = g("note").trim();
+  return Object.keys(e).length ? e : undefined;
+}
+async function act(action) {
+  const c = queue[0]; if (!c) return;
+  const el = $("#stack").firstElementChild;
+  if (action === "skip") { skipped.add(c.id); localStorage.setItem("db-skipped", JSON.stringify([...skipped])); el.classList.add("gone-d"); setTimeout(rebuild, 250); return; }
+  const body = { id: c.id, action, edits: edits(el, c) };
+  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) })).json();
+  if (!r.ok) { toast("Error: " + r.error); return; }
+  history.push({ card: c, undo: r.undo });
+  el.classList.add(action === "promote" ? "gone-r" : "gone-l");
+  toast(action === "promote" ? `Promoted as ${r.newId}` : `Retired ${c.id}`);
+  all = all.filter((x) => x.id !== c.id); skipped.delete(c.id);
+  tallies[action === "promote" ? "confirmed" : "retired"]++;
+  setTimeout(rebuild, 280);
+}
+async function saveNote() {
+  const c = queue[0]; if (!c) return;
+  const el = $("#stack").firstElementChild;
+  const e = edits(el, c);
+  if (!e) { toast("Nothing to save"); return; }
+  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: c.id, action: "note", edits: e }) })).json();
+  if (!r.ok) { toast("Error: " + r.error); return; }
+  toast("Saved to " + c.id); await load();
+}
+async function undo() {
+  const h = history.pop(); if (!h) { toast("Nothing to undo"); return; }
+  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(h.undo) })).json();
+  if (!r.ok) { toast("Undo failed: " + r.error); return; }
+  toast("Undone " + h.card.id); await load();
+}
+async function compile() {
+  toast("Compiling…");
+  const r = await (await fetch("/api/compile", { method: "POST" })).json();
+  toast(r.ok ? r.out.trim() : "Compile failed: " + r.out);
+}
+function toast(m) { const t = $("#toast"); t.textContent = m; t.classList.add("on"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("on"), 2200); }
+document.addEventListener("keydown", (e) => {
+  if (["INPUT","SELECT","TEXTAREA"].includes(e.target.tagName)) return;
+  if (e.key === "ArrowRight") act("promote"); else if (e.key === "ArrowLeft") act("retire"); else if (e.key === "ArrowDown") act("skip");
+  else if (e.key.toLowerCase() === "z") undo(); else if (e.key.toLowerCase() === "c") compile(); else if (e.key.toLowerCase() === "s") saveNote();
+});
+$("#fdim").onchange = rebuild; $("#fscope").onchange = rebuild; $("#fkind").onchange = rebuild;
+
+// Tinder-style drag on the top card (pointer events cover mouse + touch)
+function attachDrag(el) {
+  if (!el || !el.dataset.id) return;
+  let sx = 0, sy = 0, dx = 0, dy = 0, on = false;
+  const yes = el.querySelector(".stamp.yes"), no = el.querySelector(".stamp.no");
+  el.addEventListener("pointerdown", (e) => { if (e.target.closest(".edit, a, ul, textarea")) return; on = true; sx = e.clientX; sy = e.clientY; el.setPointerCapture(e.pointerId); el.style.transition = "none"; });
+  el.addEventListener("pointermove", (e) => { if (!on) return; dx = e.clientX - sx; dy = e.clientY - sy; el.style.transform = `translate(${dx}px, ${dy}px) rotate(${dx / 18}deg)`; yes.style.opacity = Math.min(1, Math.max(0, dx / 120)); no.style.opacity = Math.min(1, Math.max(0, -dx / 120)); });
+  const end = () => { if (!on) return; on = false; el.style.transition = ""; yes.style.opacity = 0; no.style.opacity = 0;
+    if (dx > 140) act("promote"); else if (dx < -140) act("retire"); else if (dy > 160) act("skip"); else el.style.transform = ""; dx = dy = 0; };
+  el.addEventListener("pointerup", end); el.addEventListener("pointercancel", end);
+}
+load();
+</script>
+</body>
+</html>

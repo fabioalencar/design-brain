@@ -1,0 +1,20 @@
+{
+  "name": "design-brain",
+  "version": "0.1.0",
+  "description": "Capture your design decisions across projects, review them in a swipe queue, compile them into agent skills.",
+  "license": "MIT",
+  "private": false,
+  "type": "module",
+  "bin": { "design-brain": "bin/design-brain.ts" },
+  "scripts": {
+    "check": "bun scripts/check.ts",
+    "compile": "bun scripts/compile-skills.ts",
+    "review": "bun --watch scripts/review-server.ts",
+    "harvest:repos": "bun scripts/harvest-repos.ts",
+    "harvest:transcripts": "bun scripts/harvest-transcripts.ts",
+    "promote": "bun scripts/promote.ts promote",
+    "retire": "bun scripts/promote.ts retire",
+    "rescope": "bun scripts/promote.ts rescope"
+  },
+  "dependencies": { "yaml": "^2.5.0" }
+}

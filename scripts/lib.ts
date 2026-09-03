@@ -1,0 +1,72 @@
+import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
+import { join, basename, resolve } from "node:path";
+
+/** Directory of the tool itself (scripts/, templates/, seed/). */
+export const toolRoot = new URL("..", import.meta.url).pathname;
+
+/**
+ * The brain is the data directory the tool operates on (sources.yaml, inbox/, decisions/, …).
+ * Resolution: --brain <dir> flag → DESIGN_BRAIN env → current directory. Must contain sources.yaml.
+ */
+export function brainRoot(): string {
+  const i = process.argv.indexOf("--brain");
+  let dir = i >= 0 && process.argv[i + 1] ? process.argv[i + 1] : process.env.DESIGN_BRAIN || process.cwd();
+  dir = resolve(dir.replace(/^~(?=$|\/)/, process.env.HOME ?? ""));
+  if (!existsSync(join(dir, "sources.yaml"))) {
+    console.error(`No brain at ${dir} (no sources.yaml).\nRun \`design-brain init <dir>\` to create one, or pass --brain <dir> / set DESIGN_BRAIN.`);
+    process.exit(2);
+  }
+  return dir.endsWith("/") ? dir : dir + "/";
+}
+import { parse as parseYaml } from "yaml";
+
+export type Frontmatter = Record<string, unknown>;
+export interface Doc {
+  path: string;
+  file: string;
+  fm: Frontmatter;
+  body: string;
+}
+
+const FM_RE = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/;
+
+export function parseDoc(path: string): Doc {
+  const raw = readFileSync(path, "utf8");
+  const m = raw.match(FM_RE);
+  if (!m) throw new Error(`${path}: missing frontmatter`);
+  const fm = (parseYaml(m[1]) ?? {}) as Frontmatter;
+  return { path, file: basename(path), fm, body: m[2].trim() };
+}
+
+export function listDocs(dir: string): Doc[] {
+  let names: string[] = [];
+  try {
+    names = readdirSync(dir).filter((n) => n.endsWith(".md") && !n.startsWith("_"));
+  } catch {
+    return [];
+  }
+  return names
+    .map((n) => join(dir, n))
+    .filter((p) => statSync(p).isFile())
+    .sort()
+    .map(parseDoc);
+}
+
+export function section(body: string, heading: string): string {
+  const parts = body.split(/^(?=##\s)/m);
+  const p = parts.find((x) => new RegExp(`^##\\s+${heading}\\b`).test(x));
+  return p ? p.replace(/^##[^\n]*\n?/, "").trim() : "";
+}
+
+export const DIMENSIONS = ["typography","color","spacing","layout","motion","copy","components","process","anti-slop"] as const;
+export const STANCES = ["always","never","prefer","avoid","context"] as const;
+export const STATUSES = ["candidate","confirmed","retired"] as const;
+export const KINDS = ["harvested","heuristic","bias","practice"] as const;
+export const COMPONENTS = ["notifications","user-profile","settings","tooltips","search","data-tables","sorting","filtering","highlight-cards","progressive-disclosure","modals","drawers","details-page","forms","empty-states","navigation","onboarding"] as const;
+
+export function scopeKind(scope: unknown): "universal" | "personal" | "client" | "project" | "invalid" {
+  if (scope === "universal" || scope === "personal") return scope;
+  if (typeof scope === "string" && /^client:[a-z0-9-]+$/.test(scope)) return "client";
+  if (typeof scope === "string" && /^project:[a-z0-9-]+$/.test(scope)) return "project";
+  return "invalid";
+}

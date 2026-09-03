@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "review", "runtimeExecutable": "bun", "runtimeArgs": ["--watch", "scripts/review-server.ts", "--brain", "../design-brain"], "port": 4455 }
+  ]
+}
