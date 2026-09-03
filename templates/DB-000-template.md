@@ -19,11 +19,19 @@ last_seen: 2026-01-01
 ---
 ## Rule
 
-One paragraph. The reusable statement, no project-specific values.
+One sentence that states what to do or avoid. No project-specific values.
+
+Then at most two short paragraphs, one idea each, five rows at most (about 300
+characters). Three or more enumerated cases become a list:
+
+- case one
+- case two
+- case three
 
 ## Why
 
-In Fabio's words where a quote exists; otherwise the inferred reason, marked as inferred.
+One or two short paragraphs. The designer's own words first where a quote exists; then the
+inferred reason, marked as inferred.
 
 ## Examples
 

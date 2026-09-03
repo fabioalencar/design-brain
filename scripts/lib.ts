@@ -70,3 +70,16 @@ export function scopeKind(scope: unknown): "universal" | "personal" | "client" |
   if (typeof scope === "string" && /^project:[a-z0-9-]+$/.test(scope)) return "project";
   return "invalid";
 }
+
+/** Paragraphs in ## Rule / ## Why longer than PARA_MAX chars (about five rows on the review card). */
+export const PARA_MAX = 300;
+export function longParagraphs(body: string): { section: string; chars: number }[] {
+  const out: { section: string; chars: number }[] = [];
+  for (const name of ["Rule", "Why"]) {
+    for (const para of section(body, name).split(/\n\s*\n/)) {
+      const t = para.trim();
+      if (t && !/^[-*]\s/.test(t) && t.length > PARA_MAX) out.push({ section: name, chars: t.length });
+    }
+  }
+  return out;
+}

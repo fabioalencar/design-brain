@@ -1,7 +1,7 @@
 // Local review queue: bun run review  →  http://localhost:4455
 // Swipe right = promote, left = retire, down = skip. Writes straight into inbox/ and decisions/.
 import { readFileSync, writeFileSync, renameSync, existsSync, readdirSync } from "node:fs";
-import { listDocs, section, type Doc, brainRoot, toolRoot } from "./lib";
+import { listDocs, section, longParagraphs, type Doc, brainRoot, toolRoot } from "./lib";
 
 const root = brainRoot();
 const PORT = Number(process.env.PORT ?? 4455);
@@ -26,7 +26,7 @@ function card(d: Doc) {
   return {
     id: d.fm.id, file: d.file, title: d.fm.title, dimension: d.fm.dimension, scope: d.fm.scope, stance: d.fm.stance,
     confidence: d.fm.confidence, occurrences: d.fm.occurrences ?? [], status: d.fm.status, kind: d.fm.kind ?? "harvested", component: d.fm.component ?? null,
-    notes: section(d.body, "Review notes"), review_note: d.fm.review_note ?? null,
+    notes: section(d.body, "Review notes"), longParas: longParagraphs(d.body).length, review_note: d.fm.review_note ?? null,
     rule: section(d.body, "Rule"), why: section(d.body, "Why"), examples: section(d.body, "Examples"), exceptions: section(d.body, "Exceptions"),
     evidence: ev, seeAlso: (d.body.match(/See also:\s*(.+)/)?.[1] ?? "").trim(),
   };

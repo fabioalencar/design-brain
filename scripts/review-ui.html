@@ -58,6 +58,7 @@
   .chip { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:999px; background:var(--accent-soft); color:var(--accent); border:0; font:600 14px/24px var(--sans) }
   .chip.meta { background:transparent; color:var(--ink-2); padding:3px 4px; font-weight:500 }
   .chip.meta em { opacity:.55 }
+  .chip.meta.warn { color:#8c5a14 }
   .chip.meta + .chip.meta::before { content:""; }
   .chip em { font-style:normal; font-weight:500; opacity:.65 }
   .chip select, .chip input { appearance:none; -webkit-appearance:none; border:0; background:transparent; color:inherit; font:inherit; font-weight:600; padding:0; cursor:pointer }
@@ -229,6 +230,7 @@ function cardEl(c, i) {
         <span class="chip meta"><em>source</em>${esc(source(c))}<span class="info" tabindex="0" data-tip="${esc(c.id)}\n${esc(c.file)}">i</span></span>
         ${c.kind !== "harvested" ? `<span class="chip meta"><em>kind</em>${esc(c.kind)}</span>` : ""}${c.component ? `<span class="chip meta"><em>component</em>${esc(c.component)}</span>` : ""}
         ${skipped.has(c.id) ? '<span class="chip meta">skipped earlier</span>' : ""}
+        ${c.longParas ? `<span class="chip meta warn"><em>needs rewrite</em>${c.longParas} long paragraph${c.longParas > 1 ? "s" : ""}<span class="info" tabindex="0" data-tip="A Rule or Why paragraph runs past five rows. Split it by idea or move detail to Examples.">i</span></span>` : ""}
         <span class="chip dim"><em>scope</em><select name="scope">${opt(scopes, c.scope)}</select></span>
       </div>
     </div>

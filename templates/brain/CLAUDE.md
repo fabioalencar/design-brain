@@ -34,3 +34,7 @@
 12. **Titles are two lines.** A title is one sentence of at most 80 characters that names the
     rule; every qualifier, example, and mechanism goes in `## Rule`. `bun run check` rejects
     longer titles.
+13. **Bodies read in short paragraphs.** Rule opens with one sentence, then at most two
+    paragraphs of one idea each, five rows max (~300 characters). Three or more cases become a
+    list. Why is one or two paragraphs. Detail moves to Examples or Exceptions; nothing is
+    deleted. `check` warns on long paragraphs.
