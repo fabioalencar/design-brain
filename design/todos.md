@@ -64,6 +64,9 @@ title: Todos
 - [ ] TASK-020 Seed pack: the reference candidates (heuristic, bias, practice) become the starter set of a new brain; design-brain init <dir> creates a brain from them
   status: todo · opened: 2026-09-03
   genesis: DDR-007 2026-09-03
+- [ ] TASK-021 Conflicts: resolution is one field per file, so a rule with several conflicts cannot say who wins per pair; move to a per-pair map (resolutions: {DB-012: ...}) and update the guard, compiler and drawer
+  status: todo · opened: 2026-09-04
+  genesis: conflict scan 2026-09-04
 
 ## Doing
 

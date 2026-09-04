@@ -452,7 +452,7 @@ function route() {
   const name = views[v] ? v : "queue";
   for (const [k, sels] of Object.entries(views)) for (const s of sels) $(s).hidden = k !== name;
   document.querySelectorAll("nav.tabs a").forEach((a) => a.classList.toggle("on", a.dataset.view === name));
-  if (name === "rules") loadRules(); if (name === "skills") loadSkills();
+  if (name === "queue") load(); else if (name === "rules") loadRules(); else if (name === "skills") loadSkills();
 }
 window.addEventListener("hashchange", route);
 
