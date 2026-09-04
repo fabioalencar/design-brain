@@ -12,29 +12,12 @@
           --accent:#9b8cff; --accent-soft:#272248; --yes:#5cc98d; --yes-soft:#14301f; --no:#f08292; --no-soft:#33161b;
           --warn:#e0b264; --warn-ink:#f0d6a4; --warn-soft:#2f2717; --warn-line:#4a3d21; --shadow:0,0,0; }
   :root[data-theme="dark"] .card, :root[data-theme="dark"] .modal, :root[data-theme="dark"] .drawer { box-shadow:0 1px 2px rgba(0,0,0,.5), 0 16px 48px rgba(0,0,0,.45) }
-  :root[data-theme="dark"] .mark .head { fill:var(--ink) }
   * { box-sizing:border-box }
   html,body { margin:0; background:var(--paper); color:var(--ink); font:16px/24px var(--sans); height:100% }
   body { display:flex; flex-direction:column; min-height:100vh; overflow:hidden }
   .wrap { width:min(720px, 100%); margin:0 auto; padding:0 20px; box-sizing:content-box }
   header { display:flex; align-items:center; gap:16px; padding:12px 24px; width:100%; box-sizing:border-box; font-size:14px; line-height:24px; color:var(--ink-2); font-variant-numeric:tabular-nums }
   header b { color:var(--ink); font-weight:600 }
-  .brand { display:inline-flex; align-items:center; gap:8px; font-weight:600; color:var(--ink); white-space:nowrap }
-  .mark { width:21px; height:22px; display:block; flex:none }
-  .mark .head { fill:var(--ink) }
-  .mark .guide { fill:none; stroke:var(--ink); stroke-width:3.35; stroke-linecap:round; stroke-linejoin:round }
-  .mark .trace { fill:none; stroke:var(--accent); stroke-width:3.6; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:1; stroke-dashoffset:0 }
-  @media (prefers-reduced-motion: no-preference) {
-    .mark .trace { stroke-dashoffset:1; animation:5s linear infinite }
-    .mark .t1 { animation-name:t1 }
-    .mark .t2 { animation-name:t2 }
-    .mark .t3 { animation-name:t3 }
-    .mark .t4 { animation-name:t4 }
-  }
-  @keyframes t1 { 0% { stroke-dashoffset:1; animation-timing-function:cubic-bezier(.33,0,.67,1) } 28.33%, 100% { stroke-dashoffset:0 } }
-  @keyframes t2 { 0%, 23.33% { stroke-dashoffset:1; animation-timing-function:cubic-bezier(.33,0,.67,1) } 45.0%, 100% { stroke-dashoffset:0 } }
-  @keyframes t3 { 0%, 40.0% { stroke-dashoffset:1; animation-timing-function:cubic-bezier(.33,0,.67,1) } 75.0%, 100% { stroke-dashoffset:0 } }
-  @keyframes t4 { 0%, 71.67% { stroke-dashoffset:1; animation-timing-function:cubic-bezier(.33,0,.67,1) } 95.0%, 100% { stroke-dashoffset:0 } }
 
   header span { white-space:nowrap }
   .qstats { display:flex; align-items:center; gap:14px; padding:14px 0 0; font:500 14px/24px var(--sans); color:var(--ink-2); font-variant-numeric:tabular-nums }
@@ -243,7 +226,7 @@
 </head>
 <body>
 <header>
-    <span class="brand"><svg class="mark" viewBox="0 0 73 76" role="img" aria-label="design-brain"><path class="head" d="M39.08 0C62.98 0.2 75.78 20 72.48 39.3C69.58 51.4 64.68 51.6 64.48 59.1C64.48 59.1 64.48 72.3 64.48 72.3C64.48 73.2 63.78 73.9 62.88 73.9C61.98 73.9 61.28 73.2 61.28 72.3C61.28 72.3 61.28 59.1 61.28 59.1C61.28 56.3 62.48 53.4 64.28 50.5C68.18 44.6 70.88 37.4 69.28 27.8C66.48 14.6 54.18 2.9 38.38 3.3C20.88 3.3 8.98 19.5 8.98 33.5C8.98 38.8 7.68 42 4.48 49.1C4.48 49.1 3.38 51.7 3.38 51.7C3.08 52.2 3.48 52.8 4.28 52.9C4.28 52.9 8.48 53.9 8.48 53.9C10.08 54.2 10.98 55.9 11.28 57C11.28 57 13.18 70.4 13.18 70.4C13.58 71.6 15.18 72.7 16.28 72.7C16.28 72.7 27.98 72.7 27.98 72.7C30.38 72.7 34.88 69.7 34.88 65C34.88 64.3 35.38 63.4 36.38 63.4C37.38 63.4 37.98 64.1 37.98 64.9C38.08 72.8 31.28 75.9 28.08 75.9C28.08 75.9 16.08 75.9 16.08 75.9C13.18 75.9 10.88 74 9.78 71C9.78 71 7.78 57.2 7.78 57.2C7.78 57.2 3.48 55.8 3.48 55.8C1.78 55.6 -1.02 53.5 0.38 50.5C0.38 50.5 1.58 47.7 1.58 47.7C5.28 39.6 5.68 37.5 5.68 33.5C5.68 13.2 22.88 0 39.08 0Z"/><path class="guide" d="M43.5 53.1C43.5 53.1 43.5 48.1 43.5 48.1C43.5 45.1 41.2 42.6 37.4 42.6C37.4 42.6 33.4 42.6 33.4 42.6C29.7 42.6 26.6 40.3 26.6 36.8C26.6 33.2 29.4 30.8 34 30.8"/><path class="guide" d="M26.2 37.5C20.9 37.5 16.8 33.8 16.8 28.1C16.8 22.7 20.5 18.3 27 18.8"/><path class="guide" d="M27 20C27 13.5 31.5 9.7 37.7 9.7C42.8 9.7 46.3 12.8 48.2 16.5C53.5 16 58.3 20 58.3 26.5C61.3 28.2 62.7 31.3 62.3 35.1C61.8 40 58.3 43.1 53.7 43.1C48.6 43.1 45.2 39.7 44.6 35.8"/><path class="guide" d="M44.6 35.8C48.8 36.2 51.6 33.3 51.3 27.7C49.3 26 47.3 25 45 24.8C45.2 20.5 43.4 17.7 39.8 17.5C37.1 17.2 34.5 18.7 32.8 21.8"/><path class="trace t1" d="M43.5 53.1C43.5 53.1 43.5 48.1 43.5 48.1C43.5 45.1 41.2 42.6 37.4 42.6C37.4 42.6 33.4 42.6 33.4 42.6C29.7 42.6 26.6 40.3 26.6 36.8C26.6 33.2 29.4 30.8 34 30.8" pathLength="1"/><path class="trace t2" d="M26.2 37.5C20.9 37.5 16.8 33.8 16.8 28.1C16.8 22.7 20.5 18.3 27 18.8" pathLength="1"/><path class="trace t3" d="M27 20C27 13.5 31.5 9.7 37.7 9.7C42.8 9.7 46.3 12.8 48.2 16.5C53.5 16 58.3 20 58.3 26.5C61.3 28.2 62.7 31.3 62.3 35.1C61.8 40 58.3 43.1 53.7 43.1C48.6 43.1 45.2 39.7 44.6 35.8" pathLength="1"/><path class="trace t4" d="M44.6 35.8C48.8 36.2 51.6 33.3 51.3 27.7C49.3 26 47.3 25 45 24.8C45.2 20.5 43.4 17.7 39.8 17.5C37.1 17.2 34.5 18.7 32.8 21.8" pathLength="1"/></svg><b>design-brain</b></span>
+    <b>design-brain</b>
     <nav class="tabs">
       <a href="#queue" data-view="queue">Queue <kbd>Q</kbd></a>
       <a href="#rules" data-view="rules">Rules <kbd>R</kbd></a>
