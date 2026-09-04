@@ -93,11 +93,12 @@ function compile() {
   return { ok: p.exitCode === 0, out };
 }
 
-const TYPES: Record<string, string> = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8" };
+const TYPES: Record<string, string> = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".jpg": "image/jpeg", ".png": "image/png", ".svg": "image/svg+xml; charset=utf-8" };
 function serveFile(rel: string): Response {
   const path = toolRoot + "scripts/" + rel.replace(/\.\./g, "");
   if (!existsSync(path)) return new Response("not found", { status: 404 });
-  return new Response(readFileSync(path, "utf8"), { headers: { "content-type": TYPES[extname(path)] ?? "text/plain; charset=utf-8" } });
+  // Bytes, not utf8: the app serves images as well as text.
+  return new Response(readFileSync(path), { headers: { "content-type": TYPES[extname(path)] ?? "text/plain; charset=utf-8" } });
 }
 
 /**
