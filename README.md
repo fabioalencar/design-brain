@@ -34,7 +34,7 @@ is a published heuristic, bias or component practice rather than anyone's privat
 
 ### Queue
 
-![The review queue](assets/screens/queue.png)
+![The review queue](assets/screens/queue.gif)
 
 One card at a time, with its evidence. Right confirms, left retires, down skips. Stance and
 scope are editable on the card before you decide, `N` leaves a dated note, and `Z` undoes.
