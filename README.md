@@ -51,10 +51,12 @@ design-brain review                 # http://localhost:4455
 Swipe right to promote, left to retire, down to skip. Adjust stance, scope, confidence,
 and leave notes on the card. Undo with Z.
 
-The app has three tabs: **Queue** (the swipe review), **Rules** (the whole ledger as a
-table: confirmed, in review, retired, conflicts; open any rule to edit it, move it back to
-review, or resolve a conflict), and **Skills** (what compiled into each skill, compile and
-install from there).
+The app has four tabs, reachable with Q, R, O and S: **Queue** (the swipe review),
+**Rules** (the whole ledger as a table: confirmed, in review, retired, conflicts; select
+rows for bulk verdicts, or open one to edit it and resolve conflicts), **Sources** (every
+published reference the ledger cites, grouped by publisher), and **Skills** (what compiled
+into each skill, compile and install from there). Light and dark themes follow the system
+until you pick one.
 
 When two rules disagree while both apply, declare it with `conflicts_with` and write a
 one-line `resolution` saying which wins and when. Two confirmed rules that conflict
