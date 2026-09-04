@@ -5,6 +5,7 @@ dimension: layout
 scope: universal
 stance: always
 status: candidate
+source: practice
 kind: practice
 component: details-page
 confidence: 8

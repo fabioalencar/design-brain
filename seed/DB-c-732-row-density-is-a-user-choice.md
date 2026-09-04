@@ -5,6 +5,7 @@ dimension: spacing
 scope: universal
 stance: prefer
 status: candidate
+source: practice
 kind: practice
 component: data-tables
 confidence: 7

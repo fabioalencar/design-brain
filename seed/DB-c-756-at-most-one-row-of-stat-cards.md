@@ -5,6 +5,7 @@ dimension: layout
 scope: universal
 stance: avoid
 status: candidate
+source: practice
 kind: practice
 component: highlight-cards
 confidence: 7

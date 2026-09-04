@@ -5,6 +5,7 @@ dimension: color
 scope: universal
 stance: never
 status: candidate
+source: practice
 kind: practice
 component: highlight-cards
 confidence: 8

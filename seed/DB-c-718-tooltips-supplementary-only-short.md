@@ -5,6 +5,7 @@ dimension: copy
 scope: universal
 stance: always
 status: candidate
+source: practice
 kind: practice
 component: tooltips
 confidence: 8

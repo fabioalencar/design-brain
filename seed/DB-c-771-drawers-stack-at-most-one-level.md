@@ -5,6 +5,7 @@ dimension: components
 scope: universal
 stance: avoid
 status: candidate
+source: practice
 kind: practice
 component: drawers
 confidence: 6

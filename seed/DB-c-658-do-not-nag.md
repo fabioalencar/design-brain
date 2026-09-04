@@ -5,6 +5,7 @@ dimension: components
 scope: universal
 stance: never
 status: candidate
+source: bias
 kind: bias
 confidence: 7
 occurrences: [reference]

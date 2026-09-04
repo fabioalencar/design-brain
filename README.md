@@ -69,6 +69,16 @@ design-brain compile                # skills/ and exports/ from confirmed decisi
 design-brain install                # symlink skills into ~/.claude/skills
 ```
 
+## Working on the tool
+
+```bash
+bun test scripts/          # drives a real brain in a temp directory through the ledger
+```
+
+`brain.ts` resolves a brain and hands out its paths; `ledger.ts` owns every mutation of it
+(promote, retire, restore, edit, note); `skills.ts` owns the compiled skills. Nothing else
+writes a decision file, so the CLI and the review app cannot diverge.
+
 ## The rules the tool keeps
 
 - A brain is private. The tool repo never contains one.

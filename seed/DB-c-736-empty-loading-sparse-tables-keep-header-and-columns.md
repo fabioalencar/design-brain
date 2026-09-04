@@ -5,6 +5,7 @@ dimension: components
 scope: universal
 stance: always
 status: candidate
+source: practice
 kind: practice
 component: data-tables
 confidence: 7

@@ -5,6 +5,7 @@ dimension: layout
 scope: universal
 stance: never
 status: candidate
+source: practice
 kind: practice
 component: progressive-disclosure
 confidence: 8

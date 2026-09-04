@@ -5,6 +5,7 @@ dimension: process
 scope: universal
 stance: always
 status: candidate
+source: practice
 kind: practice
 component: sorting
 confidence: 6

@@ -5,6 +5,7 @@ dimension: process
 scope: universal
 stance: avoid
 status: candidate
+source: bias
 kind: bias
 confidence: 7
 occurrences: [reference]

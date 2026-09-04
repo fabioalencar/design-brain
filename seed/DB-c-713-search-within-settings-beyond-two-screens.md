@@ -5,6 +5,7 @@ dimension: components
 scope: universal
 stance: prefer
 status: candidate
+source: practice
 kind: practice
 component: settings
 confidence: 7

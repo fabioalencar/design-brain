@@ -6,6 +6,8 @@ scope: personal         # universal|personal|client:<slug>|project:<slug>
 stance: prefer          # always|never|prefer|avoid|context
 status: candidate       # candidate|confirmed|retired
 kind: harvested         # harvested (default) | heuristic | bias | practice — the latter three need a reference: evidence line
+source: transcripts     # where this came from: transcripts | forge record | design audits | repos and docs |
+                        # imported project | heuristic | bias | practice. Survives promotion.
 # component: data-tables  # practice only — one of lib.ts COMPONENTS
 confidence: 5           # 1-10
 occurrences: [project-slug]

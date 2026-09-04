@@ -5,6 +5,7 @@ dimension: copy
 scope: universal
 stance: prefer
 status: candidate
+source: practice
 kind: practice
 component: details-page
 confidence: 6

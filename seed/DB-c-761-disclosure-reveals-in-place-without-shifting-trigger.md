@@ -5,6 +5,7 @@ dimension: motion
 scope: universal
 stance: always
 status: candidate
+source: practice
 kind: practice
 component: progressive-disclosure
 confidence: 7

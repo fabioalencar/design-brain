@@ -5,6 +5,7 @@ dimension: components
 scope: universal
 stance: never
 status: candidate
+source: practice
 kind: practice
 component: tooltips
 confidence: 8

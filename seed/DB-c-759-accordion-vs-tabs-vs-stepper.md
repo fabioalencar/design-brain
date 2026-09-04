@@ -5,6 +5,7 @@ dimension: components
 scope: universal
 stance: context
 status: candidate
+source: practice
 kind: practice
 component: progressive-disclosure
 confidence: 7

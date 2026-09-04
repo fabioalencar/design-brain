@@ -5,6 +5,7 @@ dimension: typography
 scope: universal
 stance: always
 status: candidate
+source: practice
 kind: practice
 component: highlight-cards
 confidence: 7

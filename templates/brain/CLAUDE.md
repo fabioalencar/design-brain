@@ -41,3 +41,5 @@
 14. **Conflicts are declared, then resolved.** When two rules disagree while both apply, tag
     `conflicts_with: [id]` and write a one-line `resolution:` saying which wins and when. Two
     confirmed rules that conflict without a resolution block `compile`.
+15. **Provenance is a field.** Every candidate records `source:` — where it came from. Ids are
+    allocated, not meaningful; never infer provenance from an id range.

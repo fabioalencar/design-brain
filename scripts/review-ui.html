@@ -322,15 +322,18 @@
     <div class="row"><button onclick="closeNote()">Cancel <kbd>Esc</kbd></button><button class="primary" onclick="saveNote()">Save note <kbd>⌘↵</kbd></button></div>
   </div>
 </div>
-<script>
+<script type="module">
+import { api } from "/app/api.js";
+import { cardEl, cardEdits, esc, md, statusLabel } from "/app/card.js";
+
 let all = [], queue = [], skipped = new Set(), history = [], tallies = { confirmed: 0, retired: 0 };
+let schema = null;
 const $ = (s) => document.querySelector(s);
-const esc = (s) => String(s ?? "").replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
-const md = (s) => esc(s).replace(/`([^`]+)`/g, "<code>$1</code>").replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");
 try { skipped = new Set(JSON.parse(localStorage.getItem("db-skipped") || "[]")); } catch {}
 
 async function load() {
-  const r = await (await fetch("/api/queue")).json();
+  if (!schema) schema = await api.schema();
+  const r = await api.queue();
   all = r.queue; tallies = { confirmed: r.confirmed, retired: r.retired };
   const dims = [...new Set(all.map((c) => c.dimension))].sort();
   $("#fdim").innerHTML = '<option value="">All dimensions</option>' + dims.map((d) => `<option>${d}</option>`).join("");
@@ -358,85 +361,8 @@ function render() {
     </div></div>`;
     return;
   }
-  queue.slice(0, 3).forEach((c, i) => st.appendChild(cardEl(c, i)));
+  queue.slice(0, 3).forEach((c, i) => st.appendChild(cardEl(c, { depth: i, schema, skipped })));
   attachDrag(st.firstElementChild);
-}
-// evidence: `type:ref "quote"` → source tag, reference, quote
-function evLine(e) {
-  const m = String(e).match(/^([a-z]+):([^"]*?)\s*(?:"([\s\S]*)")?\s*$/i);
-  if (!m) return `<li>${md(e)}</li>`;
-  const [, type, ref, quote] = m;
-  const label = { transcript: "said", repo: "repo", ddr: "DDR", audit: "audit", commit: "commit", note: "note", reference: "source", learnings: "learning" }[type.toLowerCase()] ?? type;
-  const refHtml = ref.trim() ? `<span class="ref">${esc(ref.trim().replace(/^~\/Code\//, ""))}</span>` : "";
-  const q = quote ? `<span class="quote">${type.toLowerCase() === "transcript" ? "“" + md(quote) + "”" : md(quote)}</span>` : "";
-  return `<li><span class="src">${esc(label)}</span>${q}${q && refHtml ? "<br>" : ""}${refHtml}</li>`;
-}
-// examples: "- project — value — source" lines → rows with the first segment as a label
-function listify(text) {
-  if (!text) return "";
-  const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
-  if (!lines.every((l) => /^[-*]\s/.test(l))) return "";
-  return lines.map((l) => {
-    const body = l.replace(/^[-*]\s+/, "");
-    const parts = body.split(/\s[—–]\s/);
-    return parts.length > 1 ? `<li><span class="who">${md(parts[0])}</span>${md(parts.slice(1).join(" — "))}</li>` : `<li>${md(body)}</li>`;
-  }).join("");
-}
-function source(c) {
-  const n = Number(String(c.id).match(/(\d{3})$/)?.[1] ?? 0);
-  if (c.kind === "heuristic") return "heuristic"; if (c.kind === "bias") return "bias"; if (c.kind === "practice") return "practice";
-  if (n < 200) return "transcripts"; if (n < 300) return "forge record"; if (n < 400) return "design audits"; if (n < 500) return "repos and docs"; if (n < 600) return "imported project"; return "reference";
-}
-function cardEl(c, i) {
-  const el = document.createElement("div");
-  el.className = "card" + (i === 0 ? " top" : i === 1 ? " next" : " next2");
-  el.dataset.id = c.id;
-  const ev = c.evidence.map(evLine).join("");
-  const exList = listify(c.examples), exBody = exList ? `<ul>${exList}</ul>` : c.examples && `<p>${md(c.examples)}</p>`;
-  const opt = (list, cur) => list.map((s) => `<option ${s === cur ? "selected" : ""}>${s}</option>`).join("");
-  const scopes = [...new Set(["universal", "personal", "project:" + (c.occurrences[0] || "x"), c.scope])];
-  const sec = (title, body, quiet) => body ? `<section class="${quiet ? "quiet" : ""}"><h2>${title}</h2>${body}</section>` : "";
-  el.innerHTML = `
-    <div class="stamp yes">PROMOTE</div><div class="stamp no">RETIRE</div>
-    <div class="head"><h1>${esc(c.title)}</h1>
-      <div class="chips">
-        <span class="chip ${esc(c.stance)}"><em>stance</em><select name="stance" onchange="this.parentNode.className='chip '+this.value">${opt(["always","never","prefer","avoid","context"], c.stance)}</select></span>
-        <span class="chip dim"><em>confidence</em><input name="confidence" type="number" min="1" max="10" value="${c.confidence}"></span>
-        <span class="chip dim"><em>scope</em><select name="scope">${opt(scopes, c.scope)}</select></span>
-      </div>
-    </div>
-    <div class="body">
-    <div class="chiprow">
-      <div class="chips metarow">
-        <span class="chip meta"><em>dimension</em>${esc(c.dimension)}</span>
-        <span class="chip meta"><em>seen</em>${c.occurrences.length}×<span class="info" tabindex="0" data-tip="${esc(c.occurrences.join("\n"))}">i</span></span>
-        <span class="chip meta"><em>source</em>${esc(source(c))}<span class="info" tabindex="0" data-tip="${esc(c.id)}\n${esc(c.file)}">i</span></span>
-        ${c.kind !== "harvested" ? `<span class="chip meta"><em>kind</em>${esc(c.kind)}</span>` : ""}${c.component ? `<span class="chip meta"><em>component</em>${esc(c.component)}</span>` : ""}
-        ${skipped.has(c.id) ? '<span class="chip meta">skipped earlier</span>' : ""}
-        ${c.longParas ? `<span class="chip meta warn"><em>needs rewrite</em>${c.longParas} long paragraph${c.longParas > 1 ? "s" : ""}<span class="info" tabindex="0" data-tip="A Rule or Why paragraph runs past five rows. Split it by idea or move detail to Examples.">i</span></span>` : ""}
-      </div>
-    </div>
-    <div class="id">${esc(c.id)} · seen in ${esc(c.occurrences.join(", "))}</div>
-    ${c.review_note ? `<div class="note">${md(c.review_note)}</div>` : ""}
-    ${(c.conflicts || []).length ? `<div class="callout"><b>Conflicts with</b> ${c.conflicts.map((x) => `${esc(x.id)} · ${esc(x.title)} <span class="st ${esc(x.status)}">${esc(x.status)}</span>`).join("<br>")}${c.resolution ? `<br><b>Resolution:</b> ${md(c.resolution)}` : `<br><span style="opacity:.8">No resolution yet. Promote will ask which wins.</span>`}</div>` : ""}
-    ${sec("Rule", `<p>${md(c.rule)}</p>`)}
-    ${sec("Why", c.why && `<p>${md(c.why).replace(/\n\n/g, "</p><p>")}</p>`, true)}
-    ${sec("Examples", exBody, true)}
-    ${sec("Exceptions", c.exceptions && `<p>${md(c.exceptions)}</p>`, true)}
-    ${sec(`Evidence · ${c.evidence.length}`, `<ul>${ev}</ul>`, true)}
-    ${sec("See also", c.seeAlso && `<p>${md(c.seeAlso)}</p>`, true)}
-    ${sec("Review notes", c.notes && `<p>${md(c.notes)}</p>`)}
-    </div>`;
-  el.addEventListener("scroll", () => el.querySelector(".head").classList.toggle("stuck", el.scrollTop > 4), { passive: true });
-  return el;
-}
-function edits(el, c) {
-  const g = (n) => el.querySelector(`[name=${n}]`)?.value;
-  const e = {};
-  if (g("stance") && g("stance") !== c.stance) e.stance = g("stance");
-  if (g("scope") && g("scope") !== c.scope) e.scope = g("scope");
-  if (g("confidence") && Number(g("confidence")) !== Number(c.confidence)) e.confidence = Number(g("confidence"));
-  return Object.keys(e).length ? e : undefined;
 }
 async function act(action) {
   const c = queue[0]; if (!c) return;
@@ -448,8 +374,8 @@ async function act(action) {
     return;
   }
   if (action === "skip") { skipped.add(c.id); localStorage.setItem("db-skipped", JSON.stringify([...skipped])); el.classList.add("gone-d"); setTimeout(rebuild, 250); return; }
-  const body = { id: c.id, action, edits: edits(el, c) };
-  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) })).json();
+  const body = { id: c.id, action, edits: cardEdits(el, c) };
+  const r = await api.verdict(body.id, body.action, body.edits);
   if (!r.ok) { toast("Error: " + r.error); return; }
   history.push({ card: c, undo: r.undo });
   el.classList.add(action === "promote" ? "gone-r" : "gone-l");
@@ -467,23 +393,23 @@ async function saveNote() {
   if (!text) { closeNote(); return; }
   if (resolveNext) { // promote flow asked for a resolution
     const fn = resolveNext; resolveNext = null; closeNote();
-    const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: c.id, action: "edit", edits: { resolution: text } }) })).json();
+    const r = await api.verdict(c.id, "edit", { resolution: text });
     if (!r.ok) { toast("Error: " + r.error); return; }
     c.resolution = text; fn(); return;
   }
-  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: c.id, action: "note", edits: { note: text } }) })).json();
+  const r = await api.verdict(c.id, "note", { note: text });
   if (!r.ok) { toast("Error: " + r.error); return; }
   closeNote(); toast("Note saved to " + c.id); noteTarget = null; await load(); if (!$("#v-rules").hidden) loadRules();
 }
 async function undo() {
   const h = history.pop(); if (!h) { toast("Nothing to undo"); return; }
-  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(h.undo) })).json();
+  const r = await api.verdict(h.undo.id, h.undo.action);
   if (!r.ok) { toast("Undo failed: " + r.error); return; }
   toast("Undone " + h.card.id); await load();
 }
 async function compile(preview) {
   toast("Compiling…");
-  const r = await (await fetch("/api/compile" + (preview ? "?preview=1" : ""), { method: "POST" })).json();
+  const r = await api.compile(preview);
   toast(r.ok ? r.out.trim().split("\n").pop() : "Compile failed: " + r.out.trim().split("\n").slice(-2).join(" "));
   if (!$("#v-skills").hidden) loadSkills();
 }
@@ -551,7 +477,8 @@ window.addEventListener("hashchange", route);
 // ---------- rules ----------
 let rules = [], rstatus = "", picked = new Set();
 async function loadRules() {
-  const r = await (await fetch("/api/rules")).json();
+  if (!schema) schema = await api.schema();
+  const r = await api.rules();
   rules = r.rules;
   const dims = [...new Set(rules.map((c) => c.dimension))].sort();
   const cur = $("#rdim").value;
@@ -569,7 +496,7 @@ function renderRules() {
     <td class="c"><input type="checkbox" ${picked.has(c.id) ? "checked" : ""}></td>
     <td class="t">${esc(c.title)}${c.conflicts_with.length ? ` <span class="st conflict">${c.resolution ? "resolved" : "conflict"}</span>` : ""}</td>
     <td class="stance-t ${esc(c.stance)}">${esc(c.stance)}</td><td>${esc(c.dimension)}</td><td>${esc(c.scope)}</td>
-    <td class="n">${c.confidence}</td><td class="n">${c.occurrences.length}×</td><td><span class="st ${esc(c.status)}">${c.status === "candidate" ? "in review" : esc(c.status)}</span></td></tr>`).join("") || `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--ink-3)">Nothing matches.</td></tr>`;
+    <td class="n">${c.confidence}</td><td class="n">${c.occurrences.length}×</td><td><span class="st ${esc(c.status)}">${esc(statusLabel(c.status))}</span></td></tr>`).join("") || `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--ink-3)">Nothing matches.</td></tr>`;
 }
 let shown = [];
 function renderBulk() {
@@ -586,7 +513,7 @@ async function bulk(action) {
   toast(`${verb} ${ids.length}…`);
   let done = 0, failed = [];
   for (const id of ids) {
-    const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id, action }) })).json();
+    const r = await api.verdict(id, action);
     r.ok ? done++ : failed.push(id);
   }
   picked.clear();
@@ -606,9 +533,9 @@ $("#rbody").onclick = (e) => {
 let dcur = null;
 function openDrawer(id) {
   const c = rules.find((x) => x.id === id); if (!c) return; dcur = c;
-  $("#dstatus").innerHTML = `<span class="st ${esc(c.status)}">${c.status === "candidate" ? "in review" : esc(c.status)}</span>`;
+  $("#dstatus").innerHTML = `<span class="st ${esc(c.status)}">${esc(statusLabel(c.status))}</span>`;
   $("#dmeta").textContent = `${c.id}${c.was ? " (was " + c.was + ")" : ""} · ${c.dir}/${c.file}${c.promoted ? " · promoted " + c.promoted : ""}${c.retired ? " · retired " + c.retired : ""}`;
-  const el = cardEl(c, 0); el.classList.remove("top");
+  const el = cardEl(c, { depth: 0, schema, skipped }); el.classList.remove("top");
   const conf = document.createElement("div"); conf.className = "conf"; conf.style.margin = "0 36px 28px";
   conf.innerHTML = `<h3>Conflicts</h3>
     <div class="row" id="clist">${c.conflicts.map((x) => `<span class="cid" data-id="${esc(x.id)}">${esc(x.id)} <span class="small">${esc(x.title).slice(0, 60)} · ${esc(x.status)}</span><button title="remove" onclick="this.parentNode.remove()">×</button></span>`).join("") || '<span class="small">None declared.</span>'}</div>
@@ -628,20 +555,20 @@ function openDrawer(id) {
 function closeDrawer() { $("#drawerbg").classList.remove("on"); $("#drawer").classList.remove("on"); dcur = null; }
 function addConflict() { const v = $("#cadd").value.trim(); if (!/^DB-(c-)?\d{3}$/.test(v)) { toast("Use an id like DB-012 or DB-c-503"); return; } const t = rules.find((x) => x.id === v); const span = document.createElement("span"); span.className = "cid"; span.dataset.id = v; span.innerHTML = `${esc(v)} <span class="small">${esc(t ? t.title : "(not found)").slice(0, 60)}${t ? " · " + esc(t.status) : ""}</span><button title="remove" onclick="this.parentNode.remove()">×</button>`; const l = $("#clist"); if (!l.querySelector(".cid")) l.innerHTML = ""; l.appendChild(span); $("#cadd").value = ""; }
 function drawerEdits() {
-  const el = $("#dbody .card"); const e = edits(el, dcur) || {};
+  const el = $("#dbody .card"); const e = cardEdits(el, dcur) || {};
   e.conflicts_with = [...$("#clist").querySelectorAll(".cid")].map((x) => x.dataset.id);
   e.resolution = $("#cres").value;
   return e;
 }
 async function saveDrawer(silent) {
-  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: dcur.id, action: "edit", edits: drawerEdits() }) })).json();
+  const r = await api.verdict(dcur.id, "edit", drawerEdits());
   if (!r.ok) { toast("Error: " + r.error); return false; }
   if (!silent) { toast("Saved " + dcur.id); await loadRules(); openDrawer(dcur.id); }
   return true;
 }
 async function drawerVerdict(action) {
   if (!(await saveDrawer(true))) return;
-  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: dcur.id, action }) })).json();
+  const r = await api.verdict(dcur.id, action);
   if (!r.ok) { toast("Error: " + r.error); return; }
   toast(action === "promote" ? `Promoted as ${r.newId}` : action === "retire" ? "Retired" : "Back in review");
   closeDrawer(); await loadRules(); load();
@@ -651,7 +578,7 @@ function drawerNote() { const c = dcur; $("#notebg").classList.add("on"); $("#no
 // ---------- sources ----------
 const PUBLISHERS = { "nngroup.com": "Nielsen Norman Group", "lawsofux.com": "Laws of UX", "deceptive.design": "Deceptive Design", "w3.org": "W3C · WCAG", "developer.mozilla.org": "MDN", "developer.apple.com": "Apple Human Interface Guidelines", "m3.material.io": "Material Design", "material.io": "Material Design", "carbondesignsystem.com": "IBM Carbon", "polaris.shopify.com": "Shopify Polaris", "atlassian.design": "Atlassian Design System", "design-system.service.gov.uk": "GOV.UK Design System", "baymard.com": "Baymard Institute", "smashingmagazine.com": "Smashing Magazine", "ui-patterns.com": "UI Patterns", "doi.org": "Academic papers", "webaim.org": "WebAIM", "inclusive-components.design": "Inclusive Components" };
 async function loadSources() {
-  if (!rules.length) { const r = await (await fetch("/api/rules")).json(); rules = r.rules; }
+  if (!rules.length) { const r = await api.rules(); rules = r.rules; }
   const by = new Map();
   for (const c of rules) for (const e of c.evidence) {
     const m = String(e).match(/^reference:\s*(https?:\/\/[^\s]+)\s*(?:[—-]\s*(.*))?$/i);
@@ -683,7 +610,7 @@ function fromSource(id) { location.hash = "#rules"; setTimeout(() => openDrawer(
 
 // ---------- skills ----------
 async function loadSkills() {
-  const r = await (await fetch("/api/skills")).json();
+  const r = await api.skills();
   $("#lastcompile").textContent = r.last ? `Last compile ${new Date(r.last.when).toLocaleString()} · ${r.last.preview ? "preview (includes unreviewed)" : "confirmed only"}${r.last.ok === false ? " · FAILED" : ""}` : "Not compiled yet";
   $("#skillcards").innerHTML = r.skills.map((s) => !s.exists ? `<div class="skill"><h3>${esc(s.name)}</h3><span class="warn">Not compiled yet.</span></div>` : `<div class="skill">
     <h3>${esc(s.name)}</h3><div class="desc">${esc(s.description).slice(0, 220)}</div>
@@ -693,7 +620,9 @@ async function loadSkills() {
   window._skills = r.skills;
 }
 function showSkill(name) { const s = window._skills.find((x) => x.name === name); $("#skillview").innerHTML = `<pre class="md">${esc(s.body)}</pre>`; $("#skillview").scrollIntoView({ behavior: "smooth", block: "start" }); }
-async function installSkills() { const r = await (await fetch("/api/install", { method: "POST" })).json(); toast(r.ok ? "Installed: " + r.installed.join(", ") : "Error: " + r.error); loadSkills(); }
+async function installSkills() { const r = await api.install(); toast(r.ok ? "Installed: " + r.installed.join(", ") : "Error: " + r.error); loadSkills(); }
+Object.assign(window, { act, undo, compile, saveNote, openNote, closeNote, openAbout, closeAbout, toggleTheme,
+  openDrawer, closeDrawer, saveDrawer, drawerVerdict, drawerNote, addConflict, bulk, showSkill, installSkills, fromSource, renderRules, picked });
 route();
 if ((location.hash || "#queue") !== "#queue") load();   // header counters are queue stats; keep them true on every tab
 </script>

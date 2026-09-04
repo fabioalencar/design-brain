@@ -5,7 +5,9 @@
   "license": "MIT",
   "private": false,
   "type": "module",
-  "bin": { "design-brain": "bin/design-brain.ts" },
+  "bin": {
+    "design-brain": "bin/design-brain.ts"
+  },
   "scripts": {
     "check": "bun scripts/check.ts",
     "compile": "bun scripts/compile-skills.ts",
@@ -14,7 +16,12 @@
     "harvest:transcripts": "bun scripts/harvest-transcripts.ts",
     "promote": "bun scripts/promote.ts promote",
     "retire": "bun scripts/promote.ts retire",
-    "rescope": "bun scripts/promote.ts rescope"
+    "rescope": "bun scripts/promote.ts rescope",
+    "test": "bun test scripts/",
+    "restore": "bun scripts/promote.ts restore",
+    "note": "bun scripts/promote.ts note"
   },
-  "dependencies": { "yaml": "^2.5.0" }
+  "dependencies": {
+    "yaml": "^2.5.0"
+  }
 }

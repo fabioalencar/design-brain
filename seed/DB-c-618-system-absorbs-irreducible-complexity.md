@@ -5,6 +5,7 @@ dimension: process
 scope: universal
 stance: always
 status: candidate
+source: heuristic
 kind: heuristic
 confidence: 6
 occurrences: [reference]
