@@ -60,13 +60,6 @@ supports. Anything you want to read later parks here until you do.
 What compiled into each skill, section by section, with its rule and word counts and
 whether it is linked into `~/.claude/skills`. Compile and install without leaving the page.
 
-### Focus mode
-
-![Focus mode](assets/screens/focus.jpg)
-
-The small mark in the bottom right corner hides the header, the filters and the counters,
-leaving the card and its two verdicts. Click it again to bring the app back.
-
 ---
 
 ## Install
