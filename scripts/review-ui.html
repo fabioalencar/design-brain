@@ -69,7 +69,7 @@
   .source .cta { flex:none; border:1px solid var(--line); background:var(--card); border-radius:999px; padding:5px 13px; font:600 13px/18px var(--sans); color:var(--ink); cursor:pointer }
   .source .cta:hover { border-color:var(--line-strong) }
   .source .top[role=button] { cursor:pointer }
-  .source pre.md { margin:12px 0 0 }
+  .drawer pre.md { margin:0; border:0; border-radius:0; background:transparent; padding:22px 26px }
   .view .count { margin-left:auto; font:500 13px/20px var(--sans); color:var(--ink-3) }
   table.rules { width:100%; border-collapse:separate; border-spacing:0; background:var(--card); border:1px solid var(--line); border-radius:12px; font:400 14px/20px var(--sans) }
   table.rules th:first-child { border-top-left-radius:11px } table.rules th:last-child { border-top-right-radius:11px }
@@ -796,17 +796,19 @@ function toggleSkill(top) {
   refreshFades();
 }
 function showSkill(name) {
-  const row = document.querySelector(`.source[data-name="${name}"]`);
   const s = window._skills.find((x) => x.name === name);
-  row.classList.add("open");
-  row.querySelector(".top").setAttribute("aria-expanded", "true");
-  let pre = row.querySelector("pre.md");
-  if (pre) { pre.remove(); return; }
-  pre = document.createElement("pre");
+  if (!s?.body) { toast(`${name} is not compiled yet`); return; }
+  dcur = null;
+  $("#dstatus").innerHTML = `<span class="st ${s.mtime ? "confirmed" : "candidate"}">${s.mtime ? "compiled" : "shipped by the tool"}</span>`;
+  $("#dmeta").textContent = `${s.name}${s.ids?.length ? ` · ${s.ids.length} rules · ${s.words} words` : ""}${s.mtime ? ` · built ${new Date(s.mtime).toLocaleString()}` : ""}`;
+  const pre = document.createElement("pre");
   pre.className = "md";
   pre.textContent = s.body;
-  row.appendChild(pre);
-  row.scrollIntoView({ behavior: "smooth", block: "start" });
+  $("#dbody").innerHTML = "";
+  $("#dbody").appendChild(pre);
+  $("#dactions").innerHTML = `<span class="sp"></span><button onclick="closeDrawer()">Close <kbd>Esc</kbd></button>`;
+  $("#drawerbg").classList.add("on");
+  $("#drawer").classList.add("on");
 }
 async function installSkills() { const r = await api.install(); toast(r.ok ? "Installed: " + r.installed.join(", ") : "Error: " + r.error); loadSkills(); }
 Object.assign(window, { act, undo, compile, saveNote, openNote, closeNote, openAbout, closeAbout, toggleTheme,

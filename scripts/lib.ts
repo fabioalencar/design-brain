@@ -80,9 +80,16 @@ export function conflictsOf(d: Doc): string[] {
 export function unresolvedConflicts(decisions: Doc[]): { a: Doc; b: Doc }[] {
   const byId = new Map(decisions.map((d) => [String(d.fm.id), d]));
   const out: { a: Doc; b: Doc }[] = [];
+  // A conflict is declared on one side only, so pair on the ids rather than on who declared it,
+  // and dedupe on the pair so a mutual declaration is still reported once.
+  const seen = new Set<string>();
   for (const a of decisions) for (const id of conflictsOf(a)) {
     const b = byId.get(id);
-    if (b && !a.fm.resolution && !b.fm.resolution && String(a.fm.id) < String(b.fm.id)) out.push({ a, b });
+    if (!b || b === a || a.fm.resolution || b.fm.resolution) continue;
+    const pair = [String(a.fm.id), id].sort().join(" ");
+    if (seen.has(pair)) continue;
+    seen.add(pair);
+    out.push({ a, b });
   }
   return out;
 }
