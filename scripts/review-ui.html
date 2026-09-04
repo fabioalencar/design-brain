@@ -165,7 +165,7 @@
   @keyframes settle { from { transform:translateY(10px); opacity:.6 } to { transform:none; opacity:1 } }
   @media (prefers-reduced-motion: reduce) { .card, .card.top { animation:none; transition:none } }
   .card .head { position:sticky; top:0; z-index:2; background:var(--card); padding:28px 36px 16px; display:flex; flex-direction:column; gap:14px; transition:box-shadow .15s }
-  .card .head.stuck { box-shadow:0 1px 0 var(--line), 0 8px 16px -12px rgba(20,20,30,.25) }
+  .card .head.stuck { box-shadow:0 1px 0 var(--line) }
   .card .body { padding:4px 36px 44px; display:flex; flex-direction:column; gap:18px }
   .card .body > section, .card .head > h1, .card .body > .note { max-width:66ch }
   .card { z-index:3 }
