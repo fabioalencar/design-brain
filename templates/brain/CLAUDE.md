@@ -38,3 +38,6 @@
     paragraphs of one idea each, five rows max (~300 characters). Three or more cases become a
     list. Why is one or two paragraphs. Detail moves to Examples or Exceptions; nothing is
     deleted. `check` warns on long paragraphs.
+14. **Conflicts are declared, then resolved.** When two rules disagree while both apply, tag
+    `conflicts_with: [id]` and write a one-line `resolution:` saying which wins and when. Two
+    confirmed rules that conflict without a resolution block `compile`.

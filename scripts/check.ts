@@ -1,5 +1,5 @@
 // Validates frontmatter of inbox/, decisions/, patterns/. Exit 1 on any error.
-import { listDocs, scopeKind, longParagraphs, DIMENSIONS, STANCES, STATUSES, KINDS, COMPONENTS, brainRoot, toolRoot } from "./lib";
+import { listDocs, scopeKind, longParagraphs, conflictsOf, unresolvedConflicts, DIMENSIONS, STANCES, STATUSES, KINDS, COMPONENTS, brainRoot, toolRoot } from "./lib";
 
 const TITLE_MAX = 80; // two lines at the review card width; detail goes in ## Rule
 const errors: string[] = [];
@@ -33,6 +33,8 @@ for (const dir of ["inbox", "decisions"]) {
     need(Array.isArray(fm.evidence) && (fm.evidence as unknown[]).length > 0, `${f}: evidence required`);
     need(Array.isArray(fm.occurrences) && (fm.occurrences as unknown[]).length > 0, `${f}: occurrences required`);
     if (!/^##\s+Rule/m.test(d.body)) errors.push(`${f}: missing '## Rule'`);
+    for (const c of conflictsOf(d)) need(/^DB-(c-)?\d{3}$/.test(c), `${f}: conflicts_with entry '${c}' is not an id`);
+    if (conflictsOf(d).length && !d.fm.resolution && dir === "inbox") warn.push(`${f}: conflicts with ${conflictsOf(d).join(", ")} and has no resolution yet`);
     for (const p of longParagraphs(d.body)) warn.push(`${f}: ${p.section} paragraph is ${p.chars} chars (~${Math.ceil(p.chars / 62)} rows); max ~300 (5 rows). Split by idea or move detail to Examples.`);
     if (!/^##\s+Why/m.test(d.body)) warn.push(`${f}: missing '## Why'`);
     if (fm.scope === "personal" && Array.isArray(fm.occurrences)) {
@@ -43,6 +45,7 @@ for (const dir of ["inbox", "decisions"]) {
     }
   }
 }
+for (const { a, b } of unresolvedConflicts(listDocs(root + "decisions"))) errors.push(`decisions/${a.file} and decisions/${b.file} are both confirmed, marked as conflicting, and neither carries a resolution`);
 for (const d of listDocs(root + "patterns")) {
   const f = `patterns/${d.file}`;
   need(d.fm.type === "pattern", `${f}: type must be pattern`);

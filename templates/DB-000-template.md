@@ -16,6 +16,8 @@ evidence:
   - "repo:~/Code/<project>/<file>"
   - "reference:<url> — <who published it>"   # for heuristics and biases
 last_seen: 2026-01-01
+# conflicts_with: [DB-012]          # another rule that disagrees when both apply
+# resolution: "which wins, and when" # required before two confirmed rules that conflict can compile
 ---
 ## Rule
 

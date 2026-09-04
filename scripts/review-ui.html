@@ -16,13 +16,78 @@
   header span { white-space:nowrap }
   header .bar { flex:1 }
   header .tally { margin-left:auto }
+  nav.tabs { display:flex; gap:22px; margin:0 10px 0 14px }
+  nav.tabs a { display:inline-flex; align-items:center; gap:7px; padding:8px 0 10px; font:500 14px/20px var(--sans); color:var(--ink-2); text-decoration:none; border-bottom:2px solid transparent; margin-bottom:-2px }
+  nav.tabs a svg { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round }
+  nav.tabs a.on { color:var(--ink); font-weight:600; border-bottom-color:var(--ink) }
+  .view { width:min(1100px, 100%); margin:0 auto; padding:0 20px 40px; box-sizing:border-box }
+  .view[hidden] { display:none }
+  main[hidden], footer[hidden], .toolbar[hidden] { display:none }
+  .view .bar-row { display:flex; gap:8px; align-items:center; padding:10px 0 14px; flex-wrap:wrap }
+  .seg { display:inline-flex; border:1px solid var(--line); border-radius:8px; background:var(--card); overflow:hidden; box-shadow:0 1px 2px rgba(20,20,30,.05) }
+  .seg button { border:0; background:transparent; padding:8px 12px; font:500 14px/20px var(--sans); color:var(--ink-2); cursor:pointer }
+  .seg button.on { background:var(--paper); color:var(--ink); font-weight:600 }
+  .search { border:1px solid var(--line); border-radius:8px; background:var(--card); padding:8px 12px; font:500 14px/20px var(--sans); color:var(--ink); min-width:220px; box-shadow:0 1px 2px rgba(20,20,30,.05) }
+  .search:focus { outline:0; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft) }
+  .view .count { margin-left:auto; font:500 13px/20px var(--sans); color:var(--ink-3) }
+  table.rules { width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden; font:400 14px/20px var(--sans) }
+  table.rules th { text-align:left; font:600 12px/18px var(--sans); letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3); padding:10px 14px; border-bottom:1px solid var(--line); background:var(--paper) }
+  table.rules td { padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--ink-2) }
+  table.rules tr:last-child td { border-bottom:0 }
+  table.rules tbody tr { cursor:pointer }
+  table.rules tbody tr:hover td { background:#fbfaf7 }
+  table.rules td.t { color:var(--ink); font-weight:500; max-width:52ch }
+  table.rules td.n { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap }
+  .st { display:inline-block; font:600 12px/18px var(--sans); padding:0 8px; border-radius:999px; background:var(--paper); color:var(--ink-2) }
+  .st.confirmed { background:var(--yes-soft); color:var(--yes) } .st.retired { color:var(--ink-3) } .st.candidate { background:var(--accent-soft); color:var(--accent) }
+  .st.conflict { background:#fcf2df; color:#8c5a14 }
+  .stance-t.never, .stance-t.avoid { color:var(--no) } .stance-t.always { color:var(--yes) } .stance-t.prefer, .stance-t.context { color:var(--accent) }
+  .drawer-bg { position:fixed; inset:0; background:rgba(20,20,30,.25); display:none; z-index:40 }
+  .drawer-bg.on { display:block }
+  .drawer { position:fixed; top:0; right:0; bottom:0; width:min(680px, 96vw); background:var(--card); border-left:1px solid var(--line); box-shadow:-16px 0 48px rgba(20,20,30,.12); z-index:41; display:flex; flex-direction:column; transform:translateX(102%); transition:transform .25s cubic-bezier(.22,1,.36,1) }
+  .drawer.on { transform:none }
+  .drawer .dhead { display:flex; align-items:center; gap:10px; padding:14px 22px; border-bottom:1px solid var(--line); font:500 14px/20px var(--sans); color:var(--ink-2) }
+  .drawer .dhead .x { margin-left:auto; border:1px solid var(--line); background:var(--card); border-radius:999px; width:32px; height:32px; cursor:pointer; font-size:16px; color:var(--ink-2) }
+  .drawer .dbody { flex:1; overflow:auto; position:relative }
+  .drawer .card { position:relative; inset:auto; border:0; border-radius:0; box-shadow:none; height:auto; overflow:visible; mask-image:none; -webkit-mask-image:none; animation:none; touch-action:auto; user-select:text }
+  .drawer .card .head { position:static }
+  .drawer .stamp { display:none }
+  .dactions { display:flex; gap:8px; padding:12px 22px; border-top:1px solid var(--line); flex-wrap:wrap; align-items:center }
+  .dactions button { border:1px solid var(--line); background:var(--card); border-radius:999px; padding:9px 16px; font:600 14px/20px var(--sans); color:var(--ink); cursor:pointer }
+  .dactions button.yes { background:var(--yes); border-color:var(--yes); color:#fff } .dactions button.no { background:var(--no); border-color:var(--no); color:#fff }
+  .dactions .sp { flex:1 }
+  .conf { border:1px solid #e8cfa0; background:#fcf2df; border-radius:10px; padding:12px 14px; display:flex; flex-direction:column; gap:8px; font:400 14px/22px var(--sans); color:#5f3d0b }
+  .conf h3 { margin:0; font:600 12px/18px var(--sans); letter-spacing:.08em; text-transform:uppercase; color:#8c5a14 }
+  .conf .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap }
+  .conf .cid { display:inline-flex; gap:6px; align-items:center; background:#fff; border:1px solid #e8cfa0; border-radius:999px; padding:2px 10px; font-weight:600; color:#5f3d0b }
+  .conf .cid button { border:0; background:transparent; cursor:pointer; color:#8c5a14; font-size:14px; padding:0 }
+  .conf input, .conf textarea { border:1px solid #e8cfa0; border-radius:8px; padding:7px 10px; font:inherit; background:#fff; color:var(--ink) }
+  .conf textarea { min-height:64px; resize:vertical; width:100% }
+  .conf .small { font-size:13px; color:#8c5a14 }
+  .callout { border-left:3px solid #e8cfa0; background:#fcf2df; border-radius:0 8px 8px 0; padding:10px 14px; font:400 15px/24px var(--sans); color:#5f3d0b }
+  .callout b { color:#8c5a14; font-weight:600 }
+  .skills { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:16px }
+  .skill { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; flex-direction:column; gap:10px; font:400 14px/22px var(--sans); color:var(--ink-2) }
+  .skill h3 { margin:0; font:700 18px/24px var(--sans); letter-spacing:-.01em; color:var(--ink) }
+  .skill .desc { color:var(--ink-2) }
+  .skill .facts { display:grid; grid-template-columns:auto 1fr; gap:4px 12px; font-size:13px }
+  .skill .facts b { color:var(--ink); font-weight:600 }
+  .skill .secs { display:flex; flex-direction:column; gap:3px; font-size:13px; border-top:1px solid var(--line); padding-top:10px }
+  .skill .secs span { display:flex; justify-content:space-between } .skill .secs span b { color:var(--ink); font-weight:500 }
+  .skill .open { align-self:flex-start; border:1px solid var(--line); background:var(--card); border-radius:999px; padding:7px 14px; font:600 13px/18px var(--sans); color:var(--ink); cursor:pointer }
+  .ok { color:var(--yes) } .warn { color:#8c5a14 }
+  .skillbar { display:flex; gap:8px; align-items:center; padding:10px 0 16px; flex-wrap:wrap; font:500 14px/20px var(--sans); color:var(--ink-2) }
+  .skillbar button { border:1px solid var(--line); background:var(--card); border-radius:8px; padding:8px 14px; font:600 14px/20px var(--sans); color:var(--ink); cursor:pointer; box-shadow:0 1px 2px rgba(20,20,30,.05) }
+  .skillbar .primary { background:var(--ink); border-color:var(--ink); color:#fff }
+  .skillbar .last { margin-left:auto; font-size:13px; color:var(--ink-3) }
+  pre.md { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 22px; white-space:pre-wrap; font:13px/21px ui-monospace, "JetBrains Mono", monospace; color:var(--ink-2); max-height:70vh; overflow:auto }
   .bar { height:3px; background:var(--line); border-radius:2px; overflow:hidden }
   .bar i { display:block; height:100%; background:var(--accent); width:0; transition:width .3s }
   select, button { font:inherit }
   .toolbar { display:flex; align-items:center; gap:8px; padding:10px 0 12px }
-  .toolbar select { appearance:none; -webkit-appearance:none; border:1px solid var(--line); background:var(--card) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1.5 1.5l4.5 4.5 4.5-4.5' fill='none' stroke='%23777' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 12px center; box-shadow:0 1px 2px rgba(20,20,30,.05); padding:8px 34px 8px 12px; border-radius:8px; color:var(--ink); font-size:14px; line-height:20px; font-weight:500; cursor:pointer; transition:border-color .12s, box-shadow .12s }
-  .toolbar select:hover { border-color:#cfcdc5 }
-  .toolbar select:focus-visible { outline:0; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft) }
+  .toolbar select, .view select { appearance:none; -webkit-appearance:none; border:1px solid var(--line); background:var(--card) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1.5 1.5l4.5 4.5 4.5-4.5' fill='none' stroke='%23777' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 12px center; box-shadow:0 1px 2px rgba(20,20,30,.05); padding:8px 34px 8px 12px; border-radius:8px; color:var(--ink); font-size:14px; line-height:20px; font-weight:500; cursor:pointer; transition:border-color .12s, box-shadow .12s }
+  .toolbar select:hover, .view select:hover { border-color:#cfcdc5 }
+  .toolbar select:focus-visible, .view select:focus-visible { outline:0; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft) }
   .toolbar .compile { margin-left:auto; border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:8px; padding:8px 14px; font-size:14px; line-height:20px; font-weight:700; cursor:pointer; box-shadow:0 1px 2px rgba(20,20,30,.05); transition:border-color .12s, box-shadow .12s }
   .toolbar .compile:hover { border-color:#cfcdc5 }
   .toolbar .compile:focus-visible { outline:0; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft) }
@@ -129,23 +194,49 @@
 <div class="wrap">
   <header>
     <b>design-brain</b>
+    <nav class="tabs">
+      <a href="#queue" data-view="queue"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Queue</a>
+      <a href="#rules" data-view="rules"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5zM9 9h6M9 13h6M9 17h3"/></svg>Rules</a>
+      <a href="#skills" data-view="skills"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Skills</a>
+    </nav>
     <span id="count">…</span>
     <div class="bar"><i id="bar"></i></div>
     <span id="tally" class="tally"></span>
   </header>
-  <div class="toolbar">
+  <div class="toolbar" id="queue-toolbar">
     <select id="fdim"><option value="">All dimensions</option></select>
     <select id="fscope"><option value="">All scopes</option><option>universal</option><option>personal</option></select>
     <select id="fkind"><option value="">All kinds</option><option>harvested</option><option>heuristic</option><option>bias</option><option>practice</option></select>
     <button class="compile" onclick="compile()">Compile skills <kbd>C</kbd></button>
   </div>
 </div>
-<main>
+<main id="v-queue">
   <button class="side no" onclick="act('retire')"><span class="arrow">←</span>Retire</button>
   <div class="stack" id="stack"></div>
   <button class="side yes" onclick="act('promote')">Promote<span class="arrow">→</span></button>
 </main>
-<footer>
+<section class="view" id="v-rules" hidden>
+  <div class="bar-row">
+    <div class="seg" id="rstatus"><button data-v="" class="on">All</button><button data-v="confirmed">Confirmed</button><button data-v="candidate">In review</button><button data-v="retired">Retired</button><button data-v="conflict">Conflicts</button></div>
+    <select id="rdim"><option value="">All dimensions</option></select>
+    <select id="rscope"><option value="">All scopes</option><option>universal</option><option>personal</option></select>
+    <select id="rkind"><option value="">All kinds</option><option>harvested</option><option>heuristic</option><option>bias</option><option>practice</option></select>
+    <input class="search" id="rq" placeholder="Search titles and rules">
+    <span class="count" id="rcount"></span>
+  </div>
+  <div style="overflow-x:auto"><table class="rules"><thead><tr><th>Rule</th><th>Stance</th><th>Dimension</th><th>Scope</th><th class="n">Conf</th><th class="n">Seen</th><th>Status</th></tr></thead><tbody id="rbody"></tbody></table></div>
+</section>
+<section class="view" id="v-skills" hidden>
+  <div class="skillbar">
+    <button class="primary" onclick="compile(false)">Compile confirmed</button>
+    <button onclick="compile(true)">Compile preview</button>
+    <button onclick="installSkills()">Install into ~/.claude/skills</button>
+    <span class="last" id="lastcompile"></span>
+  </div>
+  <div class="skills" id="skills"></div>
+  <div id="skillview" style="margin-top:16px"></div>
+</section>
+<footer id="queue-footer">
   <button class="side no mobile" onclick="act('retire')"><span class="arrow">←</span>Retire</button>
   <button onclick="act('skip')">Skip <kbd>↓</kbd></button>
   <button onclick="openNote()">Add note <kbd>N</kbd></button>
@@ -153,6 +244,12 @@
   <button class="side yes mobile" onclick="act('promote')">Promote<span class="arrow">→</span></button>
 </footer>
 <div class="toast" id="toast"></div>
+<div class="drawer-bg" id="drawerbg" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer">
+  <div class="dhead"><span id="dstatus"></span><span id="dmeta"></span><button class="x" onclick="closeDrawer()" aria-label="Close">×</button></div>
+  <div class="dbody" id="dbody"></div>
+  <div class="dactions" id="dactions"></div>
+</aside>
 <div class="modal-bg" id="notebg" onclick="if (event.target === this) closeNote()">
   <div class="modal">
     <h3>Add note</h3>
@@ -257,6 +354,7 @@ function cardEl(c, i) {
     </div>
     <div class="id">${esc(c.id)} · seen in ${esc(c.occurrences.join(", "))}</div>
     ${c.review_note ? `<div class="note">${md(c.review_note)}</div>` : ""}
+    ${(c.conflicts || []).length ? `<div class="callout"><b>Conflicts with</b> ${c.conflicts.map((x) => `${esc(x.id)} · ${esc(x.title)} <span class="st ${esc(x.status)}">${esc(x.status)}</span>`).join("<br>")}${c.resolution ? `<br><b>Resolution:</b> ${md(c.resolution)}` : `<br><span style="opacity:.8">No resolution yet. Promote will ask which wins.</span>`}</div>` : ""}
     ${sec("Rule", `<p>${md(c.rule)}</p>`)}
     ${sec("Why", c.why && `<p>${md(c.why).replace(/\n\n/g, "</p><p>")}</p>`, true)}
     ${sec("Examples", exBody, true)}
@@ -279,6 +377,12 @@ function edits(el, c) {
 async function act(action) {
   const c = queue[0]; if (!c) return;
   const el = $("#stack").firstElementChild;
+  if (action === "promote" && (c.conflicts || []).some((x) => x.status === "confirmed") && !c.resolution) {
+    noteTarget = c; resolveNext = () => act("promote");
+    $("#notebg").classList.add("on"); $("#notetitle").textContent = "Resolve the conflict before promoting · " + c.id;
+    $("#notetext").value = ""; $("#notetext").placeholder = "Which rule wins, and when? e.g. \"dark-first applies to tools; system theme applies to consumer surfaces\""; setTimeout(() => $("#notetext").focus(), 0);
+    return;
+  }
   if (action === "skip") { skipped.add(c.id); localStorage.setItem("db-skipped", JSON.stringify([...skipped])); el.classList.add("gone-d"); setTimeout(rebuild, 250); return; }
   const body = { id: c.id, action, edits: edits(el, c) };
   const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) })).json();
@@ -290,15 +394,22 @@ async function act(action) {
   tallies[action === "promote" ? "confirmed" : "retired"]++;
   setTimeout(rebuild, 280);
 }
-function openNote() { const c = queue[0]; if (!c) return; $("#notebg").classList.add("on"); $("#notetitle").textContent = c.id + " · " + c.title; const t = $("#notetext"); t.value = ""; setTimeout(() => t.focus(), 0); }
-function closeNote() { $("#notebg").classList.remove("on"); }
+let noteTarget = null, resolveNext = null;
+function openNote() { const c = queue[0]; if (!c) return; noteTarget = c; $("#notebg").classList.add("on"); $("#notetitle").textContent = c.id + " · " + c.title; const t = $("#notetext"); t.value = ""; setTimeout(() => t.focus(), 0); }
+function closeNote() { $("#notebg").classList.remove("on"); resolveNext = null; $("#notetext").placeholder = "Reword, narrow, merge with…, why you kept or dropped it. Saved into the file, dated."; }
 async function saveNote() {
-  const c = queue[0]; if (!c) return;
-  const note = $("#notetext").value.trim();
-  if (!note) { closeNote(); return; }
-  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: c.id, action: "note", edits: { note } }) })).json();
+  const c = noteTarget || queue[0]; if (!c) return;
+  const text = $("#notetext").value.trim();
+  if (!text) { closeNote(); return; }
+  if (resolveNext) { // promote flow asked for a resolution
+    const fn = resolveNext; resolveNext = null; closeNote();
+    const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: c.id, action: "edit", edits: { resolution: text } }) })).json();
+    if (!r.ok) { toast("Error: " + r.error); return; }
+    c.resolution = text; fn(); return;
+  }
+  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: c.id, action: "note", edits: { note: text } }) })).json();
   if (!r.ok) { toast("Error: " + r.error); return; }
-  closeNote(); toast("Note saved to " + c.id); await load();
+  closeNote(); toast("Note saved to " + c.id); noteTarget = null; await load(); if (!$("#v-rules").hidden) loadRules();
 }
 async function undo() {
   const h = history.pop(); if (!h) { toast("Nothing to undo"); return; }
@@ -306,10 +417,11 @@ async function undo() {
   if (!r.ok) { toast("Undo failed: " + r.error); return; }
   toast("Undone " + h.card.id); await load();
 }
-async function compile() {
+async function compile(preview) {
   toast("Compiling…");
-  const r = await (await fetch("/api/compile", { method: "POST" })).json();
-  toast(r.ok ? r.out.trim() : "Compile failed: " + r.out);
+  const r = await (await fetch("/api/compile" + (preview ? "?preview=1" : ""), { method: "POST" })).json();
+  toast(r.ok ? r.out.trim().split("\n").pop() : "Compile failed: " + r.out.trim().split("\n").slice(-2).join(" "));
+  if (!$("#v-skills").hidden) loadSkills();
 }
 function toast(m) { const t = $("#toast"); t.textContent = m; t.classList.add("on"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("on"), 2200); }
 document.addEventListener("keydown", (e) => {
@@ -332,7 +444,102 @@ function attachDrag(el) {
     if (dx > 140) act("promote"); else if (dx < -140) act("retire"); else if (dy > 160) act("skip"); else el.style.transform = ""; dx = dy = 0; };
   el.addEventListener("pointerup", end); el.addEventListener("pointercancel", end);
 }
-load();
+
+// ---------- routing ----------
+const views = { queue: ["#v-queue", "#queue-toolbar", "#queue-footer"], rules: ["#v-rules"], skills: ["#v-skills"] };
+function route() {
+  const v = (location.hash || "#queue").slice(1);
+  const name = views[v] ? v : "queue";
+  for (const [k, sels] of Object.entries(views)) for (const s of sels) $(s).hidden = k !== name;
+  document.querySelectorAll("nav.tabs a").forEach((a) => a.classList.toggle("on", a.dataset.view === name));
+  if (name === "rules") loadRules(); if (name === "skills") loadSkills();
+}
+window.addEventListener("hashchange", route);
+
+// ---------- rules ----------
+let rules = [], rstatus = "";
+async function loadRules() {
+  const r = await (await fetch("/api/rules")).json();
+  rules = r.rules;
+  const dims = [...new Set(rules.map((c) => c.dimension))].sort();
+  const cur = $("#rdim").value;
+  $("#rdim").innerHTML = '<option value="">All dimensions</option>' + dims.map((d) => `<option ${d === cur ? "selected" : ""}>${d}</option>`).join("");
+  renderRules();
+}
+function renderRules() {
+  const q = $("#rq").value.trim().toLowerCase(), fd = $("#rdim").value, fs = $("#rscope").value, fk = $("#rkind").value;
+  const rows = rules.filter((c) => (rstatus === "conflict" ? c.conflicts_with.length : !rstatus || c.status === rstatus) && (!fd || c.dimension === fd) && (!fs || c.scope === fs) && (!fk || c.kind === fk) && (!q || (c.title + " " + c.rule + " " + c.id).toLowerCase().includes(q)))
+    .sort((a, b) => ({ confirmed: 0, candidate: 1, retired: 2 })[a.status] - ({ confirmed: 0, candidate: 1, retired: 2 })[b.status] || b.occurrences.length - a.occurrences.length || b.confidence - a.confidence);
+  $("#rcount").textContent = `${rows.length} of ${rules.length}`;
+  $("#rbody").innerHTML = rows.map((c) => `<tr data-id="${esc(c.id)}">
+    <td class="t">${esc(c.title)}${c.conflicts_with.length ? ` <span class="st conflict">${c.resolution ? "resolved" : "conflict"}</span>` : ""}</td>
+    <td class="stance-t ${esc(c.stance)}">${esc(c.stance)}</td><td>${esc(c.dimension)}</td><td>${esc(c.scope)}</td>
+    <td class="n">${c.confidence}</td><td class="n">${c.occurrences.length}×</td><td><span class="st ${esc(c.status)}">${c.status === "candidate" ? "in review" : esc(c.status)}</span></td></tr>`).join("") || `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--ink-3)">Nothing matches.</td></tr>`;
+}
+$("#rq").oninput = renderRules; $("#rdim").onchange = renderRules; $("#rscope").onchange = renderRules; $("#rkind").onchange = renderRules;
+$("#rstatus").onclick = (e) => { const b = e.target.closest("button"); if (!b) return; rstatus = b.dataset.v; $("#rstatus").querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b)); renderRules(); };
+$("#rbody").onclick = (e) => { const tr = e.target.closest("tr[data-id]"); if (tr) openDrawer(tr.dataset.id); };
+
+// ---------- drawer ----------
+let dcur = null;
+function openDrawer(id) {
+  const c = rules.find((x) => x.id === id); if (!c) return; dcur = c;
+  $("#dstatus").innerHTML = `<span class="st ${esc(c.status)}">${c.status === "candidate" ? "in review" : esc(c.status)}</span>`;
+  $("#dmeta").textContent = `${c.id}${c.was ? " (was " + c.was + ")" : ""} · ${c.dir}/${c.file}${c.promoted ? " · promoted " + c.promoted : ""}${c.retired ? " · retired " + c.retired : ""}`;
+  const el = cardEl(c, 0); el.classList.remove("top");
+  const conf = document.createElement("div"); conf.className = "conf"; conf.style.margin = "0 36px 28px";
+  conf.innerHTML = `<h3>Conflicts</h3>
+    <div class="row" id="clist">${c.conflicts.map((x) => `<span class="cid" data-id="${esc(x.id)}">${esc(x.id)} <span class="small">${esc(x.title).slice(0, 60)} · ${esc(x.status)}</span><button title="remove" onclick="this.parentNode.remove()">×</button></span>`).join("") || '<span class="small">None declared.</span>'}</div>
+    <div class="row"><input id="cadd" placeholder="Add id, e.g. DB-012" style="width:180px"><button class="open" onclick="addConflict()" style="border:1px solid #e8cfa0;background:#fff;border-radius:999px;padding:6px 12px;font-weight:600;color:#5f3d0b;cursor:pointer">Add</button></div>
+    <textarea id="cres" placeholder="Resolution: which rule wins, and when. Required before two confirmed rules that conflict can compile.">${esc(c.resolution)}</textarea>
+    <span class="small">Stance, scope and confidence edits on the card above are saved with this.</span>`;
+  el.querySelector(".body").appendChild(conf);
+  $("#dbody").innerHTML = ""; $("#dbody").appendChild(el);
+  const acts = [];
+  if (c.status === "candidate") acts.push(`<button class="yes" onclick="drawerVerdict('promote')">Promote</button><button class="no" onclick="drawerVerdict('retire')">Retire</button>`);
+  if (c.status === "confirmed") acts.push(`<button onclick="drawerVerdict('unpromote')">Move back to review</button>`);
+  if (c.status === "retired") acts.push(`<button onclick="drawerVerdict('unretire')">Restore to review</button>`);
+  acts.push(`<span class="sp"></span><button onclick="drawerNote()">Add note</button><button onclick="saveDrawer()" style="background:var(--ink);border-color:var(--ink);color:#fff">Save</button>`);
+  $("#dactions").innerHTML = acts.join("");
+  $("#drawerbg").classList.add("on"); $("#drawer").classList.add("on");
+}
+function closeDrawer() { $("#drawerbg").classList.remove("on"); $("#drawer").classList.remove("on"); dcur = null; }
+function addConflict() { const v = $("#cadd").value.trim(); if (!/^DB-(c-)?\d{3}$/.test(v)) { toast("Use an id like DB-012 or DB-c-503"); return; } const t = rules.find((x) => x.id === v); const span = document.createElement("span"); span.className = "cid"; span.dataset.id = v; span.innerHTML = `${esc(v)} <span class="small">${esc(t ? t.title : "(not found)").slice(0, 60)}${t ? " · " + esc(t.status) : ""}</span><button title="remove" onclick="this.parentNode.remove()">×</button>`; const l = $("#clist"); if (!l.querySelector(".cid")) l.innerHTML = ""; l.appendChild(span); $("#cadd").value = ""; }
+function drawerEdits() {
+  const el = $("#dbody .card"); const e = edits(el, dcur) || {};
+  e.conflicts_with = [...$("#clist").querySelectorAll(".cid")].map((x) => x.dataset.id);
+  e.resolution = $("#cres").value;
+  return e;
+}
+async function saveDrawer(silent) {
+  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: dcur.id, action: "edit", edits: drawerEdits() }) })).json();
+  if (!r.ok) { toast("Error: " + r.error); return false; }
+  if (!silent) { toast("Saved " + dcur.id); await loadRules(); openDrawer(dcur.id); }
+  return true;
+}
+async function drawerVerdict(action) {
+  if (!(await saveDrawer(true))) return;
+  const r = await (await fetch("/api/verdict", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: dcur.id, action }) })).json();
+  if (!r.ok) { toast("Error: " + r.error); return; }
+  toast(action === "promote" ? `Promoted as ${r.newId}` : action === "retire" ? "Retired" : "Back in review");
+  closeDrawer(); await loadRules(); load();
+}
+function drawerNote() { const c = dcur; $("#notebg").classList.add("on"); $("#notetitle").textContent = c.id + " · " + c.title; $("#notetext").value = ""; noteTarget = c; setTimeout(() => $("#notetext").focus(), 0); }
+
+// ---------- skills ----------
+async function loadSkills() {
+  const r = await (await fetch("/api/skills")).json();
+  $("#lastcompile").textContent = r.last ? `Last compile ${new Date(r.last.when).toLocaleString()} · ${r.last.preview ? "preview (includes unreviewed)" : "confirmed only"}${r.last.ok === false ? " · FAILED" : ""}` : "Not compiled yet";
+  $("#skills").innerHTML = r.skills.map((s) => !s.exists ? `<div class="skill"><h3>${esc(s.name)}</h3><span class="warn">Not compiled yet.</span></div>` : `<div class="skill">
+    <h3>${esc(s.name)}</h3><div class="desc">${esc(s.description).slice(0, 220)}</div>
+    <div class="facts"><span>rules cited</span><b>${s.ids.length}</b><span>words</span><b>${s.words}</b><span>build</span><b class="${s.preview ? "warn" : "ok"}">${s.preview ? "preview" : "confirmed only"}</b><span>installed</span><b class="${s.installed ? "ok" : "warn"}">${s.installed ? "linked in ~/.claude/skills" : "not linked"}</b></div>
+    <div class="secs">${s.sections.filter((x) => x.rules).map((x) => `<span>${esc(x.title)}<b>${x.rules}</b></span>`).join("") || "<span>no rule lines yet</span>"}</div>
+    <button class="open" onclick="showSkill('${esc(s.name)}')">View SKILL.md</button></div>`).join("");
+  window._skills = r.skills;
+}
+function showSkill(name) { const s = window._skills.find((x) => x.name === name); $("#skillview").innerHTML = `<pre class="md">${esc(s.body)}</pre>`; $("#skillview").scrollIntoView({ behavior: "smooth", block: "start" }); }
+async function installSkills() { const r = await (await fetch("/api/install", { method: "POST" })).json(); toast(r.ok ? "Installed: " + r.installed.join(", ") : "Error: " + r.error); loadSkills(); }
+route();
 </script>
 </body>
 </html>

@@ -25,6 +25,7 @@ file below is one concept; tools and agents read them directly.
 * [The tool is public; each designer's brain is a private data directory; only reference seeds ship with the tool](decisions/DDR-007-tool-and-brain-are-separate.md) - Decision · DDR-007
 * [A title is one sentence of at most 80 characters; detail lives in the rule body](decisions/DDR-008-titles-are-two-lines.md) - Decision · DDR-008
 * [Rule and Why sections read as short single-idea paragraphs; enumerations become lists](decisions/DDR-009-rule-bodies-read-in-short-paragraphs.md) - Decision · DDR-009
+* [Conflicting rules are declared with conflicts_with and cannot compile without a resolution](decisions/DDR-010-conflicts-declared-then-resolved.md) - Decision · DDR-010
 
 ## glossary
 

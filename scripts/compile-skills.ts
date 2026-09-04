@@ -1,7 +1,7 @@
 // Renders skills/ and exports/ from decisions/ (+ inbox/ with --preview) and patterns/.
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { parse as parseYaml } from "yaml";
-import { listDocs, section, scopeKind, DIMENSIONS, type Doc, brainRoot, toolRoot } from "./lib";
+import { listDocs, section, scopeKind, conflictsOf, unresolvedConflicts, DIMENSIONS, type Doc, brainRoot, toolRoot } from "./lib";
 
 const root = brainRoot();
 const preview = process.argv.includes("--preview");
@@ -12,6 +12,14 @@ if (preview) {
   decisions = decisions.concat(cands);
 }
 const patterns = listDocs(root + "patterns");
+{ // DDR-010 guard: two confirmed rules that conflict must carry a resolution before they compile
+  const bad = unresolvedConflicts(listDocs(root + "decisions").filter((d) => d.fm.status === "confirmed"));
+  if (bad.length) {
+    for (const { a, b } of bad) console.log(`conflict  ${a.fm.id} "${a.fm.title}"  ↔  ${b.fm.id} "${b.fm.title}"  (no resolution on either)`);
+    console.log(`DDR-010: ${bad.length} unresolved conflict(s) between confirmed decisions. Add a resolution: line to one side (Rules tab → open the rule) before compiling.`);
+    process.exit(1);
+  }
+}
 const today = new Date().toISOString().slice(0, 10);
 const banner = preview
   ? `> **PREVIEW BUILD ${today}.** Includes UNREVIEWED candidates from inbox/. Not for daily use.\n\n`
@@ -30,7 +38,9 @@ function ruleLine(d: Doc): string {
   const norm = (x: string) => x.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
   if (!rule || norm(rule).startsWith(norm(title).slice(0, 40)) || norm(title).startsWith(norm(rule).slice(0, 40))) rule = "";
   // DDR-005: no project names, paths, quotes or project-specific examples leave the ledger.
-  return `- **${stanceWord[d.fm.stance as string] ?? ""}: ${title}**${tag(d)} (${d.fm.id}, seen in ${occ(d)} project${occ(d) === 1 ? "" : "s"}, conf ${d.fm.confidence}).${rule ? " " + rule : ""}`;
+  const conf = conflictsOf(d);
+  const prec = d.fm.resolution ? ` _Precedence over ${conf.join(", ")}:_ ${String(d.fm.resolution).replace(/\s+/g, " ")}` : conf.length ? ` _(conflicts with ${conf.join(", ")}; unresolved)_` : "";
+  return `- **${stanceWord[d.fm.stance as string] ?? ""}: ${title}**${tag(d)} (${d.fm.id}, seen in ${occ(d)} project${occ(d) === 1 ? "" : "s"}, conf ${d.fm.confidence}).${rule ? " " + rule : ""}${prec}`;
 }
 
 function renderDimension(dim: string, docs: Doc[]): string {
@@ -219,6 +229,7 @@ Scope: **<personal | client:name>**. New non-obvious design choices get a note i
   }
   if (leaks) console.log(`DDR-005: ${leaks} line(s) in skills/ name a project. Fix the rule text in the ledger.`);
 }
+writeFileSync(root + "exports/.compile.json", JSON.stringify({ when: new Date().toISOString(), preview, counts: { harvested: decisions.length, heuristics: heuristics.length, biases: biases.length, practices: practices.length, patterns: patterns.length } }, null, 2));
 console.log(`compiled ${decisions.length} harvested + ${heuristics.length} heuristics + ${biases.length} biases + ${practices.length} practices (${preview ? "preview incl. inbox" : "confirmed only"}), ${patterns.length} patterns → skills/, exports/`);
 
 function writeSkill(name: string, content: string) {

@@ -83,3 +83,19 @@ export function longParagraphs(body: string): { section: string; chars: number }
   }
   return out;
 }
+
+/** conflicts_with ids on a doc, normalised to an array of strings. */
+export function conflictsOf(d: Doc): string[] {
+  const v = d.fm.conflicts_with;
+  return Array.isArray(v) ? v.map(String) : typeof v === "string" && v ? [v] : [];
+}
+/** Pairs of confirmed decisions that conflict and carry no resolution on either side. */
+export function unresolvedConflicts(decisions: Doc[]): { a: Doc; b: Doc }[] {
+  const byId = new Map(decisions.map((d) => [String(d.fm.id), d]));
+  const out: { a: Doc; b: Doc }[] = [];
+  for (const a of decisions) for (const id of conflictsOf(a)) {
+    const b = byId.get(id);
+    if (b && !a.fm.resolution && !b.fm.resolution && String(a.fm.id) < String(b.fm.id)) out.push({ a, b });
+  }
+  return out;
+}
