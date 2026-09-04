@@ -17,7 +17,7 @@
   body { display:flex; flex-direction:column; min-height:100vh; overflow:hidden }
   .wrap { width:min(720px, 100%); margin:0 auto; padding:6px 20px 0; box-sizing:content-box }
   header { position:relative; display:flex; align-items:center; gap:16px; padding:12px 20px 7px; border-bottom:1px solid var(--line); width:min(1100px, 100%); margin:0 auto; box-sizing:border-box; font-size:14px; line-height:24px; color:var(--ink-2); font-variant-numeric:tabular-nums }
-  .brand { position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); display:inline-flex; align-items:center; gap:8px; color:var(--ink); pointer-events:none; white-space:nowrap }
+  .brand { display:inline-flex; align-items:center; gap:8px; color:var(--ink); white-space:nowrap; flex:1 }
   .brand .mark { width:22.5px; height:22.5px; flex:none; display:block; opacity:.5 }
   header b { color:var(--ink); font-weight:600 }
 
@@ -25,11 +25,11 @@
   .qstats { display:flex; align-items:center; gap:14px; padding:5px 15px 15px; font:500 14px/24px var(--sans); color:var(--ink-2); font-variant-numeric:tabular-nums }
   .qstats .bar { flex:1 }
   .qstats .tally { white-space:nowrap }
-  nav.tabs { display:flex; gap:20px; margin:0 }
+  nav.tabs { display:flex; gap:20px; margin:0; flex:none }
   nav.tabs a { display:inline-flex; align-items:center; gap:6px; padding:8px 0 10px; font:500 14px/20px var(--sans); color:var(--ink-2); text-decoration:none; border-bottom:2px solid transparent; margin-bottom:-12px }
   nav.tabs a.on { color:var(--ink); font-weight:600; border-bottom-color:var(--ink) }
   nav.tabs kbd { opacity:.45 }
-  .hactions { margin-left:auto; display:flex; align-items:center; gap:8px }
+  .hactions { flex:1; justify-content:flex-end; display:flex; align-items:center; gap:8px }
   .hactions button { border:0; background:var(--code-bg); color:var(--ink); border-radius:999px; cursor:pointer; font:500 14px/20px var(--sans); padding:8px 16px }
   .hactions button.icon { width:36px; height:36px; padding:0; display:inline-flex; align-items:center; justify-content:center }
   .hactions button:hover { background:var(--line) }
@@ -69,7 +69,20 @@
   .source .cta { flex:none; border:1px solid var(--line); background:var(--card); border-radius:999px; padding:5px 13px; font:600 13px/18px var(--sans); color:var(--ink); cursor:pointer }
   .source .cta:hover { border-color:var(--line-strong) }
   .source .top[role=button] { cursor:pointer }
-  .drawer pre.md { margin:0; border:0; border-radius:0; background:transparent; padding:22px 26px }
+  .doc { padding:26px 30px 40px; max-width:70ch; font:400 16px/26px var(--serif); color:var(--ink) }
+  .doc h1 { font:700 26px/34px var(--sans); letter-spacing:-.01em; margin:0 0 14px }
+  .doc h2 { font:700 18px/26px var(--sans); letter-spacing:0; text-transform:none; color:var(--ink); margin:28px 0 8px; padding-top:14px; border-top:1px solid var(--line) }
+  .doc h3, .doc h4 { font:600 15px/24px var(--sans); color:var(--ink); margin:20px 0 6px }
+  .doc p { margin:0 0 14px; text-wrap:pretty }
+  .doc ul, .doc ol { margin:0 0 14px; padding-left:22px; display:block }
+  .doc li { margin:0 0 7px; list-style:disc; text-wrap:pretty }
+  .doc ol li { list-style:decimal }
+  .doc blockquote { margin:0 0 14px; padding:10px 14px; border-left:3px solid var(--warn-line); background:var(--warn-soft); color:var(--warn-ink); border-radius:0 8px 8px 0; font-size:15px }
+  .doc pre { margin:0 0 16px; padding:14px 16px; background:var(--code-bg); border-radius:10px; overflow-x:auto }
+  .doc pre code { font:13px/21px ui-monospace, "JetBrains Mono", monospace; background:none; padding:0; color:var(--ink-2) }
+  .doc code { font:.86em/1 ui-monospace, "JetBrains Mono", monospace; background:var(--code-bg); color:var(--ink-2); padding:2px 5px; border-radius:4px }
+  .doc a { color:var(--ink); text-decoration:underline; text-underline-offset:2px }
+  .doc p.row { font:13px/21px var(--sans); color:var(--ink-2); margin:0 0 4px }
   .view .count { margin-left:auto; font:500 13px/20px var(--sans); color:var(--ink-3) }
   table.rules { width:100%; border-collapse:separate; border-spacing:0; background:var(--card); border:1px solid var(--line); border-radius:12px; font:400 14px/20px var(--sans) }
   table.rules th:first-child { border-top-left-radius:11px } table.rules th:last-child { border-top-right-radius:11px }
@@ -380,7 +393,7 @@
 </div>
 <script type="module">
 import { api } from "/app/api.js";
-import { cardEl, cardEdits, esc, md, statusLabel } from "/app/card.js";
+import { cardEl, cardEdits, esc, md, statusLabel, renderMarkdown } from "/app/card.js";
 
 let all = [], queue = [], skipped = new Set(), history = [], tallies = { confirmed: 0, retired: 0 };
 let schema = null;
@@ -801,11 +814,7 @@ function showSkill(name) {
   dcur = null;
   $("#dstatus").innerHTML = `<span class="st ${s.mtime ? "confirmed" : "candidate"}">${s.mtime ? "compiled" : "shipped by the tool"}</span>`;
   $("#dmeta").textContent = `${s.name}${s.ids?.length ? ` · ${s.ids.length} rules · ${s.words} words` : ""}${s.mtime ? ` · built ${new Date(s.mtime).toLocaleString()}` : ""}`;
-  const pre = document.createElement("pre");
-  pre.className = "md";
-  pre.textContent = s.body;
-  $("#dbody").innerHTML = "";
-  $("#dbody").appendChild(pre);
+  $("#dbody").innerHTML = `<article class="doc">${renderMarkdown(s.body)}</article>`;
   $("#dactions").innerHTML = `<span class="sp"></span><button onclick="closeDrawer()">Close <kbd>Esc</kbd></button>`;
   $("#drawerbg").classList.add("on");
   $("#drawer").classList.add("on");

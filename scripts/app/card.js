@@ -96,3 +96,66 @@ export function cardEdits(el, c) {
   if (g("confidence") && Number(g("confidence")) !== Number(c.confidence)) e.confidence = Number(g("confidence"));
   return Object.keys(e).length ? e : undefined;
 }
+
+/**
+ * A SKILL.md rendered for reading: headings, lists, quotes, fenced code and paragraphs.
+ * Deliberately small and dependency-free — the app ships no third-party runtime.
+ */
+export function renderMarkdown(text) {
+  const out = [];
+  const lines = String(text).replace(/\r\n/g, "\n").split("\n");
+  let para = [];
+  let list = null;
+  const inline = (s) =>
+    md(s)
+      .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>')
+      .replace(/(^|[\s(])_([^_]+)_(?=[\s.,;:)]|$)/g, "$1<em>$2</em>");
+  const flushPara = () => {
+    if (para.length) out.push(`<p>${inline(para.join(" "))}</p>`);
+    para = [];
+  };
+  const flushList = () => {
+    if (list) out.push(`<${list.tag}>${list.items.map((i) => `<li>${inline(i)}</li>`).join("")}</${list.tag}>`);
+    list = null;
+  };
+  const flush = () => { flushPara(); flushList(); };
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const fence = line.match(/^```(\w*)/);
+    if (fence) {
+      flush();
+      const body = [];
+      while (++i < lines.length && !/^```/.test(lines[i])) body.push(lines[i]);
+      out.push(`<pre><code>${esc(body.join("\n"))}</code></pre>`);
+      continue;
+    }
+    const heading = line.match(/^(#{1,4})\s+(.*)$/);
+    if (heading) {
+      flush();
+      out.push(`<h${heading[1].length}>${inline(heading[2])}</h${heading[1].length}>`);
+      continue;
+    }
+    const quote = line.match(/^>\s?(.*)$/);
+    if (quote) {
+      flush();
+      out.push(`<blockquote>${inline(quote[1])}</blockquote>`);
+      continue;
+    }
+    const item = line.match(/^\s*(?:[-*]|(\d+)\.)\s+(.*)$/);
+    if (item) {
+      flushPara();
+      const tag = item[1] ? "ol" : "ul";
+      if (list && list.tag !== tag) flushList();
+      list = list ?? { tag, items: [] };
+      list.items.push(item[2]);
+      continue;
+    }
+    if (!line.trim()) { flush(); continue; }
+    if (list) { list.items[list.items.length - 1] += " " + line.trim(); continue; }
+    if (/^\s*\|/.test(line)) { flush(); out.push(`<p class="row">${inline(line.replace(/^\||\|$/g, "").split("|").join(" · "))}</p>`); continue; }
+    para.push(line.trim());
+  }
+  flush();
+  return out.join("\n");
+}
