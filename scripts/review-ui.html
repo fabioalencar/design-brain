@@ -29,7 +29,9 @@
   * { box-sizing:border-box }
   html,body { margin:0; background:var(--paper); color:var(--ink); font:16px/24px var(--sans); height:100% }
   body { display:flex; flex-direction:column; min-height:100vh; overflow:hidden }
-  .wrap { width:min(720px, 100%); margin:0 auto; padding:6px 20px 0; box-sizing:content-box }
+  /* the 6px belongs to the toolbar, not the shell: .wrap outlives it on the other tabs and would leave an empty strip */
+  .wrap { width:min(1100px, 100%); margin:0 auto; padding:0 20px; box-sizing:border-box }
+  #queue-toolbar { padding-top:6px }
   header { position:relative; display:flex; align-items:center; gap:16px; padding:12px 20px 7px; border-bottom:1px solid var(--line); width:min(1100px, 100%); margin:0 auto; box-sizing:border-box; font-size:14px; line-height:24px; color:var(--ink-2); font-variant-numeric:tabular-nums }
   .brand { display:inline-flex; align-items:center; gap:8px; color:var(--ink); white-space:nowrap; flex:1 }
   .brand .mark { width:22.5px; height:22.5px; flex:none; display:block; opacity:.5; transform:rotate(-15deg) }
@@ -48,7 +50,8 @@
   .hactions button.icon { width:36px; height:36px; padding:0; display:inline-flex; align-items:center; justify-content:center }
   .hactions button:hover { background:var(--line) }
   .hactions svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round }
-  .view { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; width:min(1100px, 100%); margin:0 auto; padding:16px 20px 40px; box-sizing:border-box }
+  /* 6px top matches .wrap, so every tab's first bar sits the same distance below the header rule */
+  .view { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; width:min(1100px, 100%); margin:0 auto; padding:6px 20px 40px; box-sizing:border-box }
   [hidden] { display:none !important }
   .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0 }
   :focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:4px }
