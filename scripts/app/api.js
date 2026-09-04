@@ -15,5 +15,5 @@ export const api = {
   skills: () => json("/api/skills"),
   install: () => post("/api/install"),
   verdict: (id, action, edits) => post("/api/verdict", { id, action, edits }),
-  compile: (preview) => post("/api/compile" + (preview ? "?preview=1" : "")),
+  compile: () => post("/api/compile"),
 };

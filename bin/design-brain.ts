@@ -51,7 +51,7 @@ else {
   init <dir>            create a brain seeded with reference heuristics, biases, practices
   review                open the swipe review queue (http://localhost:4455)
   check                 validate inbox/, decisions/, patterns/
-  compile [--preview]   build skills/ and exports/ from confirmed decisions
+  compile               build skills/ and exports/ from the confirmed decisions
   harvest:repos         extract design facts from the projects in sources.yaml
   harvest:transcripts   mine Claude Code transcripts for design directives
   promote|retire|restore <DB-c-###> …

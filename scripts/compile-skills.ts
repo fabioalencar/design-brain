@@ -1,4 +1,5 @@
-// Renders skills/ and exports/ from decisions/ (+ inbox/ with --preview) and patterns/.
+// Renders skills/ and exports/ from the confirmed decisions/ and patterns/.
+// There is no preview build: a rule reaches a skill by being promoted, not by being compiled.
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { parse as parseYaml } from "yaml";
 import { listDocs, section, scopeKind, conflictsOf, unresolvedConflicts, DIMENSIONS, type Doc } from "./lib";
@@ -9,13 +10,8 @@ const brain = openBrainOrExit();
 const root = brain.root;
 // Emitted skills point at the brain that compiled them, never at a path baked into the tool.
 const BRAIN = root.replace(/\/$/, "").replace(process.env.HOME ?? "~", "~");
-const preview = process.argv.includes("--preview");
-
+const today = new Date().toISOString().slice(0, 10);
 let decisions = listDocs(root + "decisions").filter((d) => d.fm.status === "confirmed");
-if (preview) {
-  const cands = listDocs(root + "inbox").filter((d) => d.fm.status === "candidate");
-  decisions = decisions.concat(cands);
-}
 const patterns = listDocs(root + "patterns");
 { // DDR-010 guard: two confirmed rules that conflict must carry a resolution before they compile
   const bad = unresolvedConflicts(listDocs(root + "decisions").filter((d) => d.fm.status === "confirmed"));
@@ -25,15 +21,10 @@ const patterns = listDocs(root + "patterns");
     process.exit(1);
   }
 }
-const today = new Date().toISOString().slice(0, 10);
-const banner = preview
-  ? `> **PREVIEW BUILD ${today}.** Includes UNREVIEWED candidates from inbox/. Not for daily use.\n\n`
-  : "";
 
 const byWeight = (a: Doc, b: Doc) =>
   (occ(b) - occ(a)) || ((b.fm.confidence as number) - (a.fm.confidence as number));
 const occ = (d: Doc) => (Array.isArray(d.fm.occurrences) ? (d.fm.occurrences as string[]).length : 0);
-const tag = (d: Doc) => (d.fm.status === "candidate" ? " _(unreviewed)_" : "");
 const firstPara = (s: string) => s.split(/\n\s*\n/)[0]?.replace(/\s+/g, " ").trim() ?? "";
 const stanceWord: Record<string, string> = { always: "Always", never: "Never", prefer: "Prefer", avoid: "Avoid", context: "When it applies" };
 
@@ -45,7 +36,7 @@ function ruleLine(d: Doc): string {
   // DDR-005: no project names, paths, quotes or project-specific examples leave the ledger.
   const conf = conflictsOf(d);
   const prec = d.fm.resolution ? ` _Precedence over ${conf.join(", ")}:_ ${String(d.fm.resolution).replace(/\s+/g, " ")}` : conf.length ? ` _(conflicts with ${conf.join(", ")}; unresolved)_` : "";
-  return `- **${stanceWord[d.fm.stance as string] ?? ""}: ${title}**${tag(d)} (${d.fm.id}, seen in ${occ(d)} project${occ(d) === 1 ? "" : "s"}, conf ${d.fm.confidence}).${rule ? " " + rule : ""}${prec}`;
+  return `- **${stanceWord[d.fm.stance as string] ?? ""}: ${title}** (${d.fm.id}, seen in ${occ(d)} project${occ(d) === 1 ? "" : "s"}, conf ${d.fm.confidence}).${rule ? " " + rule : ""}${prec}`;
 }
 
 function renderDimension(dim: string, docs: Doc[]): string {
@@ -84,7 +75,7 @@ description: ${JSON.stringify(mainDesc)}
 
 # design-brain
 
-${banner}Standing decisions distilled from the designer's own projects. Each line is a rule with
+Standing decisions distilled from the designer's own projects. Each line is a rule with
 a stance, an id, how many projects it was observed in, and the designer's confidence. Ask before
 overriding an **Always**/**Never**; **Prefer**/**Avoid** are defaults you may deviate
 from with a stated reason.
@@ -134,7 +125,7 @@ description: ${JSON.stringify(checkDesc)}
 
 # design-brain-check
 
-${banner}Detect mode. For the surface under review, walk the patterns below. For each hit:
+Detect mode. For the surface under review, walk the patterns below. For each hit:
 name the pattern, quote or point at the exact element, give the fix in one line. Do
 not rate, do not pad with praise, do not report patterns that are not present. If a
 "hit" is something the designer chose on purpose (a decision in \`design-brain\` covers it),
@@ -174,7 +165,7 @@ description: ${JSON.stringify(startDesc)}
 
 # design-brain-start
 
-${banner}## 1. Scope
+## 1. Scope
 
 Ask (or infer from the repo) one question: **personal brand or client brand?** Client
 work takes only universal craft plus the client's constraints; do not import personal
@@ -231,8 +222,8 @@ Scope: **<personal | client:name>**. New non-obvious design choices get a note i
   }
   if (leaks) console.log(`DDR-005: ${leaks} line(s) in skills/ name a project. Fix the rule text in the ledger.`);
 }
-writeFileSync(root + "exports/.compile.json", JSON.stringify({ when: new Date().toISOString(), preview, counts: { harvested: decisions.length, heuristics: heuristics.length, biases: biases.length, practices: practices.length, patterns: patterns.length } }, null, 2));
-console.log(`compiled ${decisions.length} harvested + ${heuristics.length} heuristics + ${biases.length} biases + ${practices.length} practices (${preview ? "preview incl. inbox" : "confirmed only"}), ${patterns.length} patterns → skills/, exports/`);
+writeFileSync(root + "exports/.compile.json", JSON.stringify({ when: new Date().toISOString(), counts: { harvested: decisions.length, heuristics: heuristics.length, biases: biases.length, practices: practices.length, patterns: patterns.length } }, null, 2));
+console.log(`compiled ${decisions.length} harvested + ${heuristics.length} heuristics + ${biases.length} biases + ${practices.length} practices, ${patterns.length} patterns → skills/, exports/`);
 
 function writeSkill(name: string, content: string) {
   mkdirSync(`${root}skills/${name}`, { recursive: true });

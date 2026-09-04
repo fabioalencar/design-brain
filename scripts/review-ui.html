@@ -306,9 +306,8 @@
   <div class="skillbar">
     <span class="last" id="lastcompile"></span>
     <span class="sp"></span>
-    <button onclick="compile(true)">Compile preview</button>
     <button onclick="installSkills()">Install into ~/.claude/skills</button>
-    <button class="primary" onclick="compile(false)">Compile confirmed</button>
+    <button class="primary" onclick="compile()">Compile skills <kbd>C</kbd></button>
   </div>
   <div class="scrollarea"><div class="src-list" id="skillcards"></div></div>
 </section>
@@ -434,9 +433,9 @@ async function undo() {
   if (!r.ok) { toast("Undo failed: " + r.error); return; }
   toast("Undone " + h.card.id); await load();
 }
-async function compile(preview) {
+async function compile() {
   toast("Compiling…");
-  const r = await api.compile(preview);
+  const r = await api.compile();
   toast(r.ok ? r.out.trim().split("\n").pop() : "Compile failed: " + r.out.trim().split("\n").slice(-2).join(" "));
   if (!$("#v-skills").hidden) loadSkills();
 }
@@ -705,14 +704,14 @@ function fromSource(id) { location.hash = "#rules"; setTimeout(() => openDrawer(
 // ---------- skills ----------
 async function loadSkills() {
   const r = await api.skills();
-  $("#lastcompile").textContent = r.last ? `Last compile ${new Date(r.last.when).toLocaleString()} · ${r.last.preview ? "preview (includes unreviewed)" : "confirmed only"}${r.last.ok === false ? " · FAILED" : ""}` : "Not compiled yet";
+  $("#lastcompile").textContent = r.last ? `Last compile ${new Date(r.last.when).toLocaleString()}${r.last.ok === false ? " · FAILED" : ""}` : "Not compiled yet";
   $("#skillcards").innerHTML = r.skills.map((s) => !s.exists
     ? `<div class="source"><div class="top"><h3>${esc(s.name)}</h3><span class="host">not compiled yet</span></div></div>`
     : `<div class="source" data-name="${esc(s.name)}">
     <div class="top" role="button" tabindex="0" aria-expanded="false" onclick="toggleSkill(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSkill(this)}">
       <h3>${esc(s.name)}</h3>
       <span class="host">${s.ids.length} rules · ${s.words} words</span>
-      <span class="n">${s.preview ? '<span class="warn">preview build</span>' : '<span class="ok">confirmed only</span>'} · ${s.installed ? '<span class="ok">linked</span>' : '<span class="warn">not linked</span>'}</span>
+      <span class="n">${s.installed ? '<span class="ok">linked</span>' : '<span class="warn">not linked</span>'}</span>
       <button class="cta" onclick="event.stopPropagation(); showSkill('${esc(s.name)}')">View SKILL.md</button>
       <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
     <ul>

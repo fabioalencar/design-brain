@@ -82,8 +82,8 @@ function verdict(v: Verdict) {
   }
 }
 
-function compile(preview: boolean) {
-  const p = Bun.spawnSync(["bun", toolRoot + "scripts/compile-skills.ts", "--brain", brain.root, ...(preview ? ["--preview"] : [])], { cwd: brain.root });
+function compile() {
+  const p = Bun.spawnSync(["bun", toolRoot + "scripts/compile-skills.ts", "--brain", brain.root], { cwd: brain.root });
   const out = p.stdout.toString() + p.stderr.toString();
   const record = brain.path("exports", ".compile.json");
   try {
@@ -112,7 +112,7 @@ Bun.serve({
       if (url.pathname === "/api/skills") return Response.json({ skills: SKILL_NAMES.map((n) => readSkill(brain, n)), last: lastCompile(brain), brain: brain.root });
       if (url.pathname === "/api/install" && req.method === "POST") return Response.json({ ok: true, installed: installSkills(brain) });
       if (url.pathname === "/api/verdict" && req.method === "POST") return Response.json(verdict(await req.json()));
-      if (url.pathname === "/api/compile" && req.method === "POST") return Response.json(compile(url.searchParams.get("preview") === "1"));
+      if (url.pathname === "/api/compile" && req.method === "POST") return Response.json(compile());
       return new Response("not found", { status: 404 });
     } catch (e: any) {
       return Response.json({ ok: false, error: String(e?.message ?? e) }, { status: 400 });

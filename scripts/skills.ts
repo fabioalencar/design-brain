@@ -15,7 +15,6 @@ export interface SkillInfo {
   description?: string;
   words?: number;
   ids?: string[];
-  preview?: boolean;
   mtime?: string;
   sections?: { level: number; title: string; rules: number }[];
   installed?: boolean;
@@ -45,7 +44,6 @@ export function readSkill(brain: Brain, name: string, home = process.env.HOME ??
     description,
     words: body.split(/\s+/).length,
     ids: [...new Set(body.match(/DB-(?:c-)?\d{3}/g) ?? [])],
-    preview: /PREVIEW BUILD/.test(content),
     mtime: statSync(path).mtime.toISOString(),
     sections: sections.filter((x) => x.level === 2 || x.rules),
     installed,

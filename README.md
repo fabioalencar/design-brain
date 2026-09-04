@@ -65,7 +65,7 @@ without a resolution block the compile.
 ## Use
 
 ```bash
-design-brain compile                # skills/ and exports/ from confirmed decisions
+design-brain compile                # skills/ and exports/ from the confirmed decisions
 design-brain install                # symlink skills into ~/.claude/skills
 ```
 
