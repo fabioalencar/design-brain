@@ -35,13 +35,28 @@
   .view { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; width:min(1100px, 100%); margin:0 auto; padding:0 20px 40px; box-sizing:border-box }
   [hidden] { display:none !important }
   .view .bar-row { display:flex; gap:8px; align-items:center; padding:10px 0 14px; flex-wrap:wrap }
-  #v-rules { display:flex; flex-direction:column; overflow:hidden; padding-bottom:20px }
-  #v-rules .scrollarea { flex:1; min-height:0; overflow:auto; overscroll-behavior:contain }
+  #v-rules, #v-skills { display:flex; flex-direction:column; overflow:hidden; padding-bottom:20px }
+  #v-rules .scrollarea, #v-skills .scrollarea { flex:1; min-height:0; overflow:auto; overscroll-behavior:contain }
   .seg { display:inline-flex; border:1px solid var(--line); border-radius:8px; background:var(--card); overflow:hidden; box-shadow:0 1px 2px rgba(20,20,30,.05) }
   .seg button { border:0; background:transparent; padding:8px 12px; font:500 14px/20px var(--sans); color:var(--ink-2); cursor:pointer }
   .seg button.on { background:var(--paper); color:var(--ink); font-weight:600 }
-  .search { border:1px solid var(--line); border-radius:8px; background:var(--card); padding:8px 12px; font:500 14px/20px var(--sans); color:var(--ink); min-width:220px; box-shadow:0 1px 2px rgba(20,20,30,.05) }
+  .searchbox { position:relative; margin-left:auto; display:flex; align-items:center }
+  .searchbox svg { position:absolute; left:11px; width:15px; height:15px; fill:none; stroke:var(--ink-3); stroke-width:1.8; stroke-linecap:round; pointer-events:none }
+  .search { border:1px solid var(--line); border-radius:8px; background:var(--card); padding:8px 12px 8px 33px; font:500 14px/20px var(--sans); color:var(--ink); min-width:240px; box-shadow:0 1px 2px rgba(20,20,30,.05) }
   .search:focus { outline:0; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft) }
+  .search:focus + svg { stroke:var(--accent) }
+  table.rules th.sortable { cursor:pointer; user-select:none }
+  table.rules th.sortable:hover { color:var(--ink) }
+  table.rules th .dir { font-size:9px; margin-left:4px; color:var(--ink) }
+  .tfoot { flex:none; border-top:1px solid var(--line); margin-top:2px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:12px 2px 0; font:500 13px/20px var(--sans); color:var(--ink-3); font-variant-numeric:tabular-nums }
+  .tfoot .right { margin-left:auto; display:flex; align-items:center; gap:8px }
+  .tfoot select { border:1px solid var(--line); background:var(--card); border-radius:8px; padding:5px 8px; font:500 13px/18px var(--sans); color:var(--ink) }
+  .tfoot button { border:1px solid var(--line); background:var(--card); border-radius:8px; padding:5px 12px; font:600 13px/18px var(--sans); color:var(--ink); cursor:pointer }
+  .tfoot button:disabled { color:var(--ink-3); cursor:default }
+  .source .cta { flex:none; border:1px solid var(--line); background:var(--card); border-radius:999px; padding:5px 13px; font:600 13px/18px var(--sans); color:var(--ink); cursor:pointer }
+  .source .cta:hover { border-color:var(--line-strong) }
+  .source .top[role=button] { cursor:pointer }
+  .source pre.md { margin:12px 0 0 }
   .view .count { margin-left:auto; font:500 13px/20px var(--sans); color:var(--ink-3) }
   table.rules { width:100%; border-collapse:separate; border-spacing:0; background:var(--card); border:1px solid var(--line); border-radius:12px; font:400 14px/20px var(--sans) }
   table.rules th:first-child { border-top-left-radius:11px } table.rules th:last-child { border-top-right-radius:11px }
@@ -117,7 +132,8 @@
   .skillbar { position:sticky; top:0; z-index:3; background:var(--paper); display:flex; gap:8px; align-items:center; padding:10px 0 16px; flex-wrap:wrap; font:500 14px/20px var(--sans); color:var(--ink-2) }
   .skillbar button { border:1px solid var(--line); background:var(--card); border-radius:8px; padding:8px 14px; font:600 14px/20px var(--sans); color:var(--ink); cursor:pointer; box-shadow:0 1px 2px rgba(20,20,30,.05) }
   .skillbar .primary { background:var(--ink); border-color:var(--ink); color:var(--on-accent) }
-  .skillbar .last { margin-left:auto; font-size:13px; color:var(--ink-3) }
+  .skillbar .last { font-size:13px; color:var(--ink-3) }
+  .skillbar .sp { flex:1 }
   pre.md { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 22px; white-space:pre-wrap; font:13px/21px ui-monospace, "JetBrains Mono", monospace; color:var(--ink-2) }
   .bar { height:3px; background:var(--line); border-radius:2px; overflow:hidden }
   .bar i { display:block; height:100%; background:var(--accent); width:0; transition:width .3s }
@@ -265,11 +281,15 @@
     <select id="rdim"><option value="">All dimensions</option></select>
     <select id="rscope"><option value="">All scopes</option><option>universal</option><option>personal</option></select>
     <select id="rkind"><option value="">All kinds</option><option>harvested</option><option>heuristic</option><option>bias</option><option>practice</option></select>
-    <input class="search" id="rq" placeholder="Search titles and rules">
-    <span class="count" id="rcount"></span>
+    <span class="searchbox"><input class="search" id="rq" placeholder="Search rules, evidence, ids"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg></span>
   </div>
   <div id="bulk"></div>
-  <div class="scrollarea"><table class="rules"><thead><tr><th class="c"><input type="checkbox" id="rall" title="Select all"></th><th>Rule</th><th>Stance</th><th>Dimension</th><th>Scope</th><th class="n">Conf</th><th class="n">Seen</th><th>Status</th></tr></thead><tbody id="rbody"></tbody></table></div>
+  <div class="scrollarea"><table class="rules"><thead><tr><th class="c"><input type="checkbox" id="rall" title="Select all"></th>
+    <th class="sortable" data-col="title">Rule</th><th class="sortable" data-col="stance">Stance</th><th class="sortable" data-col="dimension">Dimension</th>
+    <th class="sortable" data-col="scope">Scope</th><th class="sortable n" data-col="confidence">Conf</th><th class="sortable n" data-col="seen">Seen</th>
+    <th class="sortable" data-col="status">Status</th></tr></thead><tbody id="rbody"></tbody></table>
+  </div>
+  <div class="tfoot" id="tfoot"></div>
 </section>
 <section class="view" id="v-sources" hidden>
   <div class="bar-row"><span class="count" id="scount" style="margin-left:0"></span></div>
@@ -277,13 +297,13 @@
 </section>
 <section class="view" id="v-skills" hidden>
   <div class="skillbar">
+    <span class="last" id="lastcompile"></span>
+    <span class="sp"></span>
     <button class="primary" onclick="compile(false)">Compile confirmed</button>
     <button onclick="compile(true)">Compile preview</button>
     <button onclick="installSkills()">Install into ~/.claude/skills</button>
-    <span class="last" id="lastcompile"></span>
   </div>
-  <div class="skills" id="skillcards"></div>
-  <div id="skillview" style="margin-top:16px"></div>
+  <div class="scrollarea"><div class="src-list" id="skillcards"></div></div>
 </section>
 <footer id="queue-footer">
   <button class="side no mobile" onclick="act('retire')"><span class="arrow">←</span>Retire</button>
@@ -476,6 +496,14 @@ window.addEventListener("hashchange", route);
 
 // ---------- rules ----------
 let rules = [], rstatus = "", picked = new Set();
+let sortCol = "", sortDir = 1, page = 0, perPage = 10;
+const STATUS_ORDER = { confirmed: 0, candidate: 1, retired: 2 };
+const VALUE = {
+  title: (c) => String(c.title).toLowerCase(), stance: (c) => c.stance, dimension: (c) => c.dimension,
+  scope: (c) => c.scope, status: (c) => STATUS_ORDER[c.status], confidence: (c) => c.confidence, seen: (c) => c.occurrences.length,
+};
+/** Default order when no column is chosen: confirmed first, then most-seen, then most-confident. */
+const byDefault = (a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status] || b.occurrences.length - a.occurrences.length || b.confidence - a.confidence;
 async function loadRules() {
   if (!schema) schema = await api.schema();
   const r = await api.rules();
@@ -487,9 +515,16 @@ async function loadRules() {
 }
 function renderRules() {
   const q = $("#rq").value.trim().toLowerCase(), fd = $("#rdim").value, fs = $("#rscope").value, fk = $("#rkind").value;
-  const rows = rules.filter((c) => (rstatus === "conflict" ? c.conflicts_with.length : !rstatus || c.status === rstatus) && (!fd || c.dimension === fd) && (!fs || c.scope === fs) && (!fk || c.kind === fk) && (!q || (c.title + " " + c.rule + " " + c.id + " " + c.evidence.join(" ")).toLowerCase().includes(q)))
-    .sort((a, b) => ({ confirmed: 0, candidate: 1, retired: 2 })[a.status] - ({ confirmed: 0, candidate: 1, retired: 2 })[b.status] || b.occurrences.length - a.occurrences.length || b.confidence - a.confidence);
-  $("#rcount").textContent = `${rows.length} of ${rules.length}`;
+  const matched = rules.filter((c) => (rstatus === "conflict" ? c.conflicts_with.length : !rstatus || c.status === rstatus) && (!fd || c.dimension === fd) && (!fs || c.scope === fs) && (!fk || c.kind === fk) && (!q || (c.title + " " + c.rule + " " + c.id + " " + c.evidence.join(" ")).toLowerCase().includes(q)));
+  matched.sort(sortCol ? (a, b) => {
+    const x = VALUE[sortCol](a), y = VALUE[sortCol](b);
+    return (x < y ? -1 : x > y ? 1 : 0) * sortDir || byDefault(a, b);
+  } : byDefault);
+  const pages = perPage ? Math.max(1, Math.ceil(matched.length / perPage)) : 1;
+  page = Math.min(page, pages - 1);
+  const rows = perPage ? matched.slice(page * perPage, page * perPage + perPage) : matched;
+  renderFoot(matched.length, rows.length, pages);
+  renderHeadings();
   renderBulk();
   shown = rows.map((c) => c.id);
   $("#rbody").innerHTML = rows.map((c) => `<tr data-id="${esc(c.id)}">
@@ -499,6 +534,30 @@ function renderRules() {
     <td class="n">${c.confidence}</td><td class="n">${c.occurrences.length}×</td><td><span class="st ${esc(c.status)}">${esc(statusLabel(c.status))}</span></td></tr>`).join("") || `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--ink-3)">Nothing matches.</td></tr>`;
 }
 let shown = [];
+/** One footer pattern: total on the left, per-page and paging on the right, always rendered. */
+function renderFoot(total, onPage, pages) {
+  const from = total ? page * perPage + 1 : 0;
+  const to = perPage ? from + onPage - 1 : total;
+  const fits = pages <= 1;
+  $("#tfoot").innerHTML = `<span>${total ? `Showing ${from}–${to} of ${total}` : "Nothing matches"}${total !== rules.length ? ` · filtered from ${rules.length}` : ""}</span>
+    <div class="right">
+      <label>Per page <select id="rper">${[10, 25, 50, 100].map((n) => `<option ${n === perPage ? "selected" : ""}>${n}</option>`).join("")}<option value="0" ${perPage ? "" : "selected"}>All</option></select></label>
+      <button id="rprev" ${page === 0 ? "disabled" : ""} title="${page === 0 ? "First page" : "Previous page"}">Prev</button>
+      <span>${page + 1} / ${pages}</span>
+      <button id="rnext" ${page >= pages - 1 ? "disabled" : ""} title="${fits ? `all ${total} fit on one page` : page >= pages - 1 ? "Last page" : "Next page"}">Next</button>
+    </div>`;
+  $("#rper").onchange = (e) => { perPage = Number(e.target.value); page = 0; renderRules(); };
+  $("#rprev").onclick = () => { page--; renderRules(); };
+  $("#rnext").onclick = () => { page++; renderRules(); };
+}
+/** One indicator, on the active column only; a third click returns to the default order. */
+function renderHeadings() {
+  document.querySelectorAll("#v-rules th.sortable").forEach((th) => {
+    const on = th.dataset.col === sortCol;
+    th.innerHTML = th.textContent.replace(/[▲▼]\s*$/, "").trim() + (on ? ` <span class="dir">${sortDir > 0 ? "▲" : "▼"}</span>` : "");
+    th.title = on && sortDir < 0 ? "Click to return to the default order" : "Sort by this column";
+  });
+}
 function renderBulk() {
   const n = picked.size;
   $("#rall").checked = n > 0 && shown.every((id) => picked.has(id));
@@ -521,8 +580,17 @@ async function bulk(action) {
   await loadRules(); load();
 }
 $("#rall").onclick = (e) => { e.target.checked ? shown.forEach((id) => picked.add(id)) : shown.forEach((id) => picked.delete(id)); renderRules(); };
-$("#rq").oninput = renderRules; $("#rdim").onchange = renderRules; $("#rscope").onchange = renderRules; $("#rkind").onchange = renderRules;
-$("#rstatus").onclick = (e) => { const b = e.target.closest("button"); if (!b) return; rstatus = b.dataset.v; $("#rstatus").querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b)); renderRules(); };
+const refilter = () => { page = 0; renderRules(); };
+$("#rq").oninput = refilter; $("#rdim").onchange = refilter; $("#rscope").onchange = refilter; $("#rkind").onchange = refilter;
+document.querySelector("#v-rules thead").onclick = (e) => {
+  const th = e.target.closest("th.sortable"); if (!th) return;
+  const col = th.dataset.col;
+  if (sortCol !== col) { sortCol = col; sortDir = 1; }
+  else if (sortDir > 0) sortDir = -1;
+  else { sortCol = ""; sortDir = 1; }
+  page = 0; renderRules();
+};
+$("#rstatus").onclick = (e) => { const b = e.target.closest("button"); if (!b) return; rstatus = b.dataset.v; page = 0; $("#rstatus").querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b)); renderRules(); };
 $("#rbody").onclick = (e) => {
   const tr = e.target.closest("tr[data-id]"); if (!tr) return;
   if (e.target.matches("input[type=checkbox]")) { e.target.checked ? picked.add(tr.dataset.id) : picked.delete(tr.dataset.id); renderBulk(); return; }
@@ -612,17 +680,42 @@ function fromSource(id) { location.hash = "#rules"; setTimeout(() => openDrawer(
 async function loadSkills() {
   const r = await api.skills();
   $("#lastcompile").textContent = r.last ? `Last compile ${new Date(r.last.when).toLocaleString()} · ${r.last.preview ? "preview (includes unreviewed)" : "confirmed only"}${r.last.ok === false ? " · FAILED" : ""}` : "Not compiled yet";
-  $("#skillcards").innerHTML = r.skills.map((s) => !s.exists ? `<div class="skill"><h3>${esc(s.name)}</h3><span class="warn">Not compiled yet.</span></div>` : `<div class="skill">
-    <h3>${esc(s.name)}</h3><div class="desc">${esc(s.description).slice(0, 220)}</div>
-    <div class="facts"><span>rules cited</span><b>${s.ids.length}</b><span>words</span><b>${s.words}</b><span>build</span><b class="${s.preview ? "warn" : "ok"}">${s.preview ? "preview" : "confirmed only"}</b><span>installed</span><b class="${s.installed ? "ok" : "warn"}">${s.installed ? "linked in ~/.claude/skills" : "not linked"}</b></div>
-    <div class="secs">${s.sections.filter((x) => x.rules).map((x) => `<span>${esc(x.title)}<b>${x.rules}</b></span>`).join("") || "<span>no rule lines yet</span>"}</div>
-    <button class="open" onclick="showSkill('${esc(s.name)}')">View SKILL.md</button></div>`).join("");
+  $("#skillcards").innerHTML = r.skills.map((s) => !s.exists
+    ? `<div class="source"><div class="top"><h3>${esc(s.name)}</h3><span class="host">not compiled yet</span></div></div>`
+    : `<div class="source" data-name="${esc(s.name)}">
+    <div class="top" role="button" tabindex="0" aria-expanded="false" onclick="toggleSkill(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSkill(this)}">
+      <h3>${esc(s.name)}</h3>
+      <span class="host">${s.ids.length} rules · ${s.words} words</span>
+      <span class="n">${s.preview ? '<span class="warn">preview build</span>' : '<span class="ok">confirmed only</span>'} · ${s.installed ? '<span class="ok">linked</span>' : '<span class="warn">not linked</span>'}</span>
+      <button class="cta" onclick="event.stopPropagation(); showSkill('${esc(s.name)}')">View SKILL.md</button>
+      <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+    <ul>
+      <li><span class="rt" style="cursor:default">${esc(s.description)}</span></li>
+      ${s.sections.map((x) => x.rules || x.level === 2 ? `<li><span class="rt" style="cursor:default; ${x.level > 2 ? "padding-left:18px; color:var(--ink-2)" : "font-weight:600"}">${esc(x.title)}</span><span class="n">${x.rules || ""}</span></li>` : "").join("") || '<li><span class="rt" style="cursor:default">No rule lines yet.</span></li>'}
+      <li><span class="rt" style="cursor:default">last built</span><span class="n">${new Date(s.mtime).toLocaleString()}</span></li>
+    </ul></div>`).join("");
   window._skills = r.skills;
 }
-function showSkill(name) { const s = window._skills.find((x) => x.name === name); $("#skillview").innerHTML = `<pre class="md">${esc(s.body)}</pre>`; $("#skillview").scrollIntoView({ behavior: "smooth", block: "start" }); }
+function toggleSkill(top) {
+  const open = top.parentNode.classList.toggle("open");
+  top.setAttribute("aria-expanded", open);
+}
+function showSkill(name) {
+  const row = document.querySelector(`.source[data-name="${name}"]`);
+  const s = window._skills.find((x) => x.name === name);
+  row.classList.add("open");
+  row.querySelector(".top").setAttribute("aria-expanded", "true");
+  let pre = row.querySelector("pre.md");
+  if (pre) { pre.remove(); return; }
+  pre = document.createElement("pre");
+  pre.className = "md";
+  pre.textContent = s.body;
+  row.appendChild(pre);
+  row.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 async function installSkills() { const r = await api.install(); toast(r.ok ? "Installed: " + r.installed.join(", ") : "Error: " + r.error); loadSkills(); }
 Object.assign(window, { act, undo, compile, saveNote, openNote, closeNote, openAbout, closeAbout, toggleTheme,
-  openDrawer, closeDrawer, saveDrawer, drawerVerdict, drawerNote, addConflict, bulk, showSkill, installSkills, fromSource, renderRules, picked });
+  openDrawer, closeDrawer, saveDrawer, drawerVerdict, drawerNote, addConflict, bulk, showSkill, toggleSkill, installSkills, fromSource, renderRules, picked });
 route();
 if ((location.hash || "#queue") !== "#queue") load();   // header counters are queue stats; keep them true on every tab
 </script>
