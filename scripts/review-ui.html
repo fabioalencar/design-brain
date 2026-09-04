@@ -36,6 +36,15 @@
   .hactions svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round }
   .view { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; width:min(1100px, 100%); margin:0 auto; padding:16px 20px 40px; box-sizing:border-box }
   [hidden] { display:none !important }
+  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0 }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:4px }
+  .side:focus-visible, footer button:focus-visible, .modal button:focus-visible, .dactions button:focus-visible { outline-offset:3px }
+  /* a hit area of at least 24px, without moving anything */
+  .info, .source .drop, .conf .cid button, .drawer .dhead .x { position:relative }
+  .info::before, .source .drop::before, .conf .cid button::before { content:""; position:absolute; inset:50% 50%; width:24px; height:24px; transform:translate(-50%, -50%) }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important }
+  }
   .view .bar-row { display:flex; gap:8px; align-items:center; padding:10px 0 14px; flex-wrap:wrap }
   #v-rules, #v-sources, #v-skills { display:flex; flex-direction:column; overflow:hidden; padding-bottom:20px }
   #v-rules .scrollarea, #v-sources .scrollarea, #v-skills .scrollarea { flex:1; min-height:0; overflow:auto; overscroll-behavior:contain }
@@ -52,7 +61,11 @@
   .search { border:1px solid var(--line); border-radius:8px; background:var(--card); padding:8px 12px 8px 33px; font:500 14px/20px var(--sans); color:var(--ink); min-width:240px; box-shadow:0 1px 2px rgba(20,20,30,.05) }
   .search:focus { outline:0; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft) }
   .search:focus + svg { stroke:var(--accent) }
-  table.rules th.sortable { cursor:pointer; user-select:none }
+  table.rules th.sortable { padding:0 }
+  table.rules th.sortable button { width:100%; text-align:inherit; border:0; background:none; padding:10px 14px; font:inherit; color:inherit; cursor:pointer; display:flex; gap:4px; align-items:center }
+  table.rules th.sortable.n button { justify-content:flex-end }
+  table.rules th.sortable button:hover { color:var(--ink) }
+  table.rules tbody tr:focus-visible { outline:2px solid var(--accent); outline-offset:-2px }
   table.rules th.sortable:hover { color:var(--ink) }
   table.rules th .dir { font-size:9px; margin-left:4px; color:var(--ink) }
   .tfoot { flex:none; border-top:1px solid var(--line); margin-top:2px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:12px 2px 0; font:500 13px/20px var(--sans); color:var(--ink-3); font-variant-numeric:tabular-nums }
@@ -120,8 +133,17 @@
   .conf input, .conf textarea { border:1px solid var(--warn-line); border-radius:8px; padding:7px 10px; font:inherit; background:var(--card); color:var(--ink) }
   .conf textarea { min-height:64px; resize:vertical; width:100% }
   .conf .small { font-size:13px; color:var(--warn) }
-  .callout { border-left:3px solid var(--warn-line); background:var(--warn-soft); border-radius:0 8px 8px 0; padding:10px 14px; font:400 15px/24px var(--sans); color:var(--warn-ink) }
+  .callout { border-left:3px solid var(--warn-line); background:var(--warn-soft); border-radius:0 8px 8px 0; padding:12px 16px; font:400 15px/24px var(--sans); color:var(--warn-ink) }
   .callout b { color:var(--warn); font-weight:600 }
+  .callout h3 { margin:0 0 8px; font:600 11px/18px var(--sans); letter-spacing:.09em; text-transform:uppercase; color:var(--warn) }
+  .callout .clist { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px }
+  .callout .clist li { display:flex; align-items:baseline; gap:8px; margin:0 }
+  .callout .rulelink { border:0; background:none; padding:0; font:inherit; color:inherit; text-align:left; text-decoration:underline; text-underline-offset:2px; cursor:pointer; flex:1 }
+  .callout .rulelink:hover { color:var(--ink) }
+  .callout .res { margin:10px 0 0; font-size:14px; line-height:22px }
+  .callout.settled { border-left-color:var(--line-strong); background:var(--code-bg); color:var(--ink-2) }
+  .callout.settled h3 { color:var(--ink-3) }
+  .callout.settled b { color:var(--ink) }
   .skills { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:16px }
   .skill { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; flex-direction:column; gap:10px; font:400 14px/22px var(--sans); color:var(--ink-2) }
   .skill h3 { margin:0; font:700 18px/24px var(--sans); letter-spacing:-.01em; color:var(--ink) }
@@ -197,7 +219,7 @@
   .chiprow { display:flex; flex-direction:column; gap:10px }
   .chips { display:flex; gap:6px; flex-wrap:wrap; font-size:14px; align-items:center }
   .chips.metarow { gap:4px 18px; color:var(--ink-2) }
-  .info { display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; border-radius:50%; background:rgba(0,0,0,.08); color:inherit; font:600 11px/1 -apple-system, system-ui, sans-serif; cursor:help; position:relative; margin-left:1px }
+  .info { border:0; font:inherit; display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; border-radius:50%; background:rgba(0,0,0,.08); color:inherit; font:600 11px/1 -apple-system, system-ui, sans-serif; cursor:help; position:relative; margin-left:1px }
   .info::after { content:attr(data-tip); position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%); background:var(--ink); color:var(--on-accent); font:400 13px/20px -apple-system, system-ui, sans-serif; padding:8px 10px; border-radius:8px; white-space:pre-line; width:max-content; max-width:280px; text-align:left; opacity:0; pointer-events:none; transition:opacity .12s; z-index:5 }
   .info:hover::after, .info:focus-visible::after { opacity:1 }
   .info:focus-visible { outline:2px solid var(--accent); outline-offset:1px }
@@ -318,10 +340,10 @@
     <span class="searchbox"><input class="search" id="rq" placeholder="Search rules, evidence, ids"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg></span>
   </div>
   <div id="bulk"></div>
-  <div class="scrollarea"><table class="rules"><thead><tr><th class="c"><input type="checkbox" id="rall" title="Select all"></th>
-    <th class="sortable" data-col="title">Rule</th><th class="sortable" data-col="stance">Stance</th><th class="sortable" data-col="dimension">Dimension</th>
-    <th class="sortable" data-col="scope">Scope</th><th class="sortable n" data-col="confidence">Conf</th><th class="sortable n" data-col="seen">Seen</th>
-    <th class="sortable" data-col="status">Status</th></tr></thead><tbody id="rbody"></tbody></table>
+  <div class="scrollarea"><table class="rules"><thead><tr><th class="c"><input type="checkbox" id="rall" title="Select all" aria-label="Select every rule on this page"></th>
+    <th class="sortable" data-col="title"><button>Rule</button></th><th class="sortable" data-col="stance"><button>Stance</button></th><th class="sortable" data-col="dimension"><button>Dimension</button></th>
+    <th class="sortable" data-col="scope"><button>Scope</button></th><th class="sortable n" data-col="confidence"><button>Conf</button></th><th class="sortable n" data-col="seen"><button>Seen</button></th>
+    <th class="sortable" data-col="status"><button>Status</button></th></tr></thead><tbody id="rbody"></tbody></table>
   </div>
   <div class="tfoot" id="tfoot"></div>
 </section>
@@ -346,25 +368,25 @@
   <button onclick="undo()">Undo <kbd>Z</kbd></button>
   <button class="side yes mobile" onclick="act('promote')">Promote<span class="arrow">→</span></button>
 </footer>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="drawer-bg" id="drawerbg" onclick="closeDrawer()"></div>
-<aside class="drawer" id="drawer">
-  <div class="dhead"><span id="dstatus"></span><span id="dmeta"></span><button class="x" onclick="closeDrawer()" aria-label="Close">×</button></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dmeta" tabindex="-1">
+  <div class="dhead"><span id="dstatus"></span><span id="dmeta"></span><button class="x" onclick="closeDrawer()" aria-label="Close panel">×</button></div>
   <div class="dbody" id="dbody"></div>
   <div class="dactions" id="dactions"></div>
 </aside>
 <div class="modal-bg" id="readbg" onclick="if (event.target === this) closeReading()">
-  <div class="modal">
-    <h3>Save to read later</h3>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="readtitle" tabindex="-1">
+    <h3 id="readtitle">Save to read later</h3>
     <p style="margin:0; font:400 14px/22px var(--sans); color:var(--ink-2)">One link per line, with an optional note after a dash. Nothing is read now: the <code>design-brain-add-source</code> skill turns these into candidates when you ask it to, in a session that can fetch and judge them.</p>
     <textarea id="readtext" placeholder="https://www.nngroup.com/articles/… — the part about empty states"></textarea>
     <div class="row"><button onclick="closeReading()">Cancel <kbd>Esc</kbd></button><button class="primary" onclick="saveReading()">Save</button></div>
   </div>
 </div>
 <div class="modal-bg" id="aboutbg" onclick="if (event.target === this) closeAbout()">
-  <div class="modal" style="max-width:640px">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="abouttitle" tabindex="-1" style="max-width:640px">
     <div class="abouthead"><svg class="mark big" aria-hidden="true" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_9_32)"> <path d="M21.1017 7.62709H21.0805H21.0593C20.7415 7.98726 22.1822 7.52116 23.6652 7.69065C24.1102 7.75421 24.3644 8.11438 24.2373 8.53811C24.1102 8.89827 23.6652 9.1737 23.2415 8.98302C22.6907 8.74997 21.8432 8.62285 20.7415 8.81353C19.7881 8.98302 18.9407 9.4915 18.178 10.233C17.5635 10.8898 16.9491 11.7796 16.9703 12.7118C16.9703 13.4957 17.3517 14.2373 17.9025 14.8305C18.4957 15.4661 19.2161 15.9534 20 16.2076C20.911 16.5042 22.2669 16.4618 23.2203 16.0169C23.7288 15.7839 24.322 16.2076 24.1737 16.7584C24.1102 16.9703 23.9619 17.1822 23.6441 17.2457C22.6907 17.4788 21.7373 17.394 21.1017 17.3729H21.0805V17.4152L21.4407 17.8813C21.7373 18.3051 22.0974 18.8347 22.3729 19.5127C22.5424 19.9576 22.2881 20.4449 21.7585 20.4449C21.3983 20.4661 21.1652 20.1906 21.1229 19.894C21.0169 19.2584 20.678 18.6652 20.3178 18.1779L20.0635 17.8813C19.7669 17.5635 19.428 17.2245 18.983 16.9491C18.5593 16.6737 18.0932 16.4618 17.6059 16.2923C16.5466 15.9534 15.1483 15.8898 14.1102 16.7584C13.4322 17.3093 12.7542 18.3474 12.7542 19.8093C12.7542 21.6313 13.8983 22.8813 14.8093 23.411C15.4025 23.7076 15.2966 24.5551 14.7034 24.6822C14.4703 24.7245 14.2585 24.6822 14.1102 24.5762C13.6864 24.2584 13.3686 23.9195 13.0508 23.5381C12.5847 22.9661 12.2034 22.3729 12.2034 22.3729C12.2034 22.3729 11.9915 22.7754 11.4619 23.411C11.1441 23.8135 10.8263 24.1525 10.4237 24.4915C10.1059 24.7669 9.57626 24.7245 9.36439 24.4067C9.11016 24.0254 9.25846 23.5593 9.61863 23.411C10.5932 22.8813 11.6102 21.7161 11.6102 19.9152C11.6102 18.644 11.0381 17.4576 10.1695 16.7373C9.89406 16.5466 9.68219 16.4195 9.32202 16.2923C8.30507 15.8686 6.92795 15.9745 5.65677 16.7373C4.68219 17.3093 3.51694 18.4534 3.2627 19.894C3.15677 20.5296 2.11863 20.6567 1.92795 19.9152C1.88558 19.6822 1.92795 19.5339 2.0127 19.3856C2.3305 18.75 2.62711 18.2627 2.9449 17.8813L3.32626 17.394L3.30507 17.3729C2.4788 17.4152 1.35592 17.6059 0.656768 17.2669C0.402531 17.1398 0.233039 16.8856 0.254226 16.5042C0.360158 16.0381 0.868632 15.7839 1.27117 16.0169C1.92795 16.3135 3.15677 16.5678 4.32202 16.2288C4.95761 16.0381 5.65677 15.6779 6.2288 15.1483L6.56778 14.8093C6.75846 14.5551 6.99151 14.3008 7.13982 13.9618C7.35168 13.5593 7.45762 13.1356 7.45762 12.6906C7.45762 12.1186 7.28812 11.6737 7.07626 11.2288L6.80083 10.8262L6.50423 10.4873L6.2288 10.2118L5.84745 9.87285C4.99999 9.23726 4.21609 8.83472 2.9449 8.72878C2.37287 8.7076 1.6949 8.77116 1.20762 8.98302C0.720327 9.19489 0.233039 8.83472 0.254226 8.30505C0.296598 8.02963 0.46609 7.75421 0.783887 7.69065C1.58897 7.54234 2.3305 7.56353 3.32626 7.69065L3.34745 7.66946C3.28389 7.54234 3.17795 7.4576 3.11439 7.33048C2.96609 7.11861 2.66948 6.6737 2.45762 6.27116L2.11863 5.63556C2.05507 5.40251 2.03389 5.16946 2.24575 4.9576C2.58473 4.57624 3.2627 4.68217 3.32626 5.38133C3.49575 6.16522 4.0466 7.1398 4.78812 7.81777C5.10592 8.13556 5.55084 8.45336 5.93219 8.62285C6.46185 8.91946 7.18219 9.19489 8.15677 9.19489C9.44914 9.19489 10.4661 8.60167 11.0381 7.6059L11.25 7.18217C11.483 6.65251 11.589 6.05929 11.589 5.40251C11.5678 4.47031 11.3347 3.72878 11.0593 3.05082C10.7415 2.43641 10.3813 1.92794 9.85168 1.50421C9.5127 1.29234 9.47033 0.720309 9.87287 0.360139C10.1907 0.148275 10.5932 0.190648 10.8051 0.444885C11.1229 0.783868 11.4407 1.3559 11.7585 1.90675L12.1822 2.88133L12.2034 2.90251L12.5212 2.24573C12.7119 1.84319 13.0296 1.31353 13.2203 1.05929C13.3263 0.868614 13.4534 0.677936 13.6017 0.508445C14.0254 -0.0212165 14.9152 0.254207 14.7457 1.05929C14.7034 1.18641 14.5974 1.31353 14.5127 1.37709L14.089 1.77963C13.4322 2.54234 12.8178 3.79234 12.7542 5.12709C12.7119 6.86438 13.5381 8.26268 14.8093 8.81353C15.339 9.08895 16.0169 9.23726 16.822 9.1737C17.4788 9.13133 18.1568 8.94065 18.7712 8.60166C19.2796 8.30505 19.7457 7.88133 20.1271 7.41522C20.5296 6.90675 20.9534 6.12285 21.1017 5.38133C21.2076 4.66099 22.1186 4.55505 22.3729 5.16946C22.4364 5.33895 22.4364 5.55082 22.3517 5.72031C22.0763 6.27116 21.7585 6.86438 21.3771 7.35166L21.1017 7.62709ZM12.2034 10.7415C11.2288 10.7415 10.2966 11.5254 10.2966 12.6906C10.2966 13.0296 10.4025 13.4534 10.6144 13.7076C10.9322 14.2161 11.5466 14.5551 12.2034 14.5551C12.8178 14.5551 13.2839 14.322 13.6017 14.0042C13.9195 13.6652 14.1102 13.2203 14.1102 12.6906C14.1102 11.6525 13.3263 10.8051 12.2881 10.7415H12.2034Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_9_32"> <rect width="24.4492" height="25" fill="white"/> </clipPath> </defs> </svg><div>
-      <h3>design-brain</h3>
+      <h3 id="abouttitle">design-brain</h3>
       <p class="tagline">The design decisions you keep re-teaching AI, kept.</p>
     </div></div>
     <p style="margin:0; font:400 15px/25px var(--sans); color:var(--ink-2)">Sources are harvested into a queue of candidates, each carrying its evidence. You promote the ones you stand behind, and the confirmed set compiles into agent skills that load on every project. Compiled skills never name a past project.</p>
@@ -384,8 +406,8 @@
   </div>
 </div>
 <div class="modal-bg" id="notebg" onclick="if (event.target === this) closeNote()">
-  <div class="modal">
-    <h3>Add note</h3>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="notetitleh" tabindex="-1">
+    <h3 id="notetitleh">Add note</h3>
     <div class="id" id="notetitle"></div>
     <textarea id="notetext" placeholder="Reword, narrow, merge with…, why you kept or dropped it. Saved into the file, dated."></textarea>
     <div class="row"><button onclick="closeNote()">Cancel <kbd>Esc</kbd></button><button class="primary" onclick="saveNote()">Save note <kbd>⌘↵</kbd></button></div>
@@ -438,7 +460,7 @@ async function act(action) {
   const el = $("#stack").firstElementChild;
   if (action === "promote" && (c.conflicts || []).some((x) => x.status === "confirmed") && !c.resolution) {
     noteTarget = c; resolveNext = () => act("promote");
-    $("#notebg").classList.add("on"); $("#notetitle").textContent = "Resolve the conflict before promoting · " + c.id;
+    openDialog($("#notebg"), $("#notetext")); $("#notetitle").textContent = "Resolve the conflict before promoting · " + c.id;
     $("#notetext").value = ""; $("#notetext").placeholder = "Which rule wins, and when? e.g. \"dark-first applies to tools; system theme applies to consumer surfaces\""; setTimeout(() => $("#notetext").focus(), 0);
     return;
   }
@@ -454,8 +476,8 @@ async function act(action) {
   setTimeout(rebuild, 280);
 }
 let noteTarget = null, resolveNext = null;
-function openNote() { const c = queue[0]; if (!c) return; noteTarget = c; $("#notebg").classList.add("on"); $("#notetitle").textContent = c.id + " · " + c.title; const t = $("#notetext"); t.value = ""; setTimeout(() => t.focus(), 0); }
-function closeNote() { $("#notebg").classList.remove("on"); resolveNext = null; $("#notetext").placeholder = "Reword, narrow, merge with…, why you kept or dropped it. Saved into the file, dated."; }
+function openNote() { const c = queue[0]; if (!c) return; noteTarget = c; openDialog($("#notebg"), $("#notetext")); $("#notetitle").textContent = c.id + " · " + c.title; const t = $("#notetext"); t.value = ""; setTimeout(() => t.focus(), 0); }
+function closeNote() { closeDialog($("#notebg")); resolveNext = null; $("#notetext").placeholder = "Reword, narrow, merge with…, why you kept or dropped it. Saved into the file, dated."; }
 async function saveNote() {
   const c = noteTarget || queue[0]; if (!c) return;
   const text = $("#notetext").value.trim();
@@ -489,6 +511,8 @@ document.addEventListener("keydown", (e) => {
   if (["INPUT","SELECT","TEXTAREA"].includes(e.target.tagName)) return;
   const tab = { q: "queue", r: "rules", o: "sources", s: "skills" }[e.key.toLowerCase()];
   if (tab && !e.metaKey && !e.ctrlKey) { location.hash = "#" + tab; return; }
+  // a keyboard reader focuses the card to scroll it, so leave the arrows to the browser there
+  if (e.target.closest?.("#stack")) return;
   if (e.key === "ArrowRight") act("promote"); else if (e.key === "ArrowLeft") act("retire"); else if (e.key === "ArrowDown") act("skip");
   else if (e.key.toLowerCase() === "z") undo(); else if (e.key.toLowerCase() === "c") compile(); else if (e.key.toLowerCase() === "n") openNote();
 });
@@ -524,6 +548,33 @@ const refreshFades = () => requestAnimationFrame(() => fades.forEach((u) => u())
 for (const el of document.querySelectorAll("#v-rules .scrollarea, #v-sources .scrollarea, #v-skills .scrollarea")) trackFade(el);
 addEventListener("resize", refreshFades);
 
+// ---------- dialogs ----------
+let lastFocus = null;
+const FOCUSABLE = 'a[href], button:not([disabled]), select, input, textarea, [tabindex]:not([tabindex="-1"])';
+function openDialog(el, focusEl) {
+  if (!el.classList.contains("on")) lastFocus = document.activeElement;
+  el.classList.add("on");
+  requestAnimationFrame(() => (focusEl ?? el.querySelector(".modal, .drawer") ?? el).focus?.());
+}
+function closeDialog(el) {
+  if (!el.classList.contains("on")) return;
+  el.classList.remove("on");
+  const back = lastFocus;
+  lastFocus = null;
+  requestAnimationFrame(() => back?.focus?.());
+}
+/** Tab stays inside the dialog on top, so the page behind it is never reachable. */
+addEventListener("keydown", (e) => {
+  if (e.key !== "Tab") return;
+  const open = [...document.querySelectorAll(".modal-bg.on .modal, .drawer.on")].pop();
+  if (!open) return;
+  const stops = [...open.querySelectorAll(FOCUSABLE)].filter((x) => x.offsetParent !== null);
+  if (!stops.length) return;
+  const first = stops[0], last = stops[stops.length - 1];
+  if (e.shiftKey && (document.activeElement === first || document.activeElement === open)) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
+
 // ---------- theme ----------
 const MOON = '<svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z"/></svg>';
 const SUN = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></svg>';
@@ -544,9 +595,9 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { le
 
 function openAbout() {
   $("#aboutcounts").textContent = `${tallies.confirmed} confirmed · ${queue.length} in review · ${tallies.retired} retired`;
-  $("#aboutbg").classList.add("on");
+  openDialog($("#aboutbg"));
 }
-function closeAbout() { $("#aboutbg").classList.remove("on"); }
+function closeAbout() { closeDialog($("#aboutbg")); }
 
 // ---------- routing ----------
 const views = { queue: ["#v-queue", "#queue-toolbar", "#queue-footer"], rules: ["#v-rules"], sources: ["#v-sources"], skills: ["#v-skills"] };
@@ -593,7 +644,7 @@ function renderRules() {
   renderHeadings();
   renderBulk();
   shown = rows.map((c) => c.id);
-  $("#rbody").innerHTML = rows.map((c) => `<tr data-id="${esc(c.id)}">
+  $("#rbody").innerHTML = rows.map((c) => `<tr data-id="${esc(c.id)}" tabindex="0" aria-label="${esc(c.title)}. ${esc(statusLabel(c.status))}. Press Enter to open.">
     <td class="c"><input type="checkbox" ${picked.has(c.id) ? "checked" : ""}></td>
     <td class="t">${esc(c.title)}${c.conflicts_with.length ? ` <span class="st conflict">${c.resolution ? "resolved" : "conflict"}</span>` : ""}</td>
     <td class="stance-t ${esc(c.stance)}">${esc(c.stance)}</td><td>${esc(c.dimension)}</td><td>${esc(c.scope)}</td>
@@ -621,8 +672,11 @@ function renderFoot(total, onPage, pages) {
 function renderHeadings() {
   document.querySelectorAll("#v-rules th.sortable").forEach((th) => {
     const on = th.dataset.col === sortCol;
-    th.innerHTML = th.textContent.replace(/[▲▼]\s*$/, "").trim() + (on ? ` <span class="dir">${sortDir > 0 ? "▲" : "▼"}</span>` : "");
-    th.title = on && sortDir < 0 ? "Click to return to the default order" : "Sort by this column";
+    const b = th.querySelector("button");
+    const label = b.textContent.replace(/[▲▼]\s*$/, "").trim();
+    b.innerHTML = label + (on ? ` <span class="dir" aria-hidden="true">${sortDir > 0 ? "▲" : "▼"}</span>` : "");
+    th.setAttribute("aria-sort", on ? (sortDir > 0 ? "ascending" : "descending") : "none");
+    b.title = on && sortDir < 0 ? "Return to the default order" : `Sort by ${label.toLowerCase()}`;
   });
 }
 function renderBulk() {
@@ -658,6 +712,11 @@ document.querySelector("#v-rules thead").onclick = (e) => {
   page = 0; renderRules();
 };
 $("#rstatus").onclick = (e) => { const b = e.target.closest("button"); if (!b) return; rstatus = b.dataset.v; page = 0; $("#rstatus").querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b)); renderRules(); };
+$("#rbody").onkeydown = (e) => {
+  const tr = e.target.closest?.("tr[data-id]");
+  if (!tr || e.target !== tr) return;
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openDrawer(tr.dataset.id); }
+};
 $("#rbody").onclick = (e) => {
   const tr = e.target.closest("tr[data-id]"); if (!tr) return;
   if (e.target.matches("input[type=checkbox]")) { e.target.checked ? picked.add(tr.dataset.id) : picked.delete(tr.dataset.id); renderBulk(); return; }
@@ -666,6 +725,11 @@ $("#rbody").onclick = (e) => {
 
 // ---------- drawer ----------
 let dcur = null;
+async function openRule(id) {
+  if (!rules.length) rules = (await api.rules()).rules;
+  if (!rules.find((x) => x.id === id)) { toast(`${id} is not in the ledger`); return; }
+  openDrawer(id);
+}
 function openDrawer(id) {
   const c = rules.find((x) => x.id === id); if (!c) return; dcur = c;
   $("#dstatus").innerHTML = `<span class="st ${esc(c.status)}">${esc(statusLabel(c.status))}</span>`;
@@ -673,7 +737,7 @@ function openDrawer(id) {
   const el = cardEl(c, { depth: 0, schema, skipped }); el.classList.remove("top");
   const conf = document.createElement("div"); conf.className = "conf"; conf.style.margin = "0 36px 28px";
   conf.innerHTML = `<h3>Conflicts</h3>
-    <div class="row" id="clist">${c.conflicts.map((x) => `<span class="cid" data-id="${esc(x.id)}">${esc(x.id)} <span class="small">${esc(x.title).slice(0, 60)} · ${esc(x.status)}</span><button title="remove" onclick="this.parentNode.remove()">×</button></span>`).join("") || '<span class="small">None declared.</span>'}</div>
+    <div class="row" id="clist">${c.conflicts.map((x) => `<span class="cid" data-id="${esc(x.id)}"><button type="button" class="rulelink" onclick="openRule('${esc(x.id)}')" title="Open ${esc(x.id)}">${esc(x.id)}</button> <span class="small">${esc(x.title).slice(0, 60)} · ${esc(x.status)}</span><button title="Remove this conflict" aria-label="Remove the conflict with ${esc(x.id)}" onclick="this.parentNode.remove()">×</button></span>`).join("") || '<span class="small">None declared.</span>'}</div>
     <div class="row"><input id="cadd" placeholder="Add id, e.g. DB-012" style="width:180px"><button class="open" onclick="addConflict()" style="border:1px solid var(--warn-line);background:var(--card);border-radius:999px;padding:6px 12px;font-weight:600;color:var(--warn-ink);cursor:pointer">Add</button></div>
     <textarea id="cres" placeholder="Resolution: which rule wins, and when. Required before two confirmed rules that conflict can compile.">${esc(c.resolution)}</textarea>
     <span class="small">Stance, scope and confidence edits on the card above are saved with this.</span>`;
@@ -685,9 +749,10 @@ function openDrawer(id) {
   if (c.status === "retired") acts.push(`<button onclick="drawerVerdict('unretire')">Restore to review</button>`);
   acts.push(`<span class="sp"></span><button onclick="drawerNote()">Add note</button><button onclick="saveDrawer()" style="background:var(--ink);border-color:var(--ink);color:var(--on-accent)">Save</button>`);
   $("#dactions").innerHTML = acts.join("");
-  $("#drawerbg").classList.add("on"); $("#drawer").classList.add("on");
+  $("#drawerbg").classList.add("on");
+  openDialog($("#drawer"));
 }
-function closeDrawer() { $("#drawerbg").classList.remove("on"); $("#drawer").classList.remove("on"); dcur = null; }
+function closeDrawer() { $("#drawerbg").classList.remove("on"); closeDialog($("#drawer")); dcur = null; }
 function addConflict() { const v = $("#cadd").value.trim(); if (!/^DB-(c-)?\d{3}$/.test(v)) { toast("Use an id like DB-012 or DB-c-503"); return; } const t = rules.find((x) => x.id === v); const span = document.createElement("span"); span.className = "cid"; span.dataset.id = v; span.innerHTML = `${esc(v)} <span class="small">${esc(t ? t.title : "(not found)").slice(0, 60)}${t ? " · " + esc(t.status) : ""}</span><button title="remove" onclick="this.parentNode.remove()">×</button>`; const l = $("#clist"); if (!l.querySelector(".cid")) l.innerHTML = ""; l.appendChild(span); $("#cadd").value = ""; }
 function drawerEdits() {
   const el = $("#dbody .card"); const e = cardEdits(el, dcur) || {};
@@ -708,7 +773,7 @@ async function drawerVerdict(action) {
   toast(action === "promote" ? `Promoted as ${r.newId}` : action === "retire" ? "Retired" : "Back in review");
   closeDrawer(); await loadRules(); load();
 }
-function drawerNote() { const c = dcur; $("#notebg").classList.add("on"); $("#notetitle").textContent = c.id + " · " + c.title; $("#notetext").value = ""; noteTarget = c; setTimeout(() => $("#notetext").focus(), 0); }
+function drawerNote() { const c = dcur; openDialog($("#notebg"), $("#notetext")); $("#notetitle").textContent = c.id + " · " + c.title; $("#notetext").value = ""; noteTarget = c; setTimeout(() => $("#notetext").focus(), 0); }
 
 // ---------- sources ----------
 const PUBLISHERS = { "nngroup.com": "Nielsen Norman Group", "lawsofux.com": "Laws of UX", "deceptive.design": "Deceptive Design", "w3.org": "W3C · WCAG", "developer.mozilla.org": "MDN", "developer.apple.com": "Apple Human Interface Guidelines", "m3.material.io": "Material Design", "material.io": "Material Design", "carbondesignsystem.com": "IBM Carbon", "polaris.shopify.com": "Shopify Polaris", "atlassian.design": "Atlassian Design System", "design-system.service.gov.uk": "GOV.UK Design System", "baymard.com": "Baymard Institute", "smashingmagazine.com": "Smashing Magazine", "ui-patterns.com": "UI Patterns", "doi.org": "Academic papers", "webaim.org": "WebAIM", "inclusive-components.design": "Inclusive Components" };
@@ -756,8 +821,8 @@ async function loadSources() {
 function fromSource(id) { location.hash = "#rules"; setTimeout(() => openDrawer(id), 400); }
 
 // ---------- reading list ----------
-function openReading() { $("#readbg").classList.add("on"); $("#readtext").value = ""; setTimeout(() => $("#readtext").focus(), 0); }
-function closeReading() { $("#readbg").classList.remove("on"); }
+function openReading() { $("#readtext").value = ""; openDialog($("#readbg"), $("#readtext")); }
+function closeReading() { closeDialog($("#readbg")); }
 async function saveReading() {
   const text = $("#readtext").value.trim();
   if (!text) { closeReading(); return; }
@@ -817,12 +882,12 @@ function showSkill(name) {
   $("#dbody").innerHTML = `<article class="doc">${renderMarkdown(s.body)}</article>`;
   $("#dactions").innerHTML = `<span class="sp"></span><button onclick="closeDrawer()">Close <kbd>Esc</kbd></button>`;
   $("#drawerbg").classList.add("on");
-  $("#drawer").classList.add("on");
+  openDialog($("#drawer"));
 }
 async function installSkills() { const r = await api.install(); toast(r.ok ? "Installed: " + r.installed.join(", ") : "Error: " + r.error); loadSkills(); }
 Object.assign(window, { act, undo, compile, saveNote, openNote, closeNote, openAbout, closeAbout, toggleTheme,
   openDrawer, closeDrawer, saveDrawer, drawerVerdict, drawerNote, addConflict, bulk, showSkill, toggleSkill, installSkills, fromSource, renderRules, refreshFades, picked,
-  openReading, closeReading, saveReading, dropReading });
+  openReading, closeReading, saveReading, dropReading, openRule });
 route();
 if ((location.hash || "#queue") !== "#queue") load();   // header counters are queue stats; keep them true on every tab
 </script>

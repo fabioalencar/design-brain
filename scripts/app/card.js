@@ -40,6 +40,11 @@ export function cardEl(c, { depth = 0, schema, skipped = new Set() } = {}) {
   const el = document.createElement("div");
   el.className = "card" + (depth === 0 ? " top" : depth === 1 ? " next" : " next2");
   el.dataset.id = c.id;
+  if (depth === 0) {
+    el.tabIndex = 0;
+    el.setAttribute("role", "article");
+    el.setAttribute("aria-label", `${c.title}. Use the arrow keys to scroll; Retire and Promote are in the toolbar.`);
+  }
   const stances = schema?.stances ?? ["always", "never", "prefer", "avoid", "context"];
   const scopes = [...new Set([...(schema?.scopes ?? ["universal", "personal"]), "project:" + (c.occurrences[0] || "x"), c.scope])];
   const ev = c.evidence.map((e, i) => evidenceLine(e, c.evidenceParsed?.[i])).join("");
@@ -59,16 +64,22 @@ export function cardEl(c, { depth = 0, schema, skipped = new Set() } = {}) {
     <div class="chiprow">
       <div class="chips metarow">
         <span class="chip meta"><em>dimension</em>${esc(c.dimension)}</span>
-        <span class="chip meta"><em>seen</em>${c.occurrences.length}×<span class="info" tabindex="0" data-tip="${esc(c.occurrences.join("\n"))}">i</span></span>
-        <span class="chip meta"><em>source</em>${esc(c.source ?? "unrecorded")}<span class="info" tabindex="0" data-tip="${esc(c.id)}\n${esc(c.file)}">i</span></span>
+        <span class="chip meta"><em>seen</em>${c.occurrences.length}×<button type="button" class="info" data-tip="${esc(c.occurrences.join("\n"))}" aria-label="Seen in ${esc(c.occurrences.join(", "))}">i</button></span>
+        <span class="chip meta"><em>source</em>${esc(c.source ?? "unrecorded")}<button type="button" class="info" data-tip="${esc(c.id)}\n${esc(c.file)}" aria-label="${esc(c.id)}, file ${esc(c.file)}">i</button></span>
         ${c.kind !== "harvested" ? `<span class="chip meta"><em>kind</em>${esc(c.kind)}</span>` : ""}${c.component ? `<span class="chip meta"><em>component</em>${esc(c.component)}</span>` : ""}
         ${skipped.has(c.id) ? '<span class="chip meta">skipped earlier</span>' : ""}
-        ${c.longParas ? `<span class="chip meta warn"><em>needs rewrite</em>${c.longParas} long paragraph${c.longParas > 1 ? "s" : ""}<span class="info" tabindex="0" data-tip="A Rule or Why paragraph runs past five rows. Split it by idea or move detail to Examples.">i</span></span>` : ""}
+        ${c.longParas ? `<span class="chip meta warn"><em>needs rewrite</em>${c.longParas} long paragraph${c.longParas > 1 ? "s" : ""}<button type="button" class="info" data-tip="A Rule or Why paragraph runs past five rows. Split it by idea or move detail to Examples." aria-label="Needs a rewrite: a Rule or Why paragraph runs past five rows.">i</button></span>` : ""}
       </div>
     </div>
     <div class="id">${esc(c.id)} · seen in ${esc(c.occurrences.join(", "))}</div>
     ${c.review_note ? `<div class="note">${md(c.review_note)}</div>` : ""}
-    ${(c.conflicts || []).length ? `<div class="callout"><b>Conflicts with</b> ${c.conflicts.map((x) => `${esc(x.id)} · ${esc(x.title)} <span class="st ${esc(x.status)}">${esc(statusLabel(x.status))}</span>`).join("<br>")}${c.resolution ? `<br><b>Resolution:</b> ${md(c.resolution)}` : `<br><span style="opacity:.8">No resolution yet. Promote will ask which wins.</span>`}</div>` : ""}
+    ${(c.conflicts || []).length ? `<div class="callout ${c.resolution ? "settled" : ""}">
+      <h3>${c.resolution ? "Settled against" : "Disagrees with"} ${c.conflicts.length === 1 ? "one rule" : c.conflicts.length + " rules"}</h3>
+      <ul class="clist">${c.conflicts.map((x) => `<li>
+        <button type="button" class="rulelink" onclick="openRule('${esc(x.id)}')" title="Open ${esc(x.id)}">${esc(x.title)}</button>
+        <span class="st ${esc(x.status)}">${esc(statusLabel(x.status))}</span></li>`).join("")}</ul>
+      ${c.resolution ? `<p class="res"><b>Which wins:</b> ${md(c.resolution)}</p>` : `<p class="res">No resolution yet. Promoting this will ask which one wins, and when.</p>`}
+    </div>` : ""}
     ${sec("Rule", `<p>${md(c.rule)}</p>`)}
     ${sec("Why", c.why && `<p>${md(c.why).replace(/\n\n/g, "</p><p>")}</p>`, true)}
     ${sec("Examples", exBody, true)}
