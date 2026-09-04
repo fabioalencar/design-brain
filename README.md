@@ -1,5 +1,7 @@
 # design-brain
 
+[![test](https://github.com/fabioalencar/design-brain/actions/workflows/test.yml/badge.svg)](https://github.com/fabioalencar/design-brain/actions/workflows/test.yml)
+
 Capture the design decisions you keep re-teaching AI, review them one at a time, and
 compile the ones you stand behind into agent skills that load on every project.
 
@@ -63,6 +65,8 @@ whether it is linked into `~/.claude/skills`. Compile and install without leavin
 ---
 
 ## Install
+
+Requires [Bun](https://bun.sh) 1.1 or newer.
 
 ```bash
 git clone https://github.com/fabioalencar/design-brain.git
@@ -164,6 +168,20 @@ Enforced, not aspirational:
   warns on the second.
 - **Provenance is a field.** Ids are allocated, never meaningful.
 
+## What it reads, and where it goes
+
+Everything stays on your machine.
+
+- `harvest:repos` reads the repositories listed in your `sources.yaml`, and only those:
+  token files, stylesheets and component sources. It writes what it finds to `inventory/`
+  inside the brain.
+- `harvest:transcripts` reads your Claude Code session transcripts under
+  `~/.claude/projects`, again only for the projects in `sources.yaml`. It keeps the lines
+  you typed, not the agent's replies.
+- The review app listens on `127.0.0.1` and is not reachable from the network.
+- The tool makes no network requests. Nothing you harvest or decide leaves the machine
+  unless you push the brain somewhere yourself.
+
 ## Commands
 
 ```
@@ -195,3 +213,6 @@ renders, `check.ts` validates. The review app is `review-ui.html` plus two modul
 `app/`: the API client, and the one card renderer the queue and the drawer share.
 
 Decisions about the tool itself are recorded as DDRs in `design/decisions/`.
+
+Contributions are welcome, and the easiest one needs no code: a heuristic or a component
+practice for the seed pack, with its source cited. See [CONTRIBUTING.md](CONTRIBUTING.md).

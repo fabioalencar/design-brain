@@ -13,7 +13,7 @@ title: Todos
 - [ ] TASK-003 Compile confirmed-only skills and run the six eval prompts with skills off and on; record correction counts in evals/results.md
   status: todo · opened: 2026-09-02
   genesis: plan 2026-09-02 step 4
-- [ ] TASK-004 Run design-brain-check against one live page (own-product-b site or portfolio) and confirm no false positives on deliberate choices
+- [ ] TASK-004 Run design-brain-check against one live page (a product site or the portfolio) and confirm no false positives on deliberate choices
   status: todo · opened: 2026-09-02
   genesis: plan 2026-09-02 step 4
 - [ ] TASK-005 Install exports: write taste-profile.json into ~/.gstack/projects, append learnings.jsonl fragments, enable cross_project_learnings
@@ -25,7 +25,7 @@ title: Todos
 - [ ] TASK-007 Skim inbox/_review-queue.md (89 uncited transcript turns) once, then delete it; improve the miner's dedupe so quotes match evidence
   status: todo · opened: 2026-09-02
   genesis: harvest 2026-09-02
-- [ ] TASK-008 Add transcript-less projects (own-product-b, own-product-a, own-product-d) as taste sources when their design sessions exist
+- [ ] TASK-008 Add the transcript-less own products as taste sources when their design sessions exist
   status: todo · opened: 2026-09-02
   genesis: harvest 2026-09-02
 - [ ] TASK-009 Compiler: render examples in a name-free structured form (values or use-case sentence) so concreteness returns to the skill without project names

@@ -5,6 +5,33 @@
   "license": "MIT",
   "private": false,
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabioalencar/design-brain.git"
+  },
+  "homepage": "https://github.com/fabioalencar/design-brain#readme",
+  "bugs": "https://github.com/fabioalencar/design-brain/issues",
+  "keywords": [
+    "design",
+    "design-systems",
+    "claude-code",
+    "agent-skills",
+    "ai-agents",
+    "ux",
+    "bun"
+  ],
+  "engines": {
+    "bun": ">=1.1"
+  },
+  "files": [
+    "bin",
+    "scripts",
+    "seed",
+    "templates",
+    "agent-skills",
+    "README.md",
+    "LICENSE"
+  ],
   "bin": {
     "design-brain": "bin/design-brain.ts"
   },

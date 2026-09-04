@@ -1,6 +1,6 @@
-// Extracts Fabio's human turns from ~/.claude/projects transcripts for projects in
+// Extracts the designer's human turns from ~/.claude/projects transcripts for projects in
 // sources.yaml, keeps only design-directive-looking turns, and writes them to
-// inbox/_review-queue.md for an agent (or Fabio) to turn into candidates.
+// inbox/_review-queue.md for an agent (or the designer) to turn into candidates.
 // Re-runnable: remembers the last timestamp per project in scripts/.cache/state.json.
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { join } from "node:path";

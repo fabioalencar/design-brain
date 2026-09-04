@@ -5,7 +5,7 @@ title: Scope separates Fabio's taste from client constraints
 date: 2026-09-02
 decision_status: accepted
 context_source: Planning conversation 2026-09-02; Fabio answered the client-vs-personal
-  question directly (client-g/client-g-site, client-d, client-e/client-e, client-f are client work).
+  question directly, naming which of the harvested repos were client work.
 ---
 ## Decision
 
@@ -13,7 +13,7 @@ Every decision and pattern carries a scope: universal (craft that applies anywhe
 
 ## Why
 
-The harvest mixes Fabio's own products with campaign microsites for client-a, client-b, client-c, a food brand, and client-e. Without a scope axis, client-a orange or client-e's density rules would compile into the defaults for Fabio's portfolio. Scope is the one field that makes cross-project aggregation safe.
+The harvest mixes Fabio's own products with campaign microsites for several consumer brands and a pharmaceutical client. Without a scope axis, one client's brand orange or another's density rules would compile into the defaults for Fabio's portfolio. Scope is the one field that makes cross-project aggregation safe.
 
 ## Alternatives rejected
 

@@ -35,10 +35,10 @@ structure) is not recalled.
 
 ## Who it's for
 
-Fabio, working alone or with an AI agent, on their own products (Forge, own-product-c, own-product-b,
-own-product-a) and on studio work for others (studio-a). Secondary: any agent (Claude Code, Codex)
-that reads the compiled skills. Client brands (client-a, client-b, client-c, client-d, client-e,
-client-f) are sources of inventory and universal craft only, never of personal taste.
+Fabio, working alone or with an AI agent, on their own products (Forge among them) and
+on studio work for others. Secondary: any agent (Claude Code, Codex) that reads the
+compiled skills. Client brands are sources of inventory and universal craft only, never
+of personal taste.
 
 ## The loop it drives
 
