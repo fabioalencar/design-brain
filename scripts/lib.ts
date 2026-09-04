@@ -1,23 +1,9 @@
-import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
-import { join, basename, resolve } from "node:path";
+import { readdirSync, readFileSync, statSync } from "node:fs";
+import { join, basename } from "node:path";
 
 /** Directory of the tool itself (scripts/, templates/, seed/). */
 export const toolRoot = new URL("..", import.meta.url).pathname;
 
-/**
- * The brain is the data directory the tool operates on (sources.yaml, inbox/, decisions/, …).
- * Resolution: --brain <dir> flag → DESIGN_BRAIN env → current directory. Must contain sources.yaml.
- */
-export function brainRoot(): string {
-  const i = process.argv.indexOf("--brain");
-  let dir = i >= 0 && process.argv[i + 1] ? process.argv[i + 1] : process.env.DESIGN_BRAIN || process.cwd();
-  dir = resolve(dir.replace(/^~(?=$|\/)/, process.env.HOME ?? ""));
-  if (!existsSync(join(dir, "sources.yaml"))) {
-    console.error(`No brain at ${dir} (no sources.yaml).\nRun \`design-brain init <dir>\` to create one, or pass --brain <dir> / set DESIGN_BRAIN.`);
-    process.exit(2);
-  }
-  return dir.endsWith("/") ? dir : dir + "/";
-}
 import { parse as parseYaml } from "yaml";
 
 export type Frontmatter = Record<string, unknown>;
@@ -62,6 +48,7 @@ export const DIMENSIONS = ["typography","color","spacing","layout","motion","cop
 export const STANCES = ["always","never","prefer","avoid","context"] as const;
 export const STATUSES = ["candidate","confirmed","retired"] as const;
 export const KINDS = ["harvested","heuristic","bias","practice"] as const;
+export const SECTIONS = ["Rule","Why","Examples","Exceptions","Review notes"] as const;
 export const COMPONENTS = ["notifications","user-profile","settings","tooltips","search","data-tables","sorting","filtering","highlight-cards","progressive-disclosure","modals","drawers","details-page","forms","empty-states","navigation","onboarding"] as const;
 
 export function scopeKind(scope: unknown): "universal" | "personal" | "client" | "project" | "invalid" {
@@ -98,4 +85,19 @@ export function unresolvedConflicts(decisions: Doc[]): { a: Doc; b: Doc }[] {
     if (b && !a.fm.resolution && !b.fm.resolution && String(a.fm.id) < String(b.fm.id)) out.push({ a, b });
   }
   return out;
+}
+
+/** Evidence lines are `type:ref "quote"`. One grammar, one parser, one label vocabulary. */
+export const EVIDENCE_LABELS: Record<string, string> = {
+  transcript: "said", repo: "repo", ddr: "DDR", audit: "audit",
+  commit: "commit", note: "note", reference: "source", learnings: "learning",
+};
+export interface Evidence { type: string; label: string; ref: string; quote: string; url?: string }
+export function parseEvidence(line: string): Evidence | null {
+  const m = String(line).match(/^([a-z]+):([^"]*?)\s*(?:"([\s\S]*)")?\s*$/i);
+  if (!m) return null;
+  const type = m[1].toLowerCase();
+  const ref = (m[2] ?? "").trim();
+  const url = ref.match(/https?:\/\/[^\s]+/)?.[0];
+  return { type, label: EVIDENCE_LABELS[type] ?? type, ref, quote: m[3] ?? "", url };
 }

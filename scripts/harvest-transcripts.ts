@@ -5,9 +5,10 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { parse as parseYaml } from "yaml";
-import { listDocs, brainRoot, toolRoot } from "./lib";
+import { listDocs } from "./lib";
+import { openBrainOrExit } from "./brain";
 
-const root = brainRoot();
+const root = openBrainOrExit().root;
 const home = process.env.HOME!;
 const cfg = parseYaml(readFileSync(root + "sources.yaml", "utf8"));
 const tdir = String(cfg.transcripts_dir).replace(/^~/, home);

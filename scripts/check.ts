@@ -1,10 +1,13 @@
 // Validates frontmatter of inbox/, decisions/, patterns/. Exit 1 on any error.
-import { listDocs, scopeKind, longParagraphs, conflictsOf, unresolvedConflicts, DIMENSIONS, STANCES, STATUSES, KINDS, COMPONENTS, brainRoot, toolRoot } from "./lib";
+import { listDocs, scopeKind, longParagraphs, conflictsOf, unresolvedConflicts, DIMENSIONS, STANCES, STATUSES, KINDS, COMPONENTS } from "./lib";
+import { openBrainOrExit } from "./brain";
 
 const TITLE_MAX = 80; // two lines at the review card width; detail goes in ## Rule
 const errors: string[] = [];
 const warn: string[] = [];
-const root = brainRoot();
+const brain = openBrainOrExit();
+const root = brain.root;
+const clientOnly = brain.clientSlugs();
 
 function need(cond: unknown, msg: string) { if (!cond) errors.push(msg); }
 
@@ -40,7 +43,6 @@ for (const dir of ["inbox", "decisions"]) {
     if (fm.scope === "personal" && Array.isArray(fm.occurrences)) {
       // client-only occurrence lists cannot be personal
       const occ = fm.occurrences as string[];
-      const clientOnly = ["client-a","client-b","client-c","client-d","client-e","client-e-programme","client-e-contracts","client-e-app","client-f"];
       if (occ.length > 0 && occ.every((o) => clientOnly.includes(o))) errors.push(`${f}: personal scope but only client occurrences`);
     }
   }

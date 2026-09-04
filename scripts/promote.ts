@@ -1,61 +1,39 @@
-// bun run promote DB-c-104 [DB-c-200 ...]   → moves inbox candidate to decisions/ as DB-### confirmed
-// bun run retire  DB-c-104 [...]            → marks it retired in place (never harvested again)
-// bun run rescope DB-c-104 client:client-a     → changes scope
-import { readdirSync, readFileSync, writeFileSync, renameSync, existsSync } from "node:fs";
-import { execSync } from "node:child_process";
-import { brainRoot } from "./lib";
+// design-brain promote|retire|restore|rescope|note <DB-c-###> …
+// An argv shim. Every transition lives in ledger.ts, so the CLI and the review app cannot diverge.
+import { openBrainOrExit } from "./brain";
+import { openLedger } from "./ledger";
 
-const root = brainRoot();
-const [cmd, ...args] = process.argv.slice(2);
-const today = new Date().toISOString().slice(0, 10);
+const [cmd, ...rest] = process.argv.slice(2);
+const args = rest.filter((a, i) => a !== "--brain" && rest[i - 1] !== "--brain");
+const ledger = openLedger(openBrainOrExit());
 
-function find(id: string): string {
-  const f = readdirSync(root + "inbox").find((n) => n.startsWith(id + "-") && n.endsWith(".md"));
-  if (!f) throw new Error(`no inbox file for ${id}`);
-  return root + "inbox/" + f;
-}
-function nextId(): number {
-  const ids = readdirSync(root + "decisions").map((n) => n.match(/^DB-(\d{3})-/)?.[1]).filter(Boolean).map(Number);
-  return ids.length ? Math.max(...ids) + 1 : 1;
-}
-function setField(src: string, key: string, value: string): string {
-  const re = new RegExp(`^${key}:.*$`, "m");
-  return re.test(src) ? src.replace(re, `${key}: ${value}`) : src.replace(/^---\n/, `---\n${key}: ${value}\n`);
-}
-
-if (cmd === "promote") {
-  for (const id of args) {
-    const path = find(id);
-    let src = readFileSync(path, "utf8");
-    const n = String(nextId()).padStart(3, "0");
-    const newId = `DB-${n}`;
-    src = setField(src, "id", newId);
-    src = setField(src, "status", "confirmed");
-    src = setField(src, "promoted", today);
-    src = setField(src, "was", id);
-    const slug = path.split("/").pop()!.replace(/^DB-c-\d{3}-/, "");
-    const dest = `${root}decisions/${newId}-${slug}`;
-    if (existsSync(dest)) throw new Error(`${dest} exists`);
-    writeFileSync(dest, src);
-    renameSync(path, path + ".promoted");
-    execSync(`rm "${path}.promoted"`);
-    console.log(`${id} → ${newId} (${slug})`);
-  }
-} else if (cmd === "retire") {
-  for (const id of args) {
-    const path = find(id);
-    let src = readFileSync(path, "utf8");
-    src = setField(src, "status", "retired");
-    src = setField(src, "retired", today);
-    writeFileSync(path, src);
-    console.log(`${id} retired`);
-  }
-} else if (cmd === "rescope") {
-  const [id, scope] = args;
-  const path = find(id);
-  writeFileSync(path, setField(readFileSync(path, "utf8"), "scope", scope));
-  console.log(`${id} scope → ${scope}`);
-} else {
-  console.log("usage: promote|retire|rescope <DB-c-###> ...");
+function fail(msg: string): never {
+  console.error(msg + "\nusage: promote|retire|restore <DB-c-###> … | rescope <id> <scope> | note <id> <text>");
   process.exit(1);
 }
+function each(ids: string[], fn: (id: string) => string) {
+  if (!ids.length) fail("no ids given");
+  for (const id of ids) {
+    try {
+      console.log(fn(id));
+    } catch (e) {
+      console.error(`${id}: ${(e as Error).message}`);
+      process.exitCode = 1;
+    }
+  }
+}
+
+if (cmd === "promote") each(args, (id) => { const r = ledger.promote(id); return `${id} → ${r.id} (${r.file})`; });
+else if (cmd === "retire") each(args, (id) => { ledger.retire(id); return `${id} retired`; });
+else if (cmd === "restore") each(args, (id) => `${id} → ${ledger.restore(id).id}, back in review`);
+else if (cmd === "rescope") {
+  const [id, scope] = args;
+  if (!id || !scope) fail("rescope needs an id and a scope");
+  ledger.edit(id, { scope });
+  console.log(`${id} scope → ${scope}`);
+} else if (cmd === "note") {
+  const [id, ...words] = args;
+  if (!id || !words.length) fail("note needs an id and some text");
+  ledger.note(id, words.join(" "));
+  console.log(`note added to ${id}`);
+} else fail(cmd ? `unknown command: ${cmd}` : "no command given");

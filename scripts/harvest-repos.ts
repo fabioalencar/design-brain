@@ -3,9 +3,9 @@
 import { readdirSync, readFileSync, statSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { join, extname } from "node:path";
 import { parse as parseYaml } from "yaml";
-import { brainRoot } from "./lib";
+import { openBrainOrExit } from "./brain";
 
-const root = brainRoot();
+const root = openBrainOrExit().root;
 const home = process.env.HOME!;
 const cfg = parseYaml(readFileSync(root + "sources.yaml", "utf8"));
 mkdirSync(root + "inventory/raw", { recursive: true });

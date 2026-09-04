@@ -1,9 +1,14 @@
 // Renders skills/ and exports/ from decisions/ (+ inbox/ with --preview) and patterns/.
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { parse as parseYaml } from "yaml";
-import { listDocs, section, scopeKind, conflictsOf, unresolvedConflicts, DIMENSIONS, type Doc, brainRoot, toolRoot } from "./lib";
+import { listDocs, section, scopeKind, conflictsOf, unresolvedConflicts, DIMENSIONS, type Doc } from "./lib";
+import { openBrainOrExit } from "./brain";
+import { SKILL_NAMES } from "./skills";
 
-const root = brainRoot();
+const brain = openBrainOrExit();
+const root = brain.root;
+// Emitted skills point at the brain that compiled them, never at a path baked into the tool.
+const BRAIN = root.replace(/\/$/, "").replace(process.env.HOME ?? "~", "~");
 const preview = process.argv.includes("--preview");
 
 let decisions = listDocs(root + "decisions").filter((d) => d.fm.status === "confirmed");
@@ -63,7 +68,7 @@ const universal = decisions.filter((d) => scopeKind(d.fm.scope) === "universal")
 const personal = decisions.filter((d) => scopeKind(d.fm.scope) === "personal");
 const clients = new Map<string, Doc[]>();
 for (const d of decisions.filter((d) => scopeKind(d.fm.scope) === "client")) {
-  const k = (d.fm.scope as string).slice(7);
+  const k = (d.fm.scope as string).slice("client:".length);
   clients.set(k, [...(clients.get(k) ?? []), d]);
 }
 const projects = decisions.filter((d) => scopeKind(d.fm.scope) === "project");
@@ -85,12 +90,12 @@ overriding an **Always**/**Never**; **Prefer**/**Avoid** are defaults you may de
 from with a stated reason.
 
 **First, establish scope.** If the project is a client brand (see
-\`~/Code/design-brain/sources.yaml\`), apply only *Universal* rules plus that client's
+\`${BRAIN}/sources.yaml\`), apply only *Universal* rules plus that client's
 section. Otherwise apply *Universal* + *Personal*.
 
 When you apply a rule, say so once: \`applied DB-###\`. When you deliberately deviate,
 say \`deviating from DB-###: <reason>\`. When the designer corrects something not covered here,
-suggest recording it: \`bun run harvest\` or a note in \`~/Code/design-brain/inbox/\`.
+suggest recording it: \`bun run harvest\` or a note in \`${BRAIN}/inbox/\`.
 
 ${renderScope("Universal craft", universal, "Applies to every project.")}${renderScope("Personal taste", personal, "The designer's own defaults. Applies to their brands and unbranded work.")}`;
 for (const [k, docs] of clients) main += renderScope(`Client: ${k}`, docs, `Only when working on ${k}.`);
@@ -106,7 +111,7 @@ if (practices.length) {
 main += `## Reference inventory
 
 Facts (not rules) about fonts, palettes, tokens and components per project live in
-\`~/Code/design-brain/inventory/\`. Read \`palettes.md\` and \`fonts.md\` when picking a
+\`${BRAIN}/inventory/\`. Read \`palettes.md\` and \`fonts.md\` when picking a
 direction so new work rhymes with existing work instead of restarting from zero.
 `;
 writeSkill("design-brain", main);
@@ -161,7 +166,7 @@ writeSkill("design-brain-check", check);
 const startDesc =
   "Kick off design for a new project, page, screen, or redesign using the designer's recorded defaults. Use when the user starts a new site, app, landing page, prototype, or 'direction', asks for a design system, tokens, font pairing, palette, or says 'let's start the design'. Establishes scope (personal vs client), picks a starting direction from past work, and lists the non-negotiables before any code.";
 const hard = decisions.filter((d) => ["always", "never"].includes(d.fm.stance as string) && scopeKind(d.fm.scope) !== "client" && (occ(d) >= 2 || (d.fm.confidence as number) >= 8)).sort(byWeight);
-const inv = (name: string) => (existsSync(root + "inventory/" + name) ? `- \`~/Code/design-brain/inventory/${name}\`` : "");
+const inv = (name: string) => (existsSync(root + "inventory/" + name) ? `- \`${BRAIN}/inventory/${name}\`` : "");
 let start = `---
 name: design-brain-start
 description: ${JSON.stringify(startDesc)}
@@ -212,18 +217,15 @@ writeFileSync(root + "exports/CLAUDE-snippet.md", `## Design decisions
 This project follows the designer's standing design decisions. Load the \`design-brain\` skill
 before any UI work and run \`design-brain-check\` before declaring UI done.
 Scope: **<personal | client:name>**. New non-obvious design choices get a note in
-\`~/Code/design-brain/inbox/\` (or a Forge DDR if this repo has a record).
+\`${BRAIN}/inbox/\` (or a Forge DDR if this repo has a record).
 `);
 
 // DDR-005 guard: no project slug, alias, or client name may appear in compiled skills.
 {
-  const cfg = parseYaml(readFileSync(root + "sources.yaml", "utf8"));
-  const names = new Set<string>();
-  for (const p of cfg.projects as any[]) { names.add(String(p.slug)); for (const a of p.aliases ?? []) names.add(String(a)); if (String(p.scope).startsWith("client:")) names.add(String(p.scope).slice(7)); }
-  for (const n of ["forge", "own-product-b", "own-product-c", "studio-a", "client-e", "client-e", "own-product-a", "own-product-d", "own-product-e", "client-a", "client-b", "client-c", "client-d", "solea", "promptrank", "fabio"]) names.add(n);
+  const names = new Set(brain.names().map((n) => n.toLowerCase()));
   const re = new RegExp(`\\b(${[...names].map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})\\b`, "i");
   let leaks = 0;
-  for (const name of ["design-brain", "design-brain-check", "design-brain-start"]) {
+  for (const name of SKILL_NAMES) {
     const lines = readFileSync(`${root}skills/${name}/SKILL.md`, "utf8").split("\n");
     lines.forEach((l, i) => { if (l.startsWith("- ") && re.test(l)) { leaks++; console.log(`leak  skills/${name}/SKILL.md:${i + 1}: ${l.slice(0, 120)}`); } });
   }

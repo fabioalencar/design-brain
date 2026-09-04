@@ -1,15 +1,18 @@
 #!/usr/bin/env bun
 // design-brain <command> [--brain <dir>] — runs the tool against a brain directory.
-import { existsSync, mkdirSync, readdirSync, copyFileSync, writeFileSync, symlinkSync, lstatSync, unlinkSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, copyFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { toolRoot } from "../scripts/lib";
+import { DIRS, expandHome, openBrain } from "../scripts/brain";
+import { installSkills } from "../scripts/skills";
 
 const [cmd, ...rest] = process.argv.slice(2);
 const home = process.env.HOME ?? "";
 const scripts: Record<string, string> = {
   check: "check.ts", compile: "compile-skills.ts", review: "review-server.ts",
   "harvest:transcripts": "harvest-transcripts.ts", "harvest:repos": "harvest-repos.ts",
-  promote: "promote.ts promote", retire: "promote.ts retire", rescope: "promote.ts rescope",
+  promote: "promote.ts promote", retire: "promote.ts retire", restore: "promote.ts restore",
+  rescope: "promote.ts rescope", note: "promote.ts note",
 };
 
 function run(script: string, args: string[]) {
@@ -20,9 +23,9 @@ function run(script: string, args: string[]) {
 
 function init(dirArg?: string) {
   if (!dirArg) { console.error("usage: design-brain init <dir>"); process.exit(1); }
-  const dir = resolve(dirArg.replace(/^~(?=$|\/)/, home));
+  const dir = resolve(expandHome(dirArg));
   if (existsSync(join(dir, "sources.yaml"))) { console.error(`${dir} already has a brain (sources.yaml).`); process.exit(1); }
-  for (const d of ["inbox", "decisions", "patterns", "inventory", "skills", "exports", "evals"]) mkdirSync(join(dir, d), { recursive: true });
+  for (const d of DIRS) mkdirSync(join(dir, d), { recursive: true });
   for (const f of readdirSync(join(toolRoot, "templates", "brain"))) copyFileSync(join(toolRoot, "templates", "brain", f), join(dir, f));
   let n = 0;
   for (const f of readdirSync(join(toolRoot, "seed"))) { copyFileSync(join(toolRoot, "seed", f), join(dir, "inbox", f)); n++; }
@@ -30,18 +33,12 @@ function init(dirArg?: string) {
 }
 
 function install(dirArg?: string) {
-  const dir = resolve((dirArg ?? process.cwd()).replace(/^~(?=$|\/)/, home));
-  const skillsDir = join(home, ".claude", "skills");
-  mkdirSync(skillsDir, { recursive: true });
-  for (const name of ["design-brain", "design-brain-check", "design-brain-start"]) {
-    const src = join(dir, "skills", name), dest = join(skillsDir, name);
-    if (!existsSync(src)) { console.error(`missing ${src}; run design-brain compile first`); process.exit(1); }
-    if (existsSync(dest) || (() => { try { lstatSync(dest); return true; } catch { return false; } })()) {
-      if (!lstatSync(dest).isSymbolicLink()) { console.error(`${dest} exists and is not a symlink; refusing`); process.exit(1); }
-      unlinkSync(dest);
-    }
-    symlinkSync(src, dest);
-    console.log(`${dest} → ${src}`);
+  try {
+    const brain = openBrain(dirArg ?? process.cwd());
+    for (const name of installSkills(brain, home)) console.log(`${join(home, ".claude", "skills", name)} → ${brain.path("skills", name)}`);
+  } catch (e) {
+    console.error((e as Error).message);
+    process.exit(1);
   }
 }
 
@@ -57,7 +54,8 @@ else {
   compile [--preview]   build skills/ and exports/ from confirmed decisions
   harvest:repos         extract design facts from the projects in sources.yaml
   harvest:transcripts   mine Claude Code transcripts for design directives
-  promote|retire|rescope <DB-c-###> …
+  promote|retire|restore <DB-c-###> …
+  rescope <id> <scope>  |  note <id> <text>
   install [dir]         symlink the brain's skills into ~/.claude/skills
 
 All commands take --brain <dir> (default: current directory, or $DESIGN_BRAIN).`);
