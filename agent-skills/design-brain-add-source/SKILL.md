@@ -63,7 +63,7 @@ of a published source, that is a different thing — a harvested rule, not a ref
    Never write into `inbox/` by hand, and never set `status: confirmed`.
 
 6. **Report.** List what you added with its id and title, name what you skipped as already
-   covered, and tell them the queue is where they decide. Do not promote, retire, or
+   covered, and tell them the queue is where they decide. Do not confirm, retire, or
    compile.
 
 ## The shape `design-brain add` expects

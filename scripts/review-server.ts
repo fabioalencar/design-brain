@@ -60,18 +60,18 @@ const schema = () => ({
   components: COMPONENTS, sections: SECTIONS, scopes: ["universal", "personal"],
 });
 
-type Verdict = { id: string; action: "promote" | "retire" | "unpromote" | "unretire" | "note" | "edit"; edits?: Edits };
+type Verdict = { id: string; action: "confirm" | "retire" | "unconfirm" | "unretire" | "note" | "edit"; edits?: Edits };
 
 function verdict(v: Verdict) {
   switch (v.action) {
-    case "promote": {
-      const r = ledger.promote(v.id, v.edits);
-      return { ok: true, newId: r.id, undo: { id: r.id, action: "unpromote" } };
+    case "confirm": {
+      const r = ledger.confirm(v.id, v.edits);
+      return { ok: true, newId: r.id, undo: { id: r.id, action: "unconfirm" } };
     }
     case "retire":
       ledger.retire(v.id, v.edits);
       return { ok: true, undo: { id: v.id, action: "unretire" } };
-    case "unpromote":
+    case "unconfirm":
     case "unretire":
       return { ok: true, ...ledger.restore(v.id) };
     case "note":

@@ -11,7 +11,7 @@ const home = process.env.HOME ?? "";
 const scripts: Record<string, string> = {
   check: "check.ts", compile: "compile-skills.ts", review: "review-server.ts",
   "harvest:transcripts": "harvest-transcripts.ts", "harvest:repos": "harvest-repos.ts",
-  promote: "promote.ts promote", retire: "promote.ts retire", restore: "promote.ts restore",
+  confirm: "promote.ts confirm", promote: "promote.ts confirm", retire: "promote.ts retire", restore: "promote.ts restore",
   rescope: "promote.ts rescope", note: "promote.ts note", add: "add.ts",
 };
 
@@ -64,7 +64,7 @@ else {
   harvest:repos         extract design facts from the projects in sources.yaml
   harvest:transcripts   mine Claude Code transcripts for design directives
   add <staged.json>     write staged candidates into inbox/ (see the add-source skill)
-  promote|retire|restore <DB-c-###> …
+  confirm|retire|restore <DB-c-###> …
   rescope <id> <scope>  |  note <id> <text>
   install [dir]         symlink the brain's skills into ~/.claude/skills
 

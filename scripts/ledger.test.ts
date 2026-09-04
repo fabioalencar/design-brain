@@ -101,10 +101,10 @@ describe("frontmatter", () => {
 });
 
 describe("ledger transitions", () => {
-  test("promote moves the file, allocates the next id and remembers where it came from", () => {
+  test("confirm moves the file, allocates the next id and remembers where it came from", () => {
     const b = newBrain({ "inbox/DB-c-101-a-rule.md": candidate("DB-c-101") });
     const l = openLedger(b, () => "2026-09-04");
-    const { id, file } = l.promote("DB-c-101");
+    const { id, file } = l.confirm("DB-c-101");
     expect(id).toBe("DB-001");
     expect(file).toBe("DB-001-a-rule.md");
     expect(existsSync(b.path("inbox", "DB-c-101-a-rule.md"))).toBe(false);
@@ -117,31 +117,31 @@ describe("ledger transitions", () => {
   test("ids keep counting up across promotions", () => {
     const b = newBrain({ "inbox/DB-c-101-a.md": candidate("DB-c-101"), "inbox/DB-c-102-b.md": candidate("DB-c-102") });
     const l = openLedger(b);
-    expect(l.promote("DB-c-101").id).toBe("DB-001");
-    expect(l.promote("DB-c-102").id).toBe("DB-002");
+    expect(l.confirm("DB-c-101").id).toBe("DB-001");
+    expect(l.confirm("DB-c-102").id).toBe("DB-002");
   });
 
-  test("promote applies edits in the same write", () => {
+  test("confirm applies edits in the same write", () => {
     const b = newBrain({ "inbox/DB-c-101-a.md": candidate("DB-c-101") });
     const l = openLedger(b, () => "2026-09-04");
-    l.promote("DB-c-101", { stance: "always", scope: "client:beta-co", note: "narrowed to the app" });
+    l.confirm("DB-c-101", { stance: "always", scope: "client:beta-co", note: "narrowed to the app" });
     const doc = l.get("DB-001");
     expect(doc.fm.stance).toBe("always");
     expect(doc.fm.scope).toBe("client:beta-co");
     expect(doc.body).toContain("- 2026-09-04: narrowed to the app");
   });
 
-  test("a retired candidate cannot be promoted", () => {
+  test("a retired candidate cannot be confirmed", () => {
     const b = newBrain({ "inbox/DB-c-101-a.md": candidate("DB-c-101") });
     const l = openLedger(b);
     l.retire("DB-c-101");
-    expect(() => l.promote("DB-c-101")).toThrow(/not a candidate/);
+    expect(() => l.confirm("DB-c-101")).toThrow(/not a candidate/);
   });
 
-  test("restore reverses a promotion, back to the original id and directory", () => {
+  test("restore reverses a confirmation, back to the original id and directory", () => {
     const b = newBrain({ "inbox/DB-c-101-a-rule.md": candidate("DB-c-101") });
     const l = openLedger(b);
-    l.promote("DB-c-101");
+    l.confirm("DB-c-101");
     expect(l.restore("DB-001").id).toBe("DB-c-101");
     expect(existsSync(b.path("inbox", "DB-c-101-a-rule.md"))).toBe(true);
     expect(readdirSync(b.decisions).length).toBe(0);
@@ -187,7 +187,7 @@ describe("ledger transitions", () => {
       "inbox/_review-queue.md": "not a rule",
     });
     const l = openLedger(b);
-    l.promote("DB-c-101");
+    l.confirm("DB-c-101");
     l.retire("DB-c-102");
     expect(l.candidates().length).toBe(0);
     expect(l.confirmed().length).toBe(1);
@@ -224,12 +224,12 @@ describe("adding a source", () => {
     expect(doc.body).toContain("## Rule");
   });
 
-  test("ids keep counting, and skip ones already promoted out of the band", () => {
+  test("ids keep counting, and skip ones already confirmed out of the band", () => {
     const b = newBrain();
     const l = openLedger(b);
     expect(l.add(source).id).toBe("DB-c-800");
     expect(l.add({ ...source, title: "A second rule from the same page" }).id).toBe("DB-c-801");
-    l.promote("DB-c-800");
+    l.confirm("DB-c-800");
     expect(l.add({ ...source, title: "A third rule from the same page" }).id).toBe("DB-c-802");
   });
 

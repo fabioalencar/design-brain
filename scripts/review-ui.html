@@ -331,7 +331,7 @@
 <main id="v-queue">
   <button class="side no" onclick="act('retire')"><span class="arrow">←</span>Retire</button>
   <div class="stack" id="stack"></div>
-  <button class="side yes" onclick="act('promote')">Promote<span class="arrow">→</span></button>
+  <button class="side yes" onclick="act('confirm')">Confirm<span class="arrow">→</span></button>
 </main>
 <section class="view" id="v-rules" hidden>
   <div class="bar-row">
@@ -368,7 +368,7 @@
   <button onclick="act('skip')">Skip <kbd>↓</kbd></button>
   <button onclick="openNote()">Add note <kbd>N</kbd></button>
   <button onclick="undo()">Undo <kbd>Z</kbd></button>
-  <button class="side yes mobile" onclick="act('promote')">Promote<span class="arrow">→</span></button>
+  <button class="side yes mobile" onclick="act('confirm')">Confirm<span class="arrow">→</span></button>
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="drawer-bg" id="drawerbg" onclick="closeDrawer()"></div>
@@ -391,9 +391,9 @@
       <h3 id="abouttitle">design-brain</h3>
       <p class="tagline">The design decisions you keep re-teaching AI, kept.</p>
     </div></div>
-    <p style="margin:0; font:400 15px/25px var(--sans); color:var(--ink-2)">Sources are harvested into a queue of candidates, each carrying its evidence. You promote the ones you stand behind, and the confirmed set compiles into agent skills that load on every project. Compiled skills never name a past project.</p>
+    <p style="margin:0; font:400 15px/25px var(--sans); color:var(--ink-2)">Sources are harvested into a queue of candidates, each carrying its evidence. You confirm the ones you stand behind, and the confirmed set compiles into agent skills that load on every project. Compiled skills never name a past project.</p>
     <div style="display:grid; grid-template-columns:auto 1fr; gap:6px 16px; font:400 14px/22px var(--sans); color:var(--ink-2)">
-      <b style="color:var(--ink)">Queue</b><span>← → retire and promote, ↓ skips, Z undoes, N adds a note.</span>
+      <b style="color:var(--ink)">Queue</b><span>← → retire and confirm, ↓ skips, Z undoes, N adds a note.</span>
       <b style="color:var(--ink)">Rules</b><span>The whole ledger: confirmed, in review, retired, conflicts. Select rows for bulk verdicts.</span>
       <b style="color:var(--ink)">Sources</b><span>Every published reference the ledger cites, and links saved to read later.</span>
       <b style="color:var(--ink)">Skills</b><span>What compiled into each skill; C compiles, and install links the symlinks.</span>
@@ -441,8 +441,8 @@ function rebuild() {
 function render() {
   const total = all.length + tallies.confirmed + tallies.retired;
   const done = tallies.confirmed + tallies.retired;
-  $("#count").textContent = queue.length === all.length ? `${queue.length} in queue` : `${queue.length} of ${all.length} in queue`;
-  $("#tally").textContent = `${tallies.confirmed} promoted · ${tallies.retired} retired`;
+  $("#count").textContent = queue.length === all.length ? `${queue.length} in review` : `${queue.length} of ${all.length} in review`;
+  $("#tally").textContent = `${tallies.confirmed} confirmed · ${tallies.retired} retired`;
   $("#bar").style.width = total ? (100 * done / total) + "%" : "0";
   const st = $("#stack"); st.innerHTML = "";
   if (!queue.length) {
@@ -450,7 +450,7 @@ function render() {
     st.innerHTML = `<div class="card done"><div class="inner">
       <h1>${filtered ? "Nothing left under this filter" : "The queue is empty"}</h1>
       <p>${filtered ? "Clear a filter to keep going, or compile what you have confirmed so far." : "Every candidate has a verdict. Compile the confirmed set into skills, then harvest again when there is new work to learn from."}</p>
-      <div class="stat"><span><b>${tallies.confirmed}</b> promoted</span><span><b>${tallies.retired}</b> retired</span></div>
+      <div class="stat"><span><b>${tallies.confirmed}</b> confirmed</span><span><b>${tallies.retired}</b> retired</span></div>
     </div></div>`;
     return;
   }
@@ -460,8 +460,8 @@ function render() {
 async function act(action) {
   const c = queue[0]; if (!c) return;
   const el = $("#stack").firstElementChild;
-  if (action === "promote" && (c.conflicts || []).some((x) => x.status === "confirmed") && !c.resolution) {
-    noteTarget = c; resolveNext = () => act("promote");
+  if (action === "confirm" && (c.conflicts || []).some((x) => x.status === "confirmed") && !c.resolution) {
+    noteTarget = c; resolveNext = () => act("confirm");
     openDialog($("#notebg"), $("#notetext")); $("#notetitle").textContent = "Resolve the conflict before promoting · " + c.id;
     $("#notetext").value = ""; $("#notetext").placeholder = "Which rule wins, and when? e.g. \"dark-first applies to tools; system theme applies to consumer surfaces\""; setTimeout(() => $("#notetext").focus(), 0);
     return;
@@ -471,10 +471,10 @@ async function act(action) {
   const r = await api.verdict(body.id, body.action, body.edits);
   if (!r.ok) { toast("Error: " + r.error); return; }
   history.push({ card: c, undo: r.undo });
-  el.classList.add(action === "promote" ? "gone-r" : "gone-l");
-  toast(action === "promote" ? `Promoted as ${r.newId}` : `Retired ${c.id}`);
+  el.classList.add(action === "confirm" ? "gone-r" : "gone-l");
+  toast(action === "confirm" ? `Confirmed as ${r.newId}` : `Retired ${c.id}`);
   all = all.filter((x) => x.id !== c.id); skipped.delete(c.id);
-  tallies[action === "promote" ? "confirmed" : "retired"]++;
+  tallies[action === "confirm" ? "confirmed" : "retired"]++;
   setTimeout(rebuild, 280);
 }
 let noteTarget = null, resolveNext = null;
@@ -484,7 +484,7 @@ async function saveNote() {
   const c = noteTarget || queue[0]; if (!c) return;
   const text = $("#notetext").value.trim();
   if (!text) { closeNote(); return; }
-  if (resolveNext) { // promote flow asked for a resolution
+  if (resolveNext) { // confirm flow asked for a resolution
     const fn = resolveNext; resolveNext = null; closeNote();
     const r = await api.verdict(c.id, "edit", { resolution: text });
     if (!r.ok) { toast("Error: " + r.error); return; }
@@ -515,7 +515,7 @@ document.addEventListener("keydown", (e) => {
   if (tab && !e.metaKey && !e.ctrlKey) { location.hash = "#" + tab; return; }
   // a keyboard reader focuses the card to scroll it, so leave the arrows to the browser there
   if (e.target.closest?.("#stack")) return;
-  if (e.key === "ArrowRight") act("promote"); else if (e.key === "ArrowLeft") act("retire"); else if (e.key === "ArrowDown") act("skip");
+  if (e.key === "ArrowRight") act("confirm"); else if (e.key === "ArrowLeft") act("retire"); else if (e.key === "ArrowDown") act("skip");
   else if (e.key.toLowerCase() === "z") undo(); else if (e.key.toLowerCase() === "c") compile(); else if (e.key.toLowerCase() === "n") openNote();
 });
 $("#fdim").onchange = rebuild; $("#fscope").onchange = rebuild; $("#fkind").onchange = rebuild;
@@ -529,7 +529,7 @@ function attachDrag(el) {
   el.addEventListener("pointermove", (e) => { if (!on) return; dx = e.clientX - sx; dy = e.clientY - sy; el.style.transform = `translate(${dx}px, ${dy}px) rotate(${dx / 18}deg)`; yes.style.opacity = Math.min(1, Math.max(0, dx / 120)); no.style.opacity = Math.min(1, Math.max(0, -dx / 120)); document.querySelector("main .side.yes").classList.toggle("armed", dx > 140); document.querySelector("main .side.no").classList.toggle("armed", dx < -140); });
   const end = () => { if (!on) return; on = false; el.style.transition = ""; yes.style.opacity = 0; no.style.opacity = 0;
     document.querySelectorAll("main .side").forEach((b) => b.classList.remove("armed"));
-    if (dx > 140) act("promote"); else if (dx < -140) act("retire"); else if (dy > 160) act("skip"); else el.style.transform = ""; dx = dy = 0; };
+    if (dx > 140) act("confirm"); else if (dx < -140) act("retire"); else if (dy > 160) act("skip"); else el.style.transform = ""; dx = dy = 0; };
   el.addEventListener("pointerup", end); el.addEventListener("pointercancel", end);
 }
 
@@ -686,13 +686,13 @@ function renderBulk() {
   const n = picked.size;
   $("#rall").checked = n > 0 && shown.every((id) => picked.has(id));
   $("#bulk").innerHTML = !n ? "" : `<div class="bulk"><b>${n} selected</b>
-    <button class="yes" onclick="bulk('promote')">Promote</button>
+    <button class="yes" onclick="bulk('confirm')">Confirm</button>
     <button class="no" onclick="bulk('retire')">Retire</button>
-    <button onclick="bulk('unpromote')">Back to review</button>
+    <button onclick="bulk('unconfirm')">Back to review</button>
     <span class="sp"></span><button onclick="picked.clear(); renderRules()">Clear</button></div>`;
 }
 async function bulk(action) {
-  const ids = [...picked], verb = action === "promote" ? "Promoting" : action === "retire" ? "Retiring" : "Restoring";
+  const ids = [...picked], verb = action === "confirm" ? "Confirming" : action === "retire" ? "Retiring" : "Restoring";
   toast(`${verb} ${ids.length}…`);
   let done = 0, failed = [];
   for (const id of ids) {
@@ -736,7 +736,7 @@ async function openRule(id) {
 function openDrawer(id) {
   const c = rules.find((x) => x.id === id); if (!c) return; dcur = c;
   $("#dstatus").innerHTML = `<span class="st ${esc(c.status)}">${esc(statusLabel(c.status))}</span>`;
-  $("#dmeta").textContent = `${c.id}${c.was ? " (was " + c.was + ")" : ""} · ${c.dir}/${c.file}${c.promoted ? " · promoted " + c.promoted : ""}${c.retired ? " · retired " + c.retired : ""}`;
+  $("#dmeta").textContent = `${c.id}${c.was ? " (was " + c.was + ")" : ""} · ${c.dir}/${c.file}${c.promoted ? " · confirmed " + c.promoted : ""}${c.retired ? " · retired " + c.retired : ""}`;
   const el = cardEl(c, { depth: 0, schema, skipped }); el.classList.remove("top");
   const conf = document.createElement("div"); conf.className = "conf"; conf.style.margin = "0 36px 28px";
   conf.innerHTML = `<h3>Conflicts</h3>
@@ -747,8 +747,8 @@ function openDrawer(id) {
   el.querySelector(".body").appendChild(conf);
   $("#dbody").innerHTML = ""; $("#dbody").appendChild(el);
   const acts = [];
-  if (c.status === "candidate") acts.push(`<button class="yes" onclick="drawerVerdict('promote')">Promote</button><button class="no" onclick="drawerVerdict('retire')">Retire</button>`);
-  if (c.status === "confirmed") acts.push(`<button onclick="drawerVerdict('unpromote')">Move back to review</button>`);
+  if (c.status === "candidate") acts.push(`<button class="yes" onclick="drawerVerdict('confirm')">Confirm</button><button class="no" onclick="drawerVerdict('retire')">Retire</button>`);
+  if (c.status === "confirmed") acts.push(`<button onclick="drawerVerdict('unconfirm')">Move back to review</button>`);
   if (c.status === "retired") acts.push(`<button onclick="drawerVerdict('unretire')">Restore to review</button>`);
   acts.push(`<span class="sp"></span><button onclick="drawerNote()">Add note</button><button onclick="saveDrawer()" style="background:var(--ink);border-color:var(--ink);color:var(--on-accent)">Save</button>`);
   $("#dactions").innerHTML = acts.join("");
@@ -773,7 +773,7 @@ async function drawerVerdict(action) {
   if (!(await saveDrawer(true))) return;
   const r = await api.verdict(dcur.id, action);
   if (!r.ok) { toast("Error: " + r.error); return; }
-  toast(action === "promote" ? `Promoted as ${r.newId}` : action === "retire" ? "Retired" : "Back in review");
+  toast(action === "confirm" ? `Confirmed as ${r.newId}` : action === "retire" ? "Retired" : "Back in review");
   closeDrawer(); await loadRules(); load();
 }
 function drawerNote() { const c = dcur; openDialog($("#notebg"), $("#notetext")); $("#notetitle").textContent = c.id + " · " + c.title; $("#notetext").value = ""; noteTarget = c; setTimeout(() => $("#notetext").focus(), 0); }

@@ -99,11 +99,11 @@ export interface Ledger {
   retired(): Doc[];
   get(id: string): Doc;
   nextConfirmedId(): string;
-  /** The next free DB-c-### in a hundred-band, counting promoted ids too so none is reused. */
+  /** The next free DB-c-### in a hundred-band, counting confirmed ids too so none is reused. */
   nextCandidateId(range?: number): string;
   /** Write a new candidate. Never confirmed: the reviewer still decides. */
   add(c: NewCandidate, range?: number): { id: string; file: string };
-  promote(id: string, edits?: Edits): { id: string; file: string };
+  confirm(id: string, edits?: Edits): { id: string; file: string };
   retire(id: string, edits?: Edits): void;
   /** Confirmed → back in review, retired → back in review. */
   restore(id: string): { id: string };
@@ -231,7 +231,7 @@ export function openLedger(brain: Brain, today: () => string = () => new Date().
       return { id, file };
     },
 
-    promote(id, edits) {
+    confirm(id, edits) {
       const { path, where } = locate(id);
       if (where !== "inbox") throw new Error(`${id} is already confirmed`);
       const status = parseDoc(path).fm.status;

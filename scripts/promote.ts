@@ -1,4 +1,4 @@
-// design-brain promote|retire|restore|rescope|note <DB-c-###> …
+// design-brain confirm|retire|restore|rescope|note <DB-c-###> …
 // An argv shim. Every transition lives in ledger.ts, so the CLI and the review app cannot diverge.
 import { openBrainOrExit } from "./brain";
 import { openLedger } from "./ledger";
@@ -8,7 +8,7 @@ const args = rest.filter((a, i) => a !== "--brain" && rest[i - 1] !== "--brain")
 const ledger = openLedger(openBrainOrExit());
 
 function fail(msg: string): never {
-  console.error(msg + "\nusage: promote|retire|restore <DB-c-###> … | rescope <id> <scope> | note <id> <text>");
+  console.error(msg + "\nusage: confirm|retire|restore <DB-c-###> … | rescope <id> <scope> | note <id> <text>");
   process.exit(1);
 }
 function each(ids: string[], fn: (id: string) => string) {
@@ -23,7 +23,7 @@ function each(ids: string[], fn: (id: string) => string) {
   }
 }
 
-if (cmd === "promote") each(args, (id) => { const r = ledger.promote(id); return `${id} → ${r.id} (${r.file})`; });
+if (cmd === "confirm" || cmd === "promote") each(args, (id) => { const r = ledger.confirm(id); return `${id} → ${r.id} (${r.file})`; });
 else if (cmd === "retire") each(args, (id) => { ledger.retire(id); return `${id} retired`; });
 else if (cmd === "restore") each(args, (id) => `${id} → ${ledger.restore(id).id}, back in review`);
 else if (cmd === "rescope") {

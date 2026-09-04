@@ -26,6 +26,8 @@ file below is one concept; tools and agents read them directly.
 * [A title is one sentence of at most 80 characters; detail lives in the rule body](decisions/DDR-008-titles-are-two-lines.md) - Decision · DDR-008
 * [Rule and Why sections read as short single-idea paragraphs; enumerations become lists](decisions/DDR-009-rule-bodies-read-in-short-paragraphs.md) - Decision · DDR-009
 * [Conflicting rules are declared with conflicts_with and cannot compile without a resolution](decisions/DDR-010-conflicts-declared-then-resolved.md) - Decision · DDR-010
+* [Confidence is dropped from the schema; exports derive a weight from occurrences](decisions/DDR-011-confidence-dropped-from-the-schema.md) - Decision · DDR-011
+* [The verb that produces a state shares its stem; each review state has one word](decisions/DDR-012-one-word-per-review-state.md) - Decision · DDR-012
 
 ## glossary
 
@@ -38,7 +40,7 @@ file below is one concept; tools and agents read them directly.
 * [Kind (harvested / heuristic / bias)](glossary/kind.md) - Term
 * [Occurrence](glossary/occurrence.md) - Term
 * [Pattern](glossary/pattern.md) - Term
-* [Promote / retire / rescope](glossary/promote.md) - Term
+* [Confirm / retire / rescope](glossary/promote.md) - Term
 * [Review queue](glossary/review-queue.md) - Term
 * [Scope](glossary/scope.md) - Term
 * [Stance](glossary/stance.md) - Term

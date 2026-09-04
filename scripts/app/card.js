@@ -43,7 +43,7 @@ export function cardEl(c, { depth = 0, schema, skipped = new Set() } = {}) {
   if (depth === 0) {
     el.tabIndex = 0;
     el.setAttribute("role", "article");
-    el.setAttribute("aria-label", `${c.title}. Use the arrow keys to scroll; Retire and Promote are in the toolbar.`);
+    el.setAttribute("aria-label", `${c.title}. Use the arrow keys to scroll; Retire and Confirm are in the toolbar.`);
   }
   const stances = schema?.stances ?? ["always", "never", "prefer", "avoid", "context"];
   const scopes = [...new Set([...(schema?.scopes ?? ["universal", "personal"]), "project:" + (c.occurrences[0] || "x"), c.scope])];
@@ -52,7 +52,7 @@ export function cardEl(c, { depth = 0, schema, skipped = new Set() } = {}) {
   const exBody = exList ? `<ul>${exList}</ul>` : c.examples && `<p>${md(c.examples)}</p>`;
   const sec = (title, body, quiet) => (body ? `<section class="${quiet ? "quiet" : ""}"><h2>${title}</h2>${body}</section>` : "");
   el.innerHTML = `
-    <div class="stamp yes">PROMOTE</div><div class="stamp no">RETIRE</div>
+    <div class="stamp yes">CONFIRM</div><div class="stamp no">RETIRE</div>
     <div class="head"><h1>${esc(c.title)}</h1>
       <div class="chips">
         <span class="chip ${esc(c.stance)}"><em>stance</em><select name="stance" onchange="this.parentNode.className='chip '+this.value">${option(stances, c.stance)}</select></span>
@@ -77,7 +77,7 @@ export function cardEl(c, { depth = 0, schema, skipped = new Set() } = {}) {
       <ul class="clist">${c.conflicts.map((x) => `<li>
         <button type="button" class="rulelink" onclick="openRule('${esc(x.id)}')" title="Open ${esc(x.id)}">${esc(x.title)}</button>
         <span class="st ${esc(x.status)}">${esc(statusLabel(x.status))}</span></li>`).join("")}</ul>
-      ${c.resolution ? `<p class="res"><b>Which wins:</b> ${md(c.resolution)}</p>` : `<p class="res">No resolution yet. Promoting this will ask which one wins, and when.</p>`}
+      ${c.resolution ? `<p class="res"><b>Which wins:</b> ${md(c.resolution)}</p>` : `<p class="res">No resolution yet. Confirming this will ask which one wins, and when.</p>`}
     </div>` : ""}
     ${sec("Rule", `<p>${md(c.rule)}</p>`)}
     ${sec("Why", c.why && `<p>${md(c.why).replace(/\n\n/g, "</p><p>")}</p>`, true)}

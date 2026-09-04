@@ -1,5 +1,5 @@
 // Renders skills/ and exports/ from the confirmed decisions/ and patterns/.
-// There is no preview build: a rule reaches a skill by being promoted, not by being compiled.
+// There is no preview build: a rule reaches a skill by being confirmed, not by being compiled.
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { parse as parseYaml } from "yaml";
 import { listDocs, section, scopeKind, conflictsOf, unresolvedConflicts, DIMENSIONS, type Doc } from "./lib";

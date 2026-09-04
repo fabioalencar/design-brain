@@ -65,7 +65,7 @@ design-brain review                 # http://localhost:4455
 
 Four tabs:
 
-- **Queue** — one card at a time. Swipe, or use the arrows: right promotes, left retires,
+- **Queue** — one card at a time. Swipe, or use the arrows: right confirms, left retires,
   down skips. Adjust stance and scope on the card before deciding, leave a
   dated note, undo with `Z`. Every card carries its evidence: the line you actually typed,
   the repo path, the article it came from.
@@ -105,7 +105,7 @@ Enforced, not aspirational:
 
 - **A brain is private.** The tool repo never contains one, and names no client.
 - **Candidates never self-accept.** Every harvester writes `status: candidate`. Only you
-  promote, in the queue or with `design-brain promote`.
+  confirm, in the queue or with `design-brain confirm`.
 - **Compiled skills are project-agnostic.** No project name, path, quote or
   project-specific value leaves the ledger; a guard re-reads the output on every compile
   and reports any leak.
@@ -127,7 +127,7 @@ compile               build skills/ and exports/ from the confirmed decisions
 harvest:repos         design facts from the projects in sources.yaml
 harvest:transcripts   design directives from Claude Code transcripts
 add <staged.json>     write staged candidates into inbox/
-promote|retire|restore <DB-c-###> …
+confirm|retire|restore <DB-c-###> …
 rescope <id> <scope>  |  note <id> <text>
 install [dir]         symlink the skills into ~/.claude/skills
 ```
@@ -142,7 +142,7 @@ bun test scripts/          # 24 tests, each driving a real brain in a temp direc
 ```
 
 `brain.ts` resolves a brain and hands out its paths. `ledger.ts` owns every mutation of it
-— promote, retire, restore, edit, note, and id allocation — so the CLI and the review app
+— confirm, retire, restore, edit, note, and id allocation — so the CLI and the review app
 cannot diverge. `skills.ts` owns the compiled skills and the installer. `compile-skills.ts`
 renders, `check.ts` validates. The review app is `review-ui.html` plus two modules in
 `app/`: the API client, and the one card renderer the queue and the drawer share.

@@ -13,7 +13,7 @@ private data directory (see `templates/brain/`) that the tool operates on via
    candidates (`kind: heuristic | bias | practice`) with published sources.
 2. **Compiled output is project-agnostic** (DDR-005). The compiler must never emit a
    project name, path, quote, or project-specific value; the leak guard enforces it.
-3. **Candidates never self-accept** (DDR-002). Only the human promotes.
+3. **Candidates never self-accept** (DDR-002). Only the human confirms.
 4. **This repo has a Forge record** in `design/` (brief, DDRs, questions, todos, glossary).
    Decisions about the tool go through the `ddr` skill; run `forge doctor` after touching
    `design/`.
