@@ -20,6 +20,10 @@
   :root[data-theme="synapse"] body { background-color:var(--paper); background-image:linear-gradient(rgba(16,24,79,.55), rgba(16,24,79,.55)), url("/app/synapse.jpg"); background-size:cover, 900px 900px; background-position:center, center; background-attachment:fixed, fixed; background-repeat:no-repeat, repeat }
   :root[data-theme="synapse"] .modal, :root[data-theme="synapse"] .drawer { background:#161f63; box-shadow:0 1px 2px rgba(0,0,0,.5), 0 16px 48px rgba(0,0,0,.5) }
   :root[data-theme="synapse"] .skillbar { background:transparent }
+  /* synapse is also a focus mode: the card and its verdicts, nothing else. The egg stays as the way out. */
+  :root[data-theme="synapse"] header, :root[data-theme="synapse"] #queue-toolbar { display:none }
+  /* main only pads sideways; with the header gone the card would sit against the viewport edge */
+  :root[data-theme="synapse"] main { padding-top:28px }
   /* the egg itself: quiet until you go looking for it */
   .egg { position:fixed; right:14px; bottom:14px; z-index:60; width:24px; height:24px; display:grid; place-items:center; padding:0; border:0; border-radius:999px; background:#9057fd; color:#fff; cursor:pointer; opacity:.3; transition:opacity .18s ease, transform .18s ease }
   .egg svg { width:14px; height:14px }
@@ -618,6 +622,7 @@ function toggleTheme() {
   const now = cur === "synapse" ? (prevTheme || "system") : cur === "dark" ? "light" : "dark";
   try { localStorage.setItem("db-theme", now); } catch {}
   applyTheme(now);
+  route();
 }
 function toggleSynapse() {
   const cur = document.documentElement.getAttribute("data-theme");
@@ -625,11 +630,13 @@ function toggleSynapse() {
     const back = prevTheme || "system";
     try { localStorage.setItem("db-theme", back); } catch {}
     applyTheme(back);
+    route();  // back to whatever tab the hash still points at
     return;
   }
   prevTheme = cur;
   try { localStorage.setItem("db-theme-prev", cur); localStorage.setItem("db-theme", "synapse"); } catch {}
   applyTheme("synapse");
+  route();
 }
 let stored = null, prevTheme = null;
 try { stored = localStorage.getItem("db-theme"); prevTheme = localStorage.getItem("db-theme-prev"); } catch {}
@@ -646,7 +653,8 @@ function closeAbout() { closeDialog($("#aboutbg")); }
 const views = { queue: ["#v-queue", "#queue-toolbar", "#queue-footer"], rules: ["#v-rules"], sources: ["#v-sources"], skills: ["#v-skills"] };
 function route() {
   const v = (location.hash || "#queue").slice(1);
-  const name = views[v] ? v : "queue";
+  // synapse is a focus mode: the tabs are hidden, so only the queue renders whatever the hash says
+  const name = document.documentElement.getAttribute("data-theme") === "synapse" ? "queue" : views[v] ? v : "queue";
   for (const [k, sels] of Object.entries(views)) for (const s of sels) $(s).hidden = k !== name;
   document.querySelectorAll("nav.tabs a").forEach((a) => a.classList.toggle("on", a.dataset.view === name));
   requestAnimationFrame(() => { const v = $("#v-" + name); if (v) { v.scrollTop = 0; v.querySelector(".scrollarea")?.scrollTo(0, 0); } });
