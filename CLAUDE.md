@@ -5,6 +5,9 @@ extraction prompt, and the seed pack. It never contains a brain. A brain is a se
 private data directory (see `templates/brain/`) that the tool operates on via
 `--brain <dir>`, `$DESIGN_BRAIN`, or the current directory.
 
+0. **Two kinds of skill live here.** `agent-skills/` is hand-written and shipped by the tool
+   (capture skills like `design-brain-add-source`). A brain's `skills/` is compiled output.
+   `design-brain install` links both; `compile` only ever writes the brain's.
 1. **No harvested content here.** Never commit candidates, decisions, patterns, inventory,
    transcripts, or anything naming a real project or client. `seed/` holds only reference
    candidates (`kind: heuristic | bias | practice`) with published sources.

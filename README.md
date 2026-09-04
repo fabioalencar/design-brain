@@ -42,6 +42,13 @@ design-brain harvest:transcripts    # design directives from Claude Code session
 Projects on another machine: run `templates/external-extract-prompt.md` there (read-only)
 and drop the output into `inbox/_imports/`.
 
+Read something worth keeping? The `design-brain-add-source` skill turns an article or a
+guideline page into candidates with a reference back to it:
+
+```bash
+design-brain add staged.json       # what that skill stages for you
+```
+
 ## Decide
 
 ```bash

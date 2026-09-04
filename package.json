@@ -19,7 +19,8 @@
     "rescope": "bun scripts/promote.ts rescope",
     "test": "bun test scripts/",
     "restore": "bun scripts/promote.ts restore",
-    "note": "bun scripts/promote.ts note"
+    "note": "bun scripts/promote.ts note",
+    "add": "bun scripts/add.ts"
   },
   "dependencies": {
     "yaml": "^2.5.0"

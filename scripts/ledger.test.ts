@@ -202,3 +202,52 @@ describe("ledger transitions", () => {
     expect(() => l.get("DB-c-999")).toThrow(/no file for DB-c-999/);
   });
 });
+
+describe("adding a source", () => {
+  const source = {
+    title: "A modal names its primary action in a verb",
+    dimension: "copy", stance: "always", confidence: 8, kind: "practice" as const, component: "modals",
+    rule: "The confirming button says what it does.",
+    why: "A generic label makes the reader re-read the sentence above it.",
+    evidence: ["reference:https://example.com/ok-cancel — Publisher, OK or Cancel"],
+  };
+
+  test("writes a candidate with an allocated id, never confirmed", () => {
+    const l = openLedger(newBrain(), () => "2026-09-04");
+    const { id, file } = l.add(source);
+    expect(id).toBe("DB-c-800");
+    expect(file).toBe("DB-c-800-a-modal-names-its-primary-action.md");
+    const doc = l.get("DB-c-800");
+    expect(doc.fm.status).toBe("candidate");
+    expect(doc.fm.scope).toBe("universal");
+    expect(doc.fm.source).toBe("added by hand");
+    expect(doc.fm.component).toBe("modals");
+    expect(doc.fm.evidence).toEqual(source.evidence);
+    expect(doc.body).toContain("## Rule");
+  });
+
+  test("ids keep counting, and skip ones already promoted out of the band", () => {
+    const b = newBrain();
+    const l = openLedger(b);
+    expect(l.add(source).id).toBe("DB-c-800");
+    expect(l.add({ ...source, title: "A second rule from the same page" }).id).toBe("DB-c-801");
+    l.promote("DB-c-800");
+    expect(l.add({ ...source, title: "A third rule from the same page" }).id).toBe("DB-c-802");
+  });
+
+  test("refuses a reference kind with no reference", () => {
+    const l = openLedger(newBrain());
+    expect(() => l.add({ ...source, evidence: ["repo:somewhere"] })).toThrow(/needs a reference/);
+  });
+
+  test("refuses a title that would not fit two lines", () => {
+    const l = openLedger(newBrain());
+    expect(() => l.add({ ...source, title: "x".repeat(81) })).toThrow(/at most 80/);
+  });
+
+  test("refuses a candidate with no rule and no evidence", () => {
+    const l = openLedger(newBrain());
+    expect(() => l.add({ ...source, rule: "  " })).toThrow(/rule is required/);
+    expect(() => l.add({ ...source, evidence: [] })).toThrow(/evidence/);
+  });
+});

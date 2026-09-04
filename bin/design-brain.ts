@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 // design-brain <command> [--brain <dir>] — runs the tool against a brain directory.
-import { existsSync, mkdirSync, readdirSync, copyFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, copyFileSync, readlinkSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { toolRoot } from "../scripts/lib";
 import { DIRS, expandHome, openBrain } from "../scripts/brain";
@@ -12,7 +12,7 @@ const scripts: Record<string, string> = {
   check: "check.ts", compile: "compile-skills.ts", review: "review-server.ts",
   "harvest:transcripts": "harvest-transcripts.ts", "harvest:repos": "harvest-repos.ts",
   promote: "promote.ts promote", retire: "promote.ts retire", restore: "promote.ts restore",
-  rescope: "promote.ts rescope", note: "promote.ts note",
+  rescope: "promote.ts rescope", note: "promote.ts note", add: "add.ts",
 };
 
 function run(script: string, args: string[]) {
@@ -35,7 +35,10 @@ function init(dirArg?: string) {
 function install(dirArg?: string) {
   try {
     const brain = openBrain(dirArg ?? process.cwd());
-    for (const name of installSkills(brain, home)) console.log(`${join(home, ".claude", "skills", name)} → ${brain.path("skills", name)}`);
+    for (const name of installSkills(brain, home)) {
+      const link = join(home, ".claude", "skills", name);
+      console.log(`${link} → ${readlinkSync(link)}`);
+    }
   } catch (e) {
     console.error((e as Error).message);
     process.exit(1);
@@ -54,6 +57,7 @@ else {
   compile               build skills/ and exports/ from the confirmed decisions
   harvest:repos         extract design facts from the projects in sources.yaml
   harvest:transcripts   mine Claude Code transcripts for design directives
+  add <staged.json>     write staged candidates into inbox/ (see the add-source skill)
   promote|retire|restore <DB-c-###> …
   rescope <id> <scope>  |  note <id> <text>
   install [dir]         symlink the brain's skills into ~/.claude/skills

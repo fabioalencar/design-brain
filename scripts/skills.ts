@@ -3,8 +3,11 @@
 import { existsSync, lstatSync, mkdirSync, readFileSync, readlinkSync, statSync, symlinkSync, unlinkSync } from "node:fs";
 import { join } from "node:path";
 import type { Brain } from "./brain";
+import { toolRoot } from "./lib";
 
 export const SKILL_NAMES = ["design-brain", "design-brain-check", "design-brain-start"] as const;
+/** Hand-written, shipped by the tool rather than compiled from a brain. */
+export const TOOL_SKILLS = ["design-brain-add-source"] as const;
 export type SkillName = (typeof SKILL_NAMES)[number];
 
 const skillsDir = (home: string) => join(home, ".claude", "skills");
@@ -68,6 +71,19 @@ export function installSkills(brain: Brain, home = process.env.HOME ?? ""): stri
     const src = brain.path("skills", name);
     const dest = join(dir, name);
     if (!existsSync(src)) throw new Error(`missing ${src}; compile first`);
+    try {
+      if (!lstatSync(dest).isSymbolicLink()) throw new Error(`${dest} exists and is not a symlink`);
+      unlinkSync(dest);
+    } catch (e: any) {
+      if (e?.code !== "ENOENT") throw e;
+    }
+    symlinkSync(src, dest);
+    done.push(name);
+  }
+  for (const name of TOOL_SKILLS) {
+    const src = join(toolRoot, "agent-skills", name);
+    const dest = join(dir, name);
+    if (!existsSync(src)) continue;
     try {
       if (!lstatSync(dest).isSymbolicLink()) throw new Error(`${dest} exists and is not a symlink`);
       unlinkSync(dest);

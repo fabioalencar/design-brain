@@ -68,6 +68,28 @@ export interface Edits {
   note?: string;
 }
 
+/** A candidate staged by an agent, before the ledger gives it an id and a file. */
+export interface NewCandidate {
+  title: string;
+  dimension: string;
+  stance: string;
+  confidence: number;
+  kind?: "harvested" | "heuristic" | "bias" | "practice";
+  component?: string;
+  scope?: string;
+  source?: string;
+  occurrences?: string[];
+  evidence: string[];
+  rule: string;
+  why?: string;
+  examples?: string;
+  exceptions?: string;
+}
+
+export const TITLE_MAX = 80;
+/** Hand-added sources live in their own band, so provenance is visible in the id as well as the field. */
+export const ADDED_RANGE = 800;
+
 export interface Ledger {
   /** Every candidate and decision, inbox first. */
   all(): Doc[];
@@ -76,6 +98,10 @@ export interface Ledger {
   retired(): Doc[];
   get(id: string): Doc;
   nextConfirmedId(): string;
+  /** The next free DB-c-### in a hundred-band, counting promoted ids too so none is reused. */
+  nextCandidateId(range?: number): string;
+  /** Write a new candidate. Never confirmed: the reviewer still decides. */
+  add(c: NewCandidate, range?: number): { id: string; file: string };
   promote(id: string, edits?: Edits): { id: string; file: string };
   retire(id: string, edits?: Edits): void;
   /** Confirmed → back in review, retired → back in review. */
@@ -138,6 +164,60 @@ export function openLedger(brain: Brain, today: () => string = () => new Date().
         .filter(Boolean)
         .map(Number);
       return "DB-" + String(ids.length ? Math.max(...ids) + 1 : 1).padStart(3, "0");
+    },
+
+    nextCandidateId(range = ADDED_RANGE) {
+      const used = new Set<number>();
+      for (const n of readdirSync(brain.inbox)) {
+        const m = n.match(/^DB-c-(\d{3})-/);
+        if (m) used.add(Number(m[1]));
+      }
+      for (const d of listIn(brain.decisions)) {
+        const m = String(d.fm.was ?? "").match(/^DB-c-(\d{3})$/);
+        if (m) used.add(Number(m[1]));
+      }
+      for (let n = range; n < range + 100; n++) if (!used.has(n)) return "DB-c-" + String(n).padStart(3, "0");
+      throw new Error(`the DB-c-${range}s are full; pass another range`);
+    },
+
+    add(c, range = ADDED_RANGE) {
+      const need = (ok: unknown, msg: string) => { if (!ok) throw new Error(msg); };
+      need(c.title && c.title.length <= TITLE_MAX, `title is required and at most ${TITLE_MAX} characters`);
+      need(c.rule?.trim(), "a rule is required");
+      need(c.evidence?.length, "at least one evidence line is required");
+      need(typeof c.confidence === "number" && c.confidence >= 1 && c.confidence <= 10, "confidence must be 1-10");
+      if (c.kind && c.kind !== "harvested") need(c.evidence.some((e) => /^reference:/.test(e)), `a ${c.kind} needs a reference: evidence line`);
+      const id = this.nextCandidateId(range);
+      const words = c.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").split("-").slice(0, 8);
+      while (words.length > 3 && words[words.length - 1].length <= 2) words.pop();
+      const slug = words.join("-");
+      const file = `${id}-${slug}.md`;
+      const dest = brain.path("inbox", file);
+      if (existsSync(dest)) throw new Error(`${dest} exists`);
+      const fm = [
+        `id: ${id}`,
+        `title: ${yamlValue(c.title)}`,
+        `dimension: ${c.dimension}`,
+        `scope: ${yamlValue(c.scope ?? "universal")}`,
+        `stance: ${c.stance}`,
+        `status: candidate`,
+        `kind: ${c.kind ?? "harvested"}`,
+        `source: ${yamlValue(c.source ?? "added by hand")}`,
+        ...(c.component ? [`component: ${c.component}`] : []),
+        `confidence: ${c.confidence}`,
+        `occurrences: [${(c.occurrences ?? ["reference"]).join(", ")}]`,
+        "evidence:",
+        ...c.evidence.map((e) => `  - ${yamlValue(e)}`),
+        `last_seen: ${today()}`,
+      ].join("\n");
+      const body = [
+        `## Rule\n\n${c.rule.trim()}`,
+        c.why?.trim() ? `## Why\n\n${c.why.trim()}` : "",
+        c.examples?.trim() ? `## Examples\n\n${c.examples.trim()}` : "",
+        c.exceptions?.trim() ? `## Exceptions\n\n${c.exceptions.trim()}` : "",
+      ].filter(Boolean).join("\n\n");
+      writeFileSync(dest, `---\n${fm}\n---\n\n${body}\n`);
+      return { id, file };
     },
 
     promote(id, edits) {
