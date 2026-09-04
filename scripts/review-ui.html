@@ -20,18 +20,22 @@
   nav.tabs a { display:inline-flex; align-items:center; gap:7px; padding:8px 0 10px; font:500 14px/20px var(--sans); color:var(--ink-2); text-decoration:none; border-bottom:2px solid transparent; margin-bottom:-2px }
   nav.tabs a svg { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round }
   nav.tabs a.on { color:var(--ink); font-weight:600; border-bottom-color:var(--ink) }
-  .view { width:min(1100px, 100%); margin:0 auto; padding:0 20px 40px; box-sizing:border-box }
+  .view { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; width:min(1100px, 100%); margin:0 auto; padding:0 20px 40px; box-sizing:border-box }
   .view[hidden] { display:none }
   main[hidden], footer[hidden], .toolbar[hidden] { display:none }
   .view .bar-row { display:flex; gap:8px; align-items:center; padding:10px 0 14px; flex-wrap:wrap }
+  #v-rules { display:flex; flex-direction:column; overflow:hidden; padding-bottom:20px }
+  #v-rules .scrollarea { flex:1; min-height:0; overflow:auto; overscroll-behavior:contain }
   .seg { display:inline-flex; border:1px solid var(--line); border-radius:8px; background:var(--card); overflow:hidden; box-shadow:0 1px 2px rgba(20,20,30,.05) }
   .seg button { border:0; background:transparent; padding:8px 12px; font:500 14px/20px var(--sans); color:var(--ink-2); cursor:pointer }
   .seg button.on { background:var(--paper); color:var(--ink); font-weight:600 }
   .search { border:1px solid var(--line); border-radius:8px; background:var(--card); padding:8px 12px; font:500 14px/20px var(--sans); color:var(--ink); min-width:220px; box-shadow:0 1px 2px rgba(20,20,30,.05) }
   .search:focus { outline:0; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft) }
   .view .count { margin-left:auto; font:500 13px/20px var(--sans); color:var(--ink-3) }
-  table.rules { width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden; font:400 14px/20px var(--sans) }
-  table.rules th { text-align:left; font:600 12px/18px var(--sans); letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3); padding:10px 14px; border-bottom:1px solid var(--line); background:var(--paper) }
+  table.rules { width:100%; border-collapse:separate; border-spacing:0; background:var(--card); border:1px solid var(--line); border-radius:12px; font:400 14px/20px var(--sans) }
+  table.rules th:first-child { border-top-left-radius:11px } table.rules th:last-child { border-top-right-radius:11px }
+  table.rules tr:last-child td:first-child { border-bottom-left-radius:11px } table.rules tr:last-child td:last-child { border-bottom-right-radius:11px }
+  table.rules th { position:sticky; top:0; z-index:2; text-align:left; font:600 12px/18px var(--sans); letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3); padding:10px 14px; border-bottom:1px solid var(--line); background:var(--paper) }
   table.rules td { padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--ink-2) }
   table.rules tr:last-child td { border-bottom:0 }
   table.rules tbody tr { cursor:pointer }
@@ -76,11 +80,11 @@
   .skill .secs span { display:flex; justify-content:space-between } .skill .secs span b { color:var(--ink); font-weight:500 }
   .skill .open { align-self:flex-start; border:1px solid var(--line); background:var(--card); border-radius:999px; padding:7px 14px; font:600 13px/18px var(--sans); color:var(--ink); cursor:pointer }
   .ok { color:var(--yes) } .warn { color:#8c5a14 }
-  .skillbar { display:flex; gap:8px; align-items:center; padding:10px 0 16px; flex-wrap:wrap; font:500 14px/20px var(--sans); color:var(--ink-2) }
+  .skillbar { position:sticky; top:0; z-index:3; background:var(--paper); display:flex; gap:8px; align-items:center; padding:10px 0 16px; flex-wrap:wrap; font:500 14px/20px var(--sans); color:var(--ink-2) }
   .skillbar button { border:1px solid var(--line); background:var(--card); border-radius:8px; padding:8px 14px; font:600 14px/20px var(--sans); color:var(--ink); cursor:pointer; box-shadow:0 1px 2px rgba(20,20,30,.05) }
   .skillbar .primary { background:var(--ink); border-color:var(--ink); color:#fff }
   .skillbar .last { margin-left:auto; font-size:13px; color:var(--ink-3) }
-  pre.md { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 22px; white-space:pre-wrap; font:13px/21px ui-monospace, "JetBrains Mono", monospace; color:var(--ink-2); max-height:70vh; overflow:auto }
+  pre.md { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 22px; white-space:pre-wrap; font:13px/21px ui-monospace, "JetBrains Mono", monospace; color:var(--ink-2) }
   .bar { height:3px; background:var(--line); border-radius:2px; overflow:hidden }
   .bar i { display:block; height:100%; background:var(--accent); width:0; transition:width .3s }
   select, button { font:inherit }
@@ -224,7 +228,7 @@
     <input class="search" id="rq" placeholder="Search titles and rules">
     <span class="count" id="rcount"></span>
   </div>
-  <div style="overflow-x:auto"><table class="rules"><thead><tr><th>Rule</th><th>Stance</th><th>Dimension</th><th>Scope</th><th class="n">Conf</th><th class="n">Seen</th><th>Status</th></tr></thead><tbody id="rbody"></tbody></table></div>
+  <div class="scrollarea"><table class="rules"><thead><tr><th>Rule</th><th>Stance</th><th>Dimension</th><th>Scope</th><th class="n">Conf</th><th class="n">Seen</th><th>Status</th></tr></thead><tbody id="rbody"></tbody></table></div>
 </section>
 <section class="view" id="v-skills" hidden>
   <div class="skillbar">
