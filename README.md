@@ -1,7 +1,9 @@
-# design-brain
+# <img src="assets/logo.svg" alt="" height="24"> design-brain
 
 Capture the design decisions you keep re-teaching AI, review them one at a time, and
 compile the ones you stand behind into agent skills that load on every project.
+
+![design-brain](assets/banner.jpg)
 
 The problem is narrow and familiar: you correct the same things in every session — the
 accent belongs on one action, the CTA is squared on this brand, the table is a table and
