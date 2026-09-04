@@ -1,9 +1,9 @@
-# <img src="assets/logo.svg" alt="" height="24"> design-brain
+# design-brain
 
 Capture the design decisions you keep re-teaching AI, review them one at a time, and
 compile the ones you stand behind into agent skills that load on every project.
 
-![design-brain](assets/banner.jpg)
+![design-brain](assets/banner.png)
 
 The problem is narrow and familiar: you correct the same things in every session — the
 accent belongs on one action, the CTA is squared on this brand, the table is a table and
@@ -52,12 +52,12 @@ design-brain harvest:transcripts    # design directives from Claude Code session
 
 Four routes in, all landing in the same queue:
 
-| Route | What it mines |
-|---|---|
-| `harvest:repos` | tokens, palettes, fonts and component choices across your repos |
-| `harvest:transcripts` | the corrections you actually typed, quoted verbatim |
+| Route                                  | What it mines                                                                                |
+| -------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `harvest:repos`                        | tokens, palettes, fonts and component choices across your repos                              |
+| `harvest:transcripts`                  | the corrections you actually typed, quoted verbatim                                          |
 | `templates/external-extract-prompt.md` | a read-only prompt to run on a repo you cannot share; drop its output into `inbox/_imports/` |
-| `design-brain-add-source` skill | an article or guideline page you just read, cited back to its page |
+| `design-brain-add-source` skill        | an article or guideline page you just read, cited back to its page                           |
 
 ## Decide
 
