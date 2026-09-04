@@ -6,10 +6,10 @@
 <title>design-brain review</title>
 <style>
   :root { --paper:#f6f5f1; --ink:#292929; --ink-2:#6b6b6b; --ink-3:#8f8f8f; --serif:Charter, "Source Serif Pro", "Iowan Old Style", Georgia, serif; --sans:-apple-system, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif; --line:#e6e4dd; --line-strong:var(--line-strong); --card:#ffffff; --hover:var(--hover); --code-bg:var(--code-bg);
-          --accent:#5b48e8; --accent-soft:#ece9fc; --yes:#117a48; --yes-soft:#e2f4ea; --no:#b22a3d; --no-soft:#fbe8eb;
+          --accent:#292929; --accent-soft:#eceae3; --on-accent:#ffffff; --yes:#117a48; --yes-soft:#e2f4ea; --no:#b22a3d; --no-soft:#fbe8eb;
           --warn:var(--warn); --warn-ink:var(--warn-ink); --warn-soft:var(--warn-soft); --warn-line:var(--warn-line); --shadow:20,20,30; }
   :root[data-theme="dark"] { --paper:#131313; --ink:#e9e7e2; --ink-2:#a5a29c; --ink-3:#7b7873; --line:#2c2c2c; --line-strong:#3d3d3d; --card:#1b1b1b; --hover:#212121; --code-bg:#262626;
-          --accent:#9b8cff; --accent-soft:#272248; --yes:#5cc98d; --yes-soft:#14301f; --no:#f08292; --no-soft:#33161b;
+          --accent:#e9e7e2; --accent-soft:#2b2b2b; --on-accent:#131313; --yes:#5cc98d; --yes-soft:#14301f; --no:#f08292; --no-soft:#33161b;
           --warn:#e0b264; --warn-ink:#f0d6a4; --warn-soft:#2f2717; --warn-line:#4a3d21; --shadow:0,0,0; }
   :root[data-theme="dark"] .card, :root[data-theme="dark"] .modal, :root[data-theme="dark"] .drawer { box-shadow:0 1px 2px rgba(0,0,0,.5), 0 16px 48px rgba(0,0,0,.45) }
   * { box-sizing:border-box }
@@ -111,7 +111,7 @@
   table.rules input[type=checkbox] { width:15px; height:15px; accent-color:var(--accent); cursor:pointer; margin:0 }
   .skillbar { position:sticky; top:0; z-index:3; background:var(--paper); display:flex; gap:8px; align-items:center; padding:10px 0 16px; flex-wrap:wrap; font:500 14px/20px var(--sans); color:var(--ink-2) }
   .skillbar button { border:1px solid var(--line); background:var(--card); border-radius:8px; padding:8px 14px; font:600 14px/20px var(--sans); color:var(--ink); cursor:pointer; box-shadow:0 1px 2px rgba(20,20,30,.05) }
-  .skillbar .primary { background:var(--ink); border-color:var(--ink); color:#fff }
+  .skillbar .primary { background:var(--ink); border-color:var(--ink); color:var(--on-accent) }
   .skillbar .last { margin-left:auto; font-size:13px; color:var(--ink-3) }
   pre.md { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 22px; white-space:pre-wrap; font:13px/21px ui-monospace, "JetBrains Mono", monospace; color:var(--ink-2) }
   .bar { height:3px; background:var(--line); border-radius:2px; overflow:hidden }
@@ -178,7 +178,7 @@
   .modal textarea { border:1px solid var(--line); border-radius:8px; padding:10px; font:inherit; font-size:16px; line-height:26px; min-height:120px; resize:vertical; background:var(--paper); color:var(--ink) }
   .modal .row { display:flex; justify-content:flex-end; gap:8px }
   .modal button { border:0; border-radius:999px; padding:9px 16px; font-weight:600; cursor:pointer; background:var(--paper); color:var(--ink) }
-  .modal button.primary { background:var(--accent); color:#fff }
+  .modal button.primary { background:var(--accent); color:var(--on-accent) }
   .chip.dim { color:var(--ink) }
   .chip.never select, .chip.avoid select { color:var(--no) }
   .chip.always select { color:var(--yes) }
@@ -616,7 +616,7 @@ function openDrawer(id) {
   if (c.status === "candidate") acts.push(`<button class="yes" onclick="drawerVerdict('promote')">Promote</button><button class="no" onclick="drawerVerdict('retire')">Retire</button>`);
   if (c.status === "confirmed") acts.push(`<button onclick="drawerVerdict('unpromote')">Move back to review</button>`);
   if (c.status === "retired") acts.push(`<button onclick="drawerVerdict('unretire')">Restore to review</button>`);
-  acts.push(`<span class="sp"></span><button onclick="drawerNote()">Add note</button><button onclick="saveDrawer()" style="background:var(--ink);border-color:var(--ink);color:#fff">Save</button>`);
+  acts.push(`<span class="sp"></span><button onclick="drawerNote()">Add note</button><button onclick="saveDrawer()" style="background:var(--ink);border-color:var(--ink);color:var(--on-accent)">Save</button>`);
   $("#dactions").innerHTML = acts.join("");
   $("#drawerbg").classList.add("on"); $("#drawer").classList.add("on");
 }
