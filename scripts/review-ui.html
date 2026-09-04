@@ -21,8 +21,7 @@
   nav.tabs a svg { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round }
   nav.tabs a.on { color:var(--ink); font-weight:600; border-bottom-color:var(--ink) }
   .view { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; width:min(1100px, 100%); margin:0 auto; padding:0 20px 40px; box-sizing:border-box }
-  .view[hidden] { display:none }
-  main[hidden], footer[hidden], .toolbar[hidden] { display:none }
+  [hidden] { display:none !important }
   .view .bar-row { display:flex; gap:8px; align-items:center; padding:10px 0 14px; flex-wrap:wrap }
   #v-rules { display:flex; flex-direction:column; overflow:hidden; padding-bottom:20px }
   #v-rules .scrollarea { flex:1; min-height:0; overflow:auto; overscroll-behavior:contain }
@@ -237,7 +236,7 @@
     <button onclick="installSkills()">Install into ~/.claude/skills</button>
     <span class="last" id="lastcompile"></span>
   </div>
-  <div class="skills" id="skills"></div>
+  <div class="skills" id="skillcards"></div>
   <div id="skillview" style="margin-top:16px"></div>
 </section>
 <footer id="queue-footer">
@@ -456,6 +455,7 @@ function route() {
   const name = views[v] ? v : "queue";
   for (const [k, sels] of Object.entries(views)) for (const s of sels) $(s).hidden = k !== name;
   document.querySelectorAll("nav.tabs a").forEach((a) => a.classList.toggle("on", a.dataset.view === name));
+  requestAnimationFrame(() => { const v = $("#v-" + name); if (v) { v.scrollTop = 0; v.querySelector(".scrollarea")?.scrollTo(0, 0); } });
   if (name === "queue") load(); else if (name === "rules") loadRules(); else if (name === "skills") loadSkills();
 }
 window.addEventListener("hashchange", route);
@@ -534,7 +534,7 @@ function drawerNote() { const c = dcur; $("#notebg").classList.add("on"); $("#no
 async function loadSkills() {
   const r = await (await fetch("/api/skills")).json();
   $("#lastcompile").textContent = r.last ? `Last compile ${new Date(r.last.when).toLocaleString()} · ${r.last.preview ? "preview (includes unreviewed)" : "confirmed only"}${r.last.ok === false ? " · FAILED" : ""}` : "Not compiled yet";
-  $("#skills").innerHTML = r.skills.map((s) => !s.exists ? `<div class="skill"><h3>${esc(s.name)}</h3><span class="warn">Not compiled yet.</span></div>` : `<div class="skill">
+  $("#skillcards").innerHTML = r.skills.map((s) => !s.exists ? `<div class="skill"><h3>${esc(s.name)}</h3><span class="warn">Not compiled yet.</span></div>` : `<div class="skill">
     <h3>${esc(s.name)}</h3><div class="desc">${esc(s.description).slice(0, 220)}</div>
     <div class="facts"><span>rules cited</span><b>${s.ids.length}</b><span>words</span><b>${s.words}</b><span>build</span><b class="${s.preview ? "warn" : "ok"}">${s.preview ? "preview" : "confirmed only"}</b><span>installed</span><b class="${s.installed ? "ok" : "warn"}">${s.installed ? "linked in ~/.claude/skills" : "not linked"}</b></div>
     <div class="secs">${s.sections.filter((x) => x.rules).map((x) => `<span>${esc(x.title)}<b>${x.rules}</b></span>`).join("") || "<span>no rule lines yet</span>"}</div>
