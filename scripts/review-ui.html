@@ -37,8 +37,13 @@
   .view { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; width:min(1100px, 100%); margin:0 auto; padding:16px 20px 40px; box-sizing:border-box }
   [hidden] { display:none !important }
   .view .bar-row { display:flex; gap:8px; align-items:center; padding:10px 0 14px; flex-wrap:wrap }
-  #v-rules, #v-skills { display:flex; flex-direction:column; overflow:hidden; padding-bottom:20px }
-  #v-rules .scrollarea, #v-skills .scrollarea { flex:1; min-height:0; overflow:auto; overscroll-behavior:contain }
+  #v-rules, #v-sources, #v-skills { display:flex; flex-direction:column; overflow:hidden; padding-bottom:20px }
+  #v-rules .scrollarea, #v-sources .scrollarea, #v-skills .scrollarea { flex:1; min-height:0; overflow:auto; overscroll-behavior:contain }
+  /* the same bottom fade the card uses: there is more below */
+  #v-rules .scrollarea, #v-sources .scrollarea, #v-skills .scrollarea {
+    mask-image:linear-gradient(to bottom, #000 calc(100% - 48px), transparent);
+    -webkit-mask-image:linear-gradient(to bottom, #000 calc(100% - 48px), transparent);
+  }
   .seg { display:inline-flex; border:1px solid var(--line); border-radius:8px; background:var(--card); overflow:hidden; box-shadow:0 1px 2px rgba(20,20,30,.05) }
   .seg button { border:0; background:transparent; padding:8px 12px; font:500 14px/20px var(--sans); color:var(--ink-2); cursor:pointer }
   .seg button.on { background:var(--paper); color:var(--ink); font-weight:600 }
@@ -498,7 +503,7 @@ window.addEventListener("hashchange", route);
 
 // ---------- rules ----------
 let rules = [], rstatus = "", picked = new Set();
-let sortCol = "", sortDir = 1, page = 0, perPage = 10;
+let sortCol = "", sortDir = 1, page = 0, perPage = 25;
 const STATUS_ORDER = { confirmed: 0, candidate: 1, retired: 2 };
 const VALUE = {
   title: (c) => String(c.title).toLowerCase(), stance: (c) => c.stance, dimension: (c) => c.dimension,
