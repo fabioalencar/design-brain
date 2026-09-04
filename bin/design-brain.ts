@@ -25,8 +25,14 @@ function init(dirArg?: string) {
   if (!dirArg) { console.error("usage: design-brain init <dir>"); process.exit(1); }
   const dir = resolve(expandHome(dirArg));
   if (existsSync(join(dir, "sources.yaml"))) { console.error(`${dir} already has a brain (sources.yaml).`); process.exit(1); }
+  const templates = readdirSync(join(toolRoot, "templates", "brain"));
+  const clashes = templates.filter((f) => existsSync(join(dir, f)));
+  if (clashes.length) {
+    console.error(`${dir} already holds ${clashes.join(", ")}. Move them aside, or init an empty directory: a brain is never written over your files.`);
+    process.exit(1);
+  }
   for (const d of DIRS) mkdirSync(join(dir, d), { recursive: true });
-  for (const f of readdirSync(join(toolRoot, "templates", "brain"))) copyFileSync(join(toolRoot, "templates", "brain", f), join(dir, f));
+  for (const f of templates) copyFileSync(join(toolRoot, "templates", "brain", f), join(dir, f));
   let n = 0;
   for (const f of readdirSync(join(toolRoot, "seed"))) { copyFileSync(join(toolRoot, "seed", f), join(dir, "inbox", f)); n++; }
   console.log(`Brain created at ${dir}\n  ${n} reference candidates seeded into inbox/ (heuristics, biases, component practices)\n  next: edit sources.yaml, then \`design-brain harvest:repos\` and \`design-brain review\` from that directory`);

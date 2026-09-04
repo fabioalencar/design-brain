@@ -133,7 +133,7 @@ test("the DDR-005 leak guard names the line where a rule carries a project slug"
     "decisions/DB-001-a.md": decision("DB-001", { title: "The meridian header keeps one weight" }),
   });
   const { code, out } = compile(dir);
-  expect(code).toBe(0); // the leak is reported, not fatal
+  expect(code).toBe(1); // DDR-005: a leak stops the compile, as CLAUDE.md and DDR-010 say it does
   expect(out).toContain("leak  skills/design-brain/SKILL.md:");
   expect(out).toContain("DDR-005:");
   expect(out).toContain("name a project");

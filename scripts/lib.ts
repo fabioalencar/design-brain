@@ -24,6 +24,9 @@ export function parseDoc(path: string): Doc {
   return { path, file: basename(path), fm, body: m[2].trim() };
 }
 
+/** Files a listing had to skip. check.ts reports these; everything else keeps working. */
+export const unreadable: { path: string; error: string }[] = [];
+
 export function listDocs(dir: string): Doc[] {
   let names: string[] = [];
   try {
@@ -31,11 +34,17 @@ export function listDocs(dir: string): Doc[] {
   } catch {
     return [];
   }
-  return names
-    .map((n) => join(dir, n))
-    .filter((p) => statSync(p).isFile())
-    .sort()
-    .map(parseDoc);
+  const out: Doc[] = [];
+  for (const p of names.map((n) => join(dir, n)).sort()) {
+    if (!statSync(p).isFile()) continue;
+    try {
+      out.push(parseDoc(p));
+    } catch (e) {
+      // one malformed file must not blind every reader; check.ts reports it by name
+      unreadable.push({ path: p, error: (e as Error).message });
+    }
+  }
+  return out;
 }
 
 export function section(body: string, heading: string): string {

@@ -15,7 +15,7 @@ export type FieldValue = string | number | string[] | null;
 /** YAML scalar that survives a round trip. Quotes anything that could be read as something else. */
 export function yamlValue(v: FieldValue): string {
   if (v === null) return "";
-  if (Array.isArray(v)) return `[${v.join(", ")}]`;
+  if (Array.isArray(v)) return `[${v.map((x) => yamlValue(String(x))).join(", ")}]`;
   if (typeof v === "number") return String(v);
   const s = String(v);
   const safe = /^[A-Za-z0-9][A-Za-z0-9 _.\/@+-]*$/.test(s)
@@ -37,12 +37,15 @@ export function setFields(src: string, patch: Record<string, FieldValue>): strin
   const lines = block.split(/\r?\n/);
   for (const [key, value] of Object.entries(patch)) {
     const i = lines.findIndex((l) => l.startsWith(key + ":"));
+    // a block-form value carries indented children; they belong to the key being replaced
+    let span = 0;
+    if (i >= 0) while (lines[i + 1 + span] !== undefined && /^\s+\S/.test(lines[i + 1 + span])) span++;
     if (value === null) {
-      if (i >= 0) lines.splice(i, 1);
+      if (i >= 0) lines.splice(i, 1 + span);
       continue;
     }
     const line = `${key}: ${yamlValue(value)}`;
-    if (i >= 0) lines[i] = line;
+    if (i >= 0) lines.splice(i, 1 + span, line);
     else lines.push(line);
   }
   return open + lines.join(nl) + close + body;
@@ -118,7 +121,15 @@ export function openLedger(brain: Brain, today: () => string = () => new Date().
     } catch {
       return [];
     }
-    return names.sort().map((n) => parseDoc(dir + "/" + n));
+    const out: Doc[] = [];
+    for (const n of names.sort()) {
+      try {
+        out.push(parseDoc(dir + "/" + n));
+      } catch {
+        // reported by check.ts; a bad file must not stop the queue
+      }
+    }
+    return out;
   };
   const fileFor = (dir: string, id: string) => {
     const f = readdirSync(dir).find((n) => n.startsWith(id + "-") && n.endsWith(".md"));
@@ -159,11 +170,16 @@ export function openLedger(brain: Brain, today: () => string = () => new Date().
     },
 
     nextConfirmedId() {
-      const ids = readdirSync(brain.decisions)
+      const used = readdirSync(brain.decisions)
         .map((n) => n.match(CONFIRMED_PREFIX)?.[1])
         .filter(Boolean)
         .map(Number);
-      return "DB-" + String(ids.length ? Math.max(...ids) + 1 : 1).padStart(3, "0");
+      // a restored rule gave its confirmed id back; never hand that id to a different rule
+      for (const d of listIn(brain.inbox)) {
+        const m = String(d.fm.was_confirmed ?? "").match(/^DB-(\d{3})$/);
+        if (m) used.push(Number(m[1]));
+      }
+      return "DB-" + String(used.length ? Math.max(...used) + 1 : 1).padStart(3, "0");
     },
 
     nextCandidateId(range = ADDED_RANGE) {
@@ -252,7 +268,7 @@ export function openLedger(brain: Brain, today: () => string = () => new Date().
       if (where === "decisions") {
         const was = doc.fm.was ? String(doc.fm.was) : "";
         if (!ID_RE.test(was)) throw new Error(`${id} has no \`was\` field; cannot move it back to review`);
-        const src = setFields(readFileSync(path, "utf8"), { id: was, status: "candidate", promoted: null, was: null });
+        const src = setFields(readFileSync(path, "utf8"), { id: was, status: "candidate", promoted: null, was: null, was_confirmed: String(doc.fm.id) });
         const dest = brain.path("inbox", path.split("/").pop()!.replace(CONFIRMED_PREFIX, was + "-"));
         if (existsSync(dest)) throw new Error(`${dest} exists`);
         writeFileSync(dest, src);

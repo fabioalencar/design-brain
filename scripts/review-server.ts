@@ -100,11 +100,28 @@ function serveFile(rel: string): Response {
   return new Response(readFileSync(path, "utf8"), { headers: { "content-type": TYPES[extname(path)] ?? "text/plain; charset=utf-8" } });
 }
 
+/**
+ * A write must come from this app's own page. Browsers set Origin on every cross-origin
+ * POST, including the text/plain kind that skips preflight, so an absent Origin is a
+ * command-line caller and a mismatched one is another site.
+ */
+function sameOrigin(req: Request, url: URL): boolean {
+  const origin = req.headers.get("origin");
+  if (!origin) return true;
+  try {
+    return new URL(origin).host === url.host;
+  } catch {
+    return false;
+  }
+}
+
 Bun.serve({
   port: PORT,
+  hostname: "127.0.0.1", // the ledger is private; never listen on the network
   async fetch(req) {
     const url = new URL(req.url);
     try {
+      if (req.method === "POST" && !sameOrigin(req, url)) return Response.json({ ok: false, error: "cross-origin write refused" }, { status: 403 });
       if (url.pathname === "/") return serveFile("review-ui.html");
       if (url.pathname.startsWith("/app/")) return serveFile("app/" + url.pathname.slice(5));
       if (url.pathname === "/api/queue") return Response.json(queue());
@@ -133,4 +150,4 @@ Bun.serve({
     }
   },
 });
-console.log(`design-brain review → http://localhost:${PORT}`);
+console.log(`design-brain review → http://127.0.0.1:${PORT}`);

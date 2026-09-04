@@ -214,13 +214,20 @@ Scope: **<personal | client:name>**. New non-obvious design choices get a note i
 // DDR-005 guard: no project slug, alias, or client name may appear in compiled skills.
 {
   const names = new Set(brain.names().map((n) => n.toLowerCase()));
+  if (!names.size) { // an empty pattern matches every word boundary; a brain with no projects has nothing to leak
+    console.log("DDR-005: sources.yaml lists no projects, so there are no names to check for.");
+  } else {
   const re = new RegExp(`\\b(${[...names].map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})\\b`, "i");
   let leaks = 0;
   for (const name of SKILL_NAMES) {
     const lines = readFileSync(`${root}skills/${name}/SKILL.md`, "utf8").split("\n");
     lines.forEach((l, i) => { if (l.startsWith("- ") && re.test(l)) { leaks++; console.log(`leak  skills/${name}/SKILL.md:${i + 1}: ${l.slice(0, 120)}`); } });
   }
-  if (leaks) console.log(`DDR-005: ${leaks} line(s) in skills/ name a project. Fix the rule text in the ledger.`);
+  if (leaks) {
+    console.log(`DDR-005: ${leaks} line(s) in skills/ name a project. Fix the rule text in the ledger, then compile again.`);
+    process.exit(1);
+  }
+  }
 }
 writeFileSync(root + "exports/.compile.json", JSON.stringify({ when: new Date().toISOString(), counts: { harvested: decisions.length, heuristics: heuristics.length, biases: biases.length, practices: practices.length, patterns: patterns.length } }, null, 2));
 console.log(`compiled ${decisions.length} harvested + ${heuristics.length} heuristics + ${biases.length} biases + ${practices.length} practices, ${patterns.length} patterns → skills/, exports/`);

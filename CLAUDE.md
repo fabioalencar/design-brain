@@ -18,4 +18,4 @@ private data directory (see `templates/brain/`) that the tool operates on via
    Decisions about the tool go through the `ddr` skill; run `forge doctor` after touching
    `design/`.
 5. Test against a real brain before shipping: `bun scripts/check.ts --brain <dir>` and
-   `bun scripts/compile-skills.ts --brain <dir> --preview` must pass.
+   `bun scripts/compile-skills.ts --brain <dir>` must pass, and `bun test scripts/` must be green.
