@@ -1,0 +1,21 @@
+name: test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun test scripts/
+      # The seed pack must always produce a brain that validates and compiles.
+      - run: bun bin/design-brain.ts init /tmp/brain
+      - run: bun scripts/check.ts --brain /tmp/brain
+      - run: bun scripts/compile-skills.ts --brain /tmp/brain
