@@ -77,7 +77,13 @@ export function cardEl(c, { depth = 0, schema, skipped = new Set() } = {}) {
     ${sec("See also", c.seeAlso && `<p>${md(c.seeAlso)}</p>`, true)}
     ${sec("Review notes", c.notes && `<p>${md(c.notes)}</p>`)}
     </div>`;
-  el.addEventListener("scroll", () => el.querySelector(".head").classList.toggle("stuck", el.scrollTop > 4), { passive: true });
+  const onScroll = () => {
+    el.querySelector(".head").classList.toggle("stuck", el.scrollTop > 4);
+    // the fade says "there is more below", so it goes once there is not
+    el.classList.toggle("at-end", el.scrollTop + el.clientHeight >= el.scrollHeight - 2);
+  };
+  el.addEventListener("scroll", onScroll, { passive: true });
+  requestAnimationFrame(onScroll);
   return el;
 }
 
