@@ -54,6 +54,20 @@ export function readSkill(brain: Brain, name: string, home = process.env.HOME ??
   };
 }
 
+/** A hand-written skill the tool ships: no rules cited, never rebuilt by compile. */
+export function readToolSkill(name: string, home = process.env.HOME ?? ""): SkillInfo {
+  const path = join(toolRoot, "agent-skills", name, "SKILL.md");
+  if (!existsSync(path)) return { name, exists: false };
+  const content = readFileSync(path, "utf8");
+  const description = content.match(/^description:\s*([\s\S]*?)\n---/m)?.[1]?.trim() ?? "";
+  let installed = false;
+  try {
+    const link = join(skillsDir(home), name);
+    installed = lstatSync(link).isSymbolicLink() && readlinkSync(link) === join(toolRoot, "agent-skills", name);
+  } catch {}
+  return { name, exists: true, description, installed, body: content.replace(/^---[\s\S]*?---\n/, "") };
+}
+
 export function lastCompile(brain: Brain): unknown {
   try {
     return JSON.parse(readFileSync(brain.path("exports", ".compile.json"), "utf8"));

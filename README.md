@@ -49,6 +49,9 @@ guideline page into candidates with a reference back to it:
 design-brain add staged.json       # what that skill stages for you
 ```
 
+Or press **Save to read later** on the Sources tab to park links, and ask the skill to
+process the list when you have time.
+
 ## Decide
 
 ```bash

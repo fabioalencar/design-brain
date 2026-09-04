@@ -16,4 +16,7 @@ export const api = {
   install: () => post("/api/install"),
   verdict: (id, action, edits) => post("/api/verdict", { id, action, edits }),
   compile: () => post("/api/compile"),
+  reading: () => json("/api/reading"),
+  saveReading: (text) => post("/api/reading", { text }),
+  dropReading: (urls) => post("/api/reading", { remove: urls }),
 };

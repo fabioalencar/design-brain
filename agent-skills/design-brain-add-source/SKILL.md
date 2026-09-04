@@ -17,6 +17,10 @@ of a published source, that is a different thing — a harvested rule, not a ref
 
 ## Steps
 
+0. **Check the reading list first.** If they say "process my reading list" or give no source
+   at all, read `inbox/_reading-list.md` in their brain: links they saved from the review
+   app. Work through them, and remove each line once its candidates are filed.
+
 1. **Read the source.** Fetch the URL with whatever browsing tool this session has, or use
    the text they pasted. If you cannot reach it, say so and ask them to paste the passage
    rather than writing rules from the title alone.

@@ -60,6 +60,12 @@
   .tfoot select { border:1px solid var(--line); background:var(--card); border-radius:8px; padding:5px 8px; font:500 13px/18px var(--sans); color:var(--ink) }
   .tfoot button { border:1px solid var(--line); background:var(--card); border-radius:8px; padding:5px 12px; font:600 13px/18px var(--sans); color:var(--ink); cursor:pointer }
   .tfoot button:disabled { color:var(--ink-3); cursor:default }
+  .grouphead { display:flex; align-items:baseline; gap:10px; margin:22px 2px 10px; font:600 12px/20px var(--sans); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3) }
+  .grouphead:first-child { margin-top:0 }
+  .grouphead span { font:400 13px/20px var(--sans); letter-spacing:0; text-transform:none; color:var(--ink-3) }
+  .source.reading { border-style:dashed }
+  .source .drop { flex:none; border:0; background:transparent; color:var(--ink-3); cursor:pointer; font-size:15px; padding:0 4px }
+  .source .drop:hover { color:var(--no) }
   .source .cta { flex:none; border:1px solid var(--line); background:var(--card); border-radius:999px; padding:5px 13px; font:600 13px/18px var(--sans); color:var(--ink); cursor:pointer }
   .source .cta:hover { border-color:var(--line-strong) }
   .source .top[role=button] { cursor:pointer }
@@ -299,7 +305,8 @@
   <div class="tfoot" id="tfoot"></div>
 </section>
 <section class="view" id="v-sources" hidden>
-  <div class="bar-row"><span class="count" id="scount" style="margin-left:0"></span></div>
+  <div class="bar-row"><span class="count" id="scount" style="margin-left:0"></span>
+    <button class="compile" style="margin-left:auto" onclick="openReading()">Save to read later</button></div>
   <div class="scrollarea"><div class="src-list" id="srclist"></div></div>
 </section>
 <section class="view" id="v-skills" hidden>
@@ -325,6 +332,14 @@
   <div class="dbody" id="dbody"></div>
   <div class="dactions" id="dactions"></div>
 </aside>
+<div class="modal-bg" id="readbg" onclick="if (event.target === this) closeReading()">
+  <div class="modal">
+    <h3>Save to read later</h3>
+    <p style="margin:0; font:400 14px/22px var(--sans); color:var(--ink-2)">One link per line, with an optional note after a dash. Nothing is read now: the <code>design-brain-add-source</code> skill turns these into candidates when you ask it to, in a session that can fetch and judge them.</p>
+    <textarea id="readtext" placeholder="https://www.nngroup.com/articles/… — the part about empty states"></textarea>
+    <div class="row"><button onclick="closeReading()">Cancel <kbd>Esc</kbd></button><button class="primary" onclick="saveReading()">Save</button></div>
+  </div>
+</div>
 <div class="modal-bg" id="aboutbg" onclick="if (event.target === this) closeAbout()">
   <div class="modal" style="max-width:620px">
     <h3>design-brain</h3>
@@ -671,6 +686,7 @@ function drawerNote() { const c = dcur; $("#notebg").classList.add("on"); $("#no
 const PUBLISHERS = { "nngroup.com": "Nielsen Norman Group", "lawsofux.com": "Laws of UX", "deceptive.design": "Deceptive Design", "w3.org": "W3C · WCAG", "developer.mozilla.org": "MDN", "developer.apple.com": "Apple Human Interface Guidelines", "m3.material.io": "Material Design", "material.io": "Material Design", "carbondesignsystem.com": "IBM Carbon", "polaris.shopify.com": "Shopify Polaris", "atlassian.design": "Atlassian Design System", "design-system.service.gov.uk": "GOV.UK Design System", "baymard.com": "Baymard Institute", "smashingmagazine.com": "Smashing Magazine", "ui-patterns.com": "UI Patterns", "doi.org": "Academic papers", "webaim.org": "WebAIM", "inclusive-components.design": "Inclusive Components" };
 async function loadSources() {
   if (!rules.length) { const r = await api.rules(); rules = r.rules; }
+  const reading = (await api.reading()).items;
   const by = new Map();
   for (const c of rules) for (const e of c.evidence) {
     const m = String(e).match(/^reference:\s*(https?:\/\/[^\s]+)\s*(?:[—-]\s*(.*))?$/i);
@@ -688,7 +704,17 @@ async function loadSources() {
   }
   const groups = [...by.values()].sort((a, b) => b.rules.size - a.rules.size || a.name.localeCompare(b.name));
   $("#scount").textContent = `${groups.length} publishers · ${groups.reduce((n, g) => n + g.pages.size, 0)} pages cited by ${new Set(groups.flatMap((g) => [...g.rules.keys()])).size} rules`;
-  $("#srclist").innerHTML = groups.map((g) => `<div class="source" data-host="${esc(g.host)}">
+  const readingRow = !reading.length ? "" : `<div class="source reading">
+    <div class="top" role="button" tabindex="0" aria-expanded="false" onclick="toggleSkill(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSkill(this)}">
+      <h3>Reading list</h3><span class="host">saved here, not yet read</span>
+      <span class="n">${reading.length} waiting</span>
+      <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+    <ul>${reading.map((i) => `<li>
+      <span class="rt" style="cursor:default">${esc(i.note || "(no note)")}</span>
+      <a href="${esc(i.url)}" target="_blank" rel="noreferrer">${esc(i.url.replace(/^https?:\/\//, "").slice(0, 46))}</a>
+      <span class="n">${esc(i.date)}</span>
+      <button class="drop" title="Remove" onclick="dropReading(event, '${esc(i.url)}')">×</button></li>`).join("")}</ul></div>`;
+  $("#srclist").innerHTML = readingRow + groups.map((g) => `<div class="source" data-host="${esc(g.host)}">
     <button class="top" aria-expanded="false" onclick="const s=this.parentNode.classList.toggle('open'); this.setAttribute('aria-expanded', s); refreshFades()">
       <h3>${esc(g.name)}</h3><span class="host">${esc(g.host)}</span>
       <span class="n">${g.rules.size} rule${g.rules.size === 1 ? "" : "s"} · ${g.pages.size} page${g.pages.size === 1 ? "" : "s"}</span>
@@ -701,25 +727,52 @@ async function loadSources() {
 }
 function fromSource(id) { location.hash = "#rules"; setTimeout(() => openDrawer(id), 400); }
 
+// ---------- reading list ----------
+function openReading() { $("#readbg").classList.add("on"); $("#readtext").value = ""; setTimeout(() => $("#readtext").focus(), 0); }
+function closeReading() { $("#readbg").classList.remove("on"); }
+async function saveReading() {
+  const text = $("#readtext").value.trim();
+  if (!text) { closeReading(); return; }
+  const r = await api.saveReading(text);
+  closeReading();
+  if (!r.ok) { toast("Error: " + r.error); return; }
+  toast(r.added ? `${r.added} saved to read later${r.skipped ? `, ${r.skipped} already listed` : ""}` : "Nothing saved: paste full links, one per line");
+  if (!$("#v-sources").hidden) loadSources();
+}
+async function dropReading(ev, url) {
+  ev?.stopPropagation();
+  const r = await api.dropReading([url]);
+  if (!r.ok) { toast("Error: " + r.error); return; }
+  toast("Removed from the reading list");
+  loadSources();
+}
+
 // ---------- skills ----------
 async function loadSkills() {
   const r = await api.skills();
   $("#lastcompile").textContent = r.last ? `Last compile ${new Date(r.last.when).toLocaleString()}${r.last.ok === false ? " · FAILED" : ""}` : "Not compiled yet";
-  $("#skillcards").innerHTML = r.skills.map((s) => !s.exists
+  const row = (s, facts) => !s.exists
     ? `<div class="source"><div class="top"><h3>${esc(s.name)}</h3><span class="host">not compiled yet</span></div></div>`
     : `<div class="source" data-name="${esc(s.name)}">
     <div class="top" role="button" tabindex="0" aria-expanded="false" onclick="toggleSkill(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSkill(this)}">
       <h3>${esc(s.name)}</h3>
-      <span class="host">${s.ids.length} rules · ${s.words} words</span>
+      <span class="host">${facts}</span>
       <span class="n">${s.installed ? '<span class="ok">linked</span>' : '<span class="warn">not linked</span>'}</span>
       <button class="cta" onclick="event.stopPropagation(); showSkill('${esc(s.name)}')">View SKILL.md</button>
       <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
     <ul>
       <li><span class="rt" style="cursor:default">${esc(s.description)}</span></li>
-      ${s.sections.map((x) => x.rules || x.level === 2 ? `<li><span class="rt" style="cursor:default; ${x.level > 2 ? "padding-left:18px; color:var(--ink-2)" : "font-weight:600"}">${esc(x.title)}</span><span class="n">${x.rules || ""}</span></li>` : "").join("") || '<li><span class="rt" style="cursor:default">No rule lines yet.</span></li>'}
-      <li><span class="rt" style="cursor:default">last built</span><span class="n">${new Date(s.mtime).toLocaleString()}</span></li>
-    </ul></div>`).join("");
-  window._skills = r.skills;
+      ${(s.sections ?? []).map((x) => x.rules || x.level === 2 ? `<li><span class="rt" style="cursor:default; ${x.level > 2 ? "padding-left:18px; color:var(--ink-2)" : "font-weight:600"}">${esc(x.title)}</span><span class="n">${x.rules || ""}</span></li>` : "").join("")}
+      ${s.mtime ? `<li><span class="rt" style="cursor:default">last built</span><span class="n">${new Date(s.mtime).toLocaleString()}</span></li>` : ""}
+    </ul></div>`;
+  $("#skillcards").innerHTML =
+    `<div class="grouphead">Compiled from your ledger <span>rebuilt on every compile</span></div>` +
+    r.skills.map((s) => row(s, s.exists ? `${s.ids.length} rules · ${s.words} words` : "")).join("") +
+    (r.tools?.length
+      ? `<div class="grouphead">Shipped by the tool <span>hand-written, never rebuilt</span></div>` +
+        r.tools.map((s) => row(s, "capture skill")).join("")
+      : "");
+  window._skills = [...r.skills, ...(r.tools ?? [])];
   refreshFades();
 }
 function toggleSkill(top) {
@@ -742,7 +795,8 @@ function showSkill(name) {
 }
 async function installSkills() { const r = await api.install(); toast(r.ok ? "Installed: " + r.installed.join(", ") : "Error: " + r.error); loadSkills(); }
 Object.assign(window, { act, undo, compile, saveNote, openNote, closeNote, openAbout, closeAbout, toggleTheme,
-  openDrawer, closeDrawer, saveDrawer, drawerVerdict, drawerNote, addConflict, bulk, showSkill, toggleSkill, installSkills, fromSource, renderRules, refreshFades, picked });
+  openDrawer, closeDrawer, saveDrawer, drawerVerdict, drawerNote, addConflict, bulk, showSkill, toggleSkill, installSkills, fromSource, renderRules, refreshFades, picked,
+  openReading, closeReading, saveReading, dropReading });
 route();
 if ((location.hash || "#queue") !== "#queue") load();   // header counters are queue stats; keep them true on every tab
 </script>

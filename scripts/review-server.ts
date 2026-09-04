@@ -8,7 +8,8 @@ import {
 } from "./lib";
 import { openBrainOrExit } from "./brain";
 import { openLedger, type Edits } from "./ledger";
-import { SKILL_NAMES, readSkill, lastCompile, installSkills } from "./skills";
+import { SKILL_NAMES, TOOL_SKILLS, readSkill, readToolSkill, lastCompile, installSkills } from "./skills";
+import { readReadingList, addToReadingList, removeFromReadingList, parsePasted } from "./reading";
 
 const brain = openBrainOrExit();
 const ledger = openLedger(brain);
@@ -109,7 +110,20 @@ Bun.serve({
       if (url.pathname === "/api/queue") return Response.json(queue());
       if (url.pathname === "/api/rules") return Response.json(rules());
       if (url.pathname === "/api/schema") return Response.json(schema());
-      if (url.pathname === "/api/skills") return Response.json({ skills: SKILL_NAMES.map((n) => readSkill(brain, n)), last: lastCompile(brain), brain: brain.root });
+      if (url.pathname === "/api/skills") return Response.json({
+        skills: SKILL_NAMES.map((n) => readSkill(brain, n)),
+        tools: TOOL_SKILLS.map((n) => readToolSkill(n)),
+        last: lastCompile(brain), brain: brain.root,
+      });
+      if (url.pathname === "/api/reading") {
+        if (req.method === "POST") {
+          const b = (await req.json()) as { text?: string; remove?: string[] };
+          if (b.remove) return Response.json({ ok: true, items: removeFromReadingList(brain, b.remove) });
+          const r = addToReadingList(brain, parsePasted(b.text ?? ""));
+          return Response.json({ ok: true, ...r });
+        }
+        return Response.json({ items: readReadingList(brain) });
+      }
       if (url.pathname === "/api/install" && req.method === "POST") return Response.json({ ok: true, installed: installSkills(brain) });
       if (url.pathname === "/api/verdict" && req.method === "POST") return Response.json(verdict(await req.json()));
       if (url.pathname === "/api/compile" && req.method === "POST") return Response.json(compile());
