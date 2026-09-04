@@ -93,11 +93,16 @@
   .ok { color:var(--yes) } .warn { color:var(--warn) }
   .src-list { display:flex; flex-direction:column; gap:12px }
   .source { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 20px; font:400 14px/22px var(--sans); color:var(--ink-2) }
-  .source .top { display:flex; align-items:baseline; gap:10px; cursor:pointer }
+  .source .top { display:flex; align-items:center; gap:10px; cursor:pointer; width:100%; border:0; background:transparent; padding:0; font:inherit; color:inherit; text-align:left }
+  .source .chev { width:16px; height:16px; flex:none; stroke:var(--ink-3); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; transition:transform .18s }
+  .source.open .chev { transform:rotate(180deg) }
+  .source ul { display:none }
+  .source.open ul { display:flex }
+  @media (prefers-reduced-motion: reduce) { .source .chev { transition:none } }
   .source h3 { margin:0; font:700 16px/24px var(--sans); color:var(--ink) }
   .source .host { font:13px/20px ui-monospace, monospace; color:var(--ink-3) }
   .source .n { margin-left:auto; font-variant-numeric:tabular-nums; color:var(--ink-3); white-space:nowrap }
-  .source ul { margin:12px 0 0; padding:0; list-style:none; border-top:1px solid var(--line); padding-top:10px; display:flex; flex-direction:column; gap:8px }
+  .source ul { margin:12px 0 0; padding:0 0 0; list-style:none; border-top:1px solid var(--line); padding-top:10px; flex-direction:column; gap:8px }
   .source li { display:flex; gap:10px; align-items:baseline; font-size:14px }
   .source li a { color:var(--accent); text-decoration:none; font-size:13px; font-family:ui-monospace, monospace; word-break:break-all }
   .source li a:hover { text-decoration:underline }
@@ -664,11 +669,12 @@ async function loadSources() {
   }
   const groups = [...by.values()].sort((a, b) => b.rules.size - a.rules.size || a.name.localeCompare(b.name));
   $("#scount").textContent = `${groups.length} publishers · ${groups.reduce((n, g) => n + g.pages.size, 0)} pages cited by ${new Set(groups.flatMap((g) => [...g.rules.keys()])).size} rules`;
-  $("#srclist").innerHTML = groups.map((g, i) => `<div class="source" data-host="${esc(g.host)}">
-    <div class="top" onclick="this.parentNode.querySelector('ul').hidden = !this.parentNode.querySelector('ul').hidden">
+  $("#srclist").innerHTML = groups.map((g) => `<div class="source" data-host="${esc(g.host)}">
+    <button class="top" aria-expanded="false" onclick="const s=this.parentNode.classList.toggle('open'); this.setAttribute('aria-expanded', s)">
       <h3>${esc(g.name)}</h3><span class="host">${esc(g.host)}</span>
-      <span class="n">${g.rules.size} rule${g.rules.size === 1 ? "" : "s"} · ${g.pages.size} page${g.pages.size === 1 ? "" : "s"}</span></div>
-    <ul ${i ? "hidden" : ""}>${[...g.pages.values()].sort((a, b) => b.ids.length - a.ids.length).map((p) => `<li>
+      <span class="n">${g.rules.size} rule${g.rules.size === 1 ? "" : "s"} · ${g.pages.size} page${g.pages.size === 1 ? "" : "s"}</span>
+      <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+    <ul>${[...g.pages.values()].sort((a, b) => b.ids.length - a.ids.length).map((p) => `<li>
       <span class="rt" onclick="fromSource('${esc(p.ids[0])}')">${esc(p.label).slice(0, 90) || "(untitled)"}</span>
       <a href="${esc(p.url)}" target="_blank" rel="noreferrer">${esc(p.url.replace(/^https?:\/\//, "").slice(0, 46))}</a>
       <span class="n">${p.ids.length}×</span></li>`).join("")}</ul></div>`).join("") || `<div class="source">No published references cited yet.</div>`;
