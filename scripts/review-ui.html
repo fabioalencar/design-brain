@@ -15,8 +15,8 @@
   * { box-sizing:border-box }
   html,body { margin:0; background:var(--paper); color:var(--ink); font:16px/24px var(--sans); height:100% }
   body { display:flex; flex-direction:column; min-height:100vh; overflow:hidden }
-  .wrap { width:min(720px, 100%); margin:0 auto; padding:0 20px; box-sizing:content-box }
-  header { position:relative; display:flex; align-items:center; gap:16px; padding:12px 20px; width:min(1100px, 100%); margin:0 auto; box-sizing:border-box; font-size:14px; line-height:24px; color:var(--ink-2); font-variant-numeric:tabular-nums }
+  .wrap { width:min(720px, 100%); margin:0 auto; padding:6px 20px 0; box-sizing:content-box }
+  header { position:relative; display:flex; align-items:center; gap:16px; padding:12px 20px 13px; border-bottom:1px solid var(--line); width:min(1100px, 100%); margin:0 auto; box-sizing:border-box; font-size:14px; line-height:24px; color:var(--ink-2); font-variant-numeric:tabular-nums }
   .brand { position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); display:inline-flex; align-items:center; gap:8px; color:var(--ink); pointer-events:none; white-space:nowrap }
   .brand .mark { width:22.5px; height:22.5px; flex:none; display:block; opacity:.5 }
   header b { color:var(--ink); font-weight:600 }
@@ -34,7 +34,7 @@
   .hactions button.icon { width:36px; height:36px; padding:0; display:inline-flex; align-items:center; justify-content:center }
   .hactions button:hover { background:var(--line) }
   .hactions svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round }
-  .view { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; width:min(1100px, 100%); margin:0 auto; padding:0 20px 40px; box-sizing:border-box }
+  .view { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; width:min(1100px, 100%); margin:0 auto; padding:16px 20px 40px; box-sizing:border-box }
   [hidden] { display:none !important }
   .view .bar-row { display:flex; gap:8px; align-items:center; padding:10px 0 14px; flex-wrap:wrap }
   #v-rules, #v-skills { display:flex; flex-direction:column; overflow:hidden; padding-bottom:20px }
@@ -192,8 +192,8 @@
   .chip input { width:30px; cursor:text; font-variant-numeric:tabular-nums }
   .addnote { flex:none; border:0; background:var(--paper); color:var(--ink-2); border-radius:999px; padding:5px 12px; font-size:14px; line-height:24px; font-weight:600; cursor:pointer }
   .addnote:hover { color:var(--ink) }
-  section { border-top:1px solid var(--line); padding:22px 0 8px }
-  section:first-of-type { border-top:0 }
+  .card section { border-top:1px solid var(--line); padding:22px 0 8px }
+  .card section:first-of-type { border-top:0 }
   .modal-bg { position:fixed; inset:0; background:rgba(20,20,30,.35); display:none; align-items:center; justify-content:center; z-index:50 }
   .modal-bg.on { display:flex }
   .modal { background:var(--card); border-radius:14px; padding:22px 24px; width:min(560px, 92vw); box-shadow:0 20px 60px rgba(20,20,30,.2); display:flex; flex-direction:column; gap:12px }
@@ -212,7 +212,7 @@
   h2 { font:600 13px/22px var(--sans); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); margin:0 0 10px }
   .card p { margin:0; white-space:pre-wrap; text-wrap:pretty; font:400 20px/32px var(--serif); letter-spacing:-.003em; color:var(--ink) }
   .card p + p { margin-top:20px }
-  section.quiet p, section.quiet li { color:var(--ink-2) }
+  .card section.quiet p, .card section.quiet li { color:var(--ink-2) }
   .note { background:var(--warn-soft); color:var(--warn); padding:10px 14px; border-radius:8px; font:400 17px/28px var(--serif) }
   .card ul { margin:0; padding:0; list-style:none; color:var(--ink-2); font:400 18px/30px var(--serif); letter-spacing:-.003em }
   .card li { margin:0 0 12px; word-break:break-word; text-wrap:pretty }
