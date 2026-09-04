@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: modals
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/ok-cancel-or-cancel-ok/ — Nielsen Norman Group (OK-Cancel or Cancel-OK? The Trouble With Buttons)"

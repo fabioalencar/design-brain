@@ -48,7 +48,6 @@ of a published source, that is a different thing — a harvested rule, not a ref
      pattern that exploits users or one the designer falls into), or `practice` (good
      practice for a named component — then set `component`).
    - `stance`: `always`, `never`, `prefer`, `avoid` or `context`, honestly.
-   - `confidence`: 8 or more only when the source states the rule outright; 6 when it
      supports the direction without saying it; note the doubt in `why`.
    - `scope`: `universal`. A published source is never the user's personal taste.
    - `evidence`: at least one `reference:<url> — Publisher, Title`. Cite the specific page,
@@ -75,7 +74,6 @@ of a published source, that is a different thing — a harvested rule, not a ref
     "title": "Put the primary action where the eye already is",
     "dimension": "layout",
     "stance": "prefer",
-    "confidence": 7,
     "kind": "practice",
     "component": "modals",
     "rule": "One sentence, then at most two short paragraphs.",

@@ -26,7 +26,7 @@ function compile(dir: string) {
 
 const skill = (dir: string, name: string) => readFileSync(join(dir, "skills", name, "SKILL.md"), "utf8");
 
-interface Opts { title?: string; stance?: string; confidence?: number; scope?: string; rule?: string }
+interface Opts { title?: string; stance?: string; scope?: string; rule?: string }
 const decision = (id: string, o: Opts = {}, extra = "") => `---
 id: ${id}
 title: ${o.title ?? "A rule that states one thing"}
@@ -34,7 +34,6 @@ dimension: color
 scope: ${o.scope ?? "universal"}
 stance: ${o.stance ?? "prefer"}
 status: confirmed
-confidence: ${o.confidence ?? 6}
 occurrences: [meridian]
 evidence:
   - "repo:app.css"
@@ -72,14 +71,14 @@ describe("a clean brain", () => {
     expect(compile(dir).code).toBe(0);
     const s = skill(dir, "design-brain");
     expect(s).toContain("**Prefer: Absence has one rendering**");
-    expect(s).toContain("(DB-001, seen in 1 project, conf 6)");
+    expect(s).toContain("(DB-001, seen in 1 project)");
     expect(s).toContain("An empty cell shows the same mark everywhere in the product.");
   });
 
   test("a never rule with weight behind it becomes a non-negotiable at kickoff", () => {
     const dir = newBrain({
-      "decisions/DB-001-a.md": decision("DB-001", { title: "Never nag a reader who declined", stance: "never", confidence: 9 }),
-      "decisions/DB-002-b.md": decision("DB-002", { title: "A soft default about spacing", stance: "prefer", confidence: 9 }),
+      "decisions/DB-001-a.md": decision("DB-001", { title: "Never nag a reader who declined", stance: "never" }),
+      "decisions/DB-002-b.md": decision("DB-002", { title: "A soft default about spacing", stance: "prefer" }),
     });
     expect(compile(dir).code).toBe(0);
     const start = skill(dir, "design-brain-start");

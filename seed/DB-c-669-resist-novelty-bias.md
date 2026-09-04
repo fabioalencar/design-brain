@@ -7,7 +7,6 @@ stance: avoid
 status: candidate
 source: bias
 kind: bias
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://lawsofux.com/articles/2024/familiar-vs-novel/ — Laws of UX (Jon Yablonski), Familiar vs Novel"

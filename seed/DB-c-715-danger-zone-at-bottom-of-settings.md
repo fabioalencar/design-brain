@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: settings
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/slips/ — Nielsen Norman Group (Preventing User Errors: Avoiding Unconscious Slips)"

@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: search
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/scoped-search/ — Nielsen Norman Group (Scoped Search: Dangerous, but Sometimes Useful)"

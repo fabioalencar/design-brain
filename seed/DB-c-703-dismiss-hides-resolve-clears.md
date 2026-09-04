@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: notifications
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://carbondesignsystem.com/patterns/notification-pattern/ — IBM Carbon Design System (Notifications pattern, actionable notifications)"

@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: highlight-cards
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/dashboards-preattentive/ — Nielsen Norman Group (Dashboards: Making Charts and Graphs Easier to Understand)"

@@ -7,7 +7,6 @@ stance: avoid
 status: candidate
 source: bias
 kind: bias
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/avoiding-bias-from-the-survivor-effect/ — Nielsen Norman Group, Avoiding Bias from the Survivor Effect"

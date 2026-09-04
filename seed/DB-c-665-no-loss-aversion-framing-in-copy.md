@@ -7,7 +7,6 @@ stance: never
 status: candidate
 source: bias
 kind: bias
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/prospect-theory/ — Nielsen Norman Group, Prospect Theory and Loss Aversion"

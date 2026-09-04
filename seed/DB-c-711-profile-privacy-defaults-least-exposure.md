@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: user-profile
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://developer.apple.com/design/human-interface-guidelines/privacy — Apple Human Interface Guidelines (Privacy)"

@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: sorting
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://polaris.shopify.com/components/selection-and-input/index-filters — Shopify Polaris (Index filters, saved views and sort)"

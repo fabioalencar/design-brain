@@ -32,7 +32,6 @@ for (const dir of ["inbox", "decisions"]) {
     if (fm.kind === "heuristic" || fm.kind === "bias" || fm.kind === "practice") need(Array.isArray(fm.evidence) && (fm.evidence as string[]).some((e) => /^reference:/.test(e)), `${f}: ${fm.kind} needs a reference: evidence line`);
     if (dir === "inbox") need(fm.status !== "confirmed", `${f}: inbox file cannot be confirmed`);
     if (dir === "decisions") need(fm.status === "confirmed", `${f}: decisions/ file must be confirmed`);
-    need(typeof fm.confidence === "number" && fm.confidence >= 1 && fm.confidence <= 10, `${f}: confidence 1-10`);
     need(Array.isArray(fm.evidence) && (fm.evidence as unknown[]).length > 0, `${f}: evidence required`);
     need(Array.isArray(fm.occurrences) && (fm.occurrences as unknown[]).length > 0, `${f}: occurrences required`);
     if (!/^##\s+Rule/m.test(d.body)) errors.push(`${f}: missing '## Rule'`);

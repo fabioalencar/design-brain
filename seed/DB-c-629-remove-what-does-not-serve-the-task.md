@@ -7,7 +7,6 @@ stance: always
 status: candidate
 source: heuristic
 kind: heuristic
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://lawsofux.com/occams-razor/ — Laws of UX, Occam's Razor"

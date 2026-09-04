@@ -7,7 +7,6 @@ stance: avoid
 status: candidate
 source: bias
 kind: bias
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://doi.org/10.1145/3544548.3580729 — Monge Roffarello, Lukoff, De Russis, Defining and Identifying Attention Capture Deceptive Designs, CHI 2023"

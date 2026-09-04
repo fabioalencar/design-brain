@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: sorting
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://carbondesignsystem.com/components/pagination/usage/ — IBM Carbon Design System (Pagination usage)"

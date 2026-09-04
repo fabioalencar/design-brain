@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: user-profile
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://atlassian.design/components/inline-edit/usage — Atlassian Design System (Inline edit usage)"

@@ -7,7 +7,6 @@ stance: always
 status: candidate
 source: heuristic
 kind: heuristic
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://www.w3.org/TR/WCAG22/#keyboard-accessible — W3C, WCAG 2.2 Guideline 2.1 Keyboard Accessible and SC 2.4.7 Focus Visible"

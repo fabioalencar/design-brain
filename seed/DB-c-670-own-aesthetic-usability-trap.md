@@ -7,7 +7,6 @@ stance: avoid
 status: candidate
 source: bias
 kind: bias
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/aesthetic-usability-effect/ — Nielsen Norman Group, The Aesthetic-Usability Effect"

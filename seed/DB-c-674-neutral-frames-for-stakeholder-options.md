@@ -7,7 +7,6 @@ stance: avoid
 status: candidate
 source: bias
 kind: bias
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/decision-framing-cognitive-bias-ux-pros/ — Nielsen Norman Group, Decision Frames: How Cognitive Biases Affect UX Practitioners"

@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: tooltips
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://carbondesignsystem.com/components/tooltip/usage/ — IBM Carbon Design System (Tooltip usage, tooltip vs popover)"

@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: modals
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://carbondesignsystem.com/components/modal/usage/ — IBM Carbon Design System (Modal usage)"

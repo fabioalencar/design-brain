@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: filtering
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/filter-categories-values/ — Nielsen Norman Group (Helpful Filter Categories and Values for Better UX)"

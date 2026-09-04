@@ -23,8 +23,10 @@ const patterns = listDocs(root + "patterns");
 }
 
 const byWeight = (a: Doc, b: Doc) =>
-  (occ(b) - occ(a)) || ((b.fm.confidence as number) - (a.fm.confidence as number));
+  (occ(b) - occ(a)) || String(a.fm.id).localeCompare(String(b.fm.id));
 const occ = (d: Doc) => (Array.isArray(d.fm.occurrences) ? (d.fm.occurrences as string[]).length : 0);
+/** Exports want a 0-1 weight. Evidence is the only thing we actually measure, so it is the weight. */
+const weight = (d: Doc) => Math.min(1, 0.5 + occ(d) * 0.1);
 const firstPara = (s: string) => s.split(/\n\s*\n/)[0]?.replace(/\s+/g, " ").trim() ?? "";
 const stanceWord: Record<string, string> = { always: "Always", never: "Never", prefer: "Prefer", avoid: "Avoid", context: "When it applies" };
 
@@ -36,7 +38,7 @@ function ruleLine(d: Doc): string {
   // DDR-005: no project names, paths, quotes or project-specific examples leave the ledger.
   const conf = conflictsOf(d);
   const prec = d.fm.resolution ? ` _Precedence over ${conf.join(", ")}:_ ${String(d.fm.resolution).replace(/\s+/g, " ")}` : conf.length ? ` _(conflicts with ${conf.join(", ")}; unresolved)_` : "";
-  return `- **${stanceWord[d.fm.stance as string] ?? ""}: ${title}** (${d.fm.id}, seen in ${occ(d)} project${occ(d) === 1 ? "" : "s"}, conf ${d.fm.confidence}).${rule ? " " + rule : ""}${prec}`;
+  return `- **${stanceWord[d.fm.stance as string] ?? ""}: ${title}** (${d.fm.id}, seen in ${occ(d)} project${occ(d) === 1 ? "" : "s"}).${rule ? " " + rule : ""}${prec}`;
 }
 
 function renderDimension(dim: string, docs: Doc[]): string {
@@ -76,7 +78,7 @@ description: ${JSON.stringify(mainDesc)}
 # design-brain
 
 Standing decisions distilled from the designer's own projects. Each line is a rule with
-a stance, an id, how many projects it was observed in, and the designer's confidence. Ask before
+a stance, an id, and how many projects it was observed in. Ask before
 overriding an **Always**/**Never**; **Prefer**/**Avoid** are defaults you may deviate
 from with a stated reason.
 
@@ -156,7 +158,7 @@ writeSkill("design-brain-check", check);
 // ---------- skill 3: design-brain-start (kickoff) ----------
 const startDesc =
   "Kick off design for a new project, page, screen, or redesign using the designer's recorded defaults. Use when the user starts a new site, app, landing page, prototype, or 'direction', asks for a design system, tokens, font pairing, palette, or says 'let's start the design'. Establishes scope (personal vs client), picks a starting direction from past work, and lists the non-negotiables before any code.";
-const hard = decisions.filter((d) => ["always", "never"].includes(d.fm.stance as string) && scopeKind(d.fm.scope) !== "client" && (occ(d) >= 2 || (d.fm.confidence as number) >= 8)).sort(byWeight);
+const hard = decisions.filter((d) => ["always", "never"].includes(d.fm.stance as string) && scopeKind(d.fm.scope) !== "client").sort(byWeight);
 const inv = (name: string) => (existsSync(root + "inventory/" + name) ? `- \`${BRAIN}/inventory/${name}\`` : "");
 let start = `---
 name: design-brain-start
@@ -196,11 +198,11 @@ const profile: any = { schema: 1, generated: today, source: "design-brain", dime
 for (const d of decisions.filter((d) => scopeKind(d.fm.scope) !== "client")) {
   const dim = dimMap[d.fm.dimension as string] ?? "aesthetics";
   const bucket = ["never", "avoid"].includes(d.fm.stance as string) ? "rejected" : "approved";
-  profile.dimensions[dim][bucket].push({ value: d.fm.title, id: d.fm.id, confidence: (d.fm.confidence as number) / 10, approved_count: bucket === "approved" ? occ(d) : 0, rejected_count: bucket === "rejected" ? occ(d) : 0, last_seen: String(d.fm.last_seen ?? today), status: d.fm.status });
+  profile.dimensions[dim][bucket].push({ value: d.fm.title, id: d.fm.id, confidence: weight(d), approved_count: bucket === "approved" ? occ(d) : 0, rejected_count: bucket === "rejected" ? occ(d) : 0, last_seen: String(d.fm.last_seen ?? today), status: d.fm.status });
 }
 writeFileSync(root + "exports/taste-profile.json", JSON.stringify(profile, null, 2));
 
-const learnings = decisions.map((d) => JSON.stringify({ skill: "design-brain", type: "preference", key: String(d.fm.id).toLowerCase() + "-" + d.file.replace(/^DB-(c-)?\d+-/, "").replace(/\.md$/, ""), insight: `${d.fm.title}: ${firstPara(section(d.body, "Rule"))}`, confidence: d.fm.confidence, source: "user-stated", scope: d.fm.scope, ts: today + "T00:00:00.000Z", trusted: d.fm.status === "confirmed" })).join("\n");
+const learnings = decisions.map((d) => JSON.stringify({ skill: "design-brain", type: "preference", key: String(d.fm.id).toLowerCase() + "-" + d.file.replace(/^DB-(c-)?\d+-/, "").replace(/\.md$/, ""), insight: `${d.fm.title}: ${firstPara(section(d.body, "Rule"))}`, confidence: weight(d), source: "user-stated", scope: d.fm.scope, ts: today + "T00:00:00.000Z", trusted: d.fm.status === "confirmed" })).join("\n");
 writeFileSync(root + "exports/learnings.jsonl", learnings + (learnings ? "\n" : ""));
 
 writeFileSync(root + "exports/CLAUDE-snippet.md", `## Design decisions

@@ -64,7 +64,6 @@ export function addNote(src: string, note: string, today: string): string {
 export interface Edits {
   stance?: string;
   scope?: string;
-  confidence?: number;
   title?: string;
   conflicts_with?: string[];
   resolution?: string;
@@ -76,7 +75,6 @@ export interface NewCandidate {
   title: string;
   dimension: string;
   stance: string;
-  confidence: number;
   kind?: "harvested" | "heuristic" | "bias" | "practice";
   component?: string;
   scope?: string;
@@ -147,7 +145,6 @@ export function openLedger(brain: Brain, today: () => string = () => new Date().
     const patch: Record<string, FieldValue> = {};
     if (e.stance) patch.stance = e.stance;
     if (e.scope) patch.scope = e.scope;
-    if (e.confidence) patch.confidence = e.confidence;
     if (e.title) patch.title = e.title;
     if (e.conflicts_with !== undefined) {
       const ids = e.conflicts_with.filter(Boolean);
@@ -201,7 +198,6 @@ export function openLedger(brain: Brain, today: () => string = () => new Date().
       need(c.title && c.title.length <= TITLE_MAX, `title is required and at most ${TITLE_MAX} characters`);
       need(c.rule?.trim(), "a rule is required");
       need(c.evidence?.length, "at least one evidence line is required");
-      need(typeof c.confidence === "number" && c.confidence >= 1 && c.confidence <= 10, "confidence must be 1-10");
       if (c.kind && c.kind !== "harvested") need(c.evidence.some((e) => /^reference:/.test(e)), `a ${c.kind} needs a reference: evidence line`);
       const id = this.nextCandidateId(range);
       const words = c.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").split("-").slice(0, 8);
@@ -220,7 +216,6 @@ export function openLedger(brain: Brain, today: () => string = () => new Date().
         `kind: ${c.kind ?? "harvested"}`,
         `source: ${yamlValue(c.source ?? "added by hand")}`,
         ...(c.component ? [`component: ${c.component}`] : []),
-        `confidence: ${c.confidence}`,
         `occurrences: [${(c.occurrences ?? ["reference"]).join(", ")}]`,
         "evidence:",
         ...c.evidence.map((e) => `  - ${yamlValue(e)}`),

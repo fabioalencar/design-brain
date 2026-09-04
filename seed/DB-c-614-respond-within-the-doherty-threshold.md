@@ -7,7 +7,6 @@ stance: always
 status: candidate
 source: heuristic
 kind: heuristic
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://lawsofux.com/doherty-threshold/ — Laws of UX, Doherty Threshold"

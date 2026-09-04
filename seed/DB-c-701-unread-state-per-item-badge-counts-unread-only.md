@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: notifications
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://m3.material.io/components/badges/guidelines — Material Design 3 (Badges guidelines)"

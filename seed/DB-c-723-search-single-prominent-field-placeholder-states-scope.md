@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: search
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/search-visible-and-simple/ — Nielsen Norman Group (Search: Visible and Simple)"

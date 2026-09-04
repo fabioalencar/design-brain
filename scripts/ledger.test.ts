@@ -23,7 +23,6 @@ dimension: color
 scope: universal
 stance: prefer
 status: candidate
-confidence: 6
 occurrences: [alpha]
 evidence:
   - "repo:alpha/app.css"
@@ -125,10 +124,9 @@ describe("ledger transitions", () => {
   test("promote applies edits in the same write", () => {
     const b = newBrain({ "inbox/DB-c-101-a.md": candidate("DB-c-101") });
     const l = openLedger(b, () => "2026-09-04");
-    l.promote("DB-c-101", { stance: "always", confidence: 9, scope: "client:beta-co", note: "narrowed to the app" });
+    l.promote("DB-c-101", { stance: "always", scope: "client:beta-co", note: "narrowed to the app" });
     const doc = l.get("DB-001");
     expect(doc.fm.stance).toBe("always");
-    expect(doc.fm.confidence).toBe(9);
     expect(doc.fm.scope).toBe("client:beta-co");
     expect(doc.body).toContain("- 2026-09-04: narrowed to the app");
   });
@@ -206,7 +204,7 @@ describe("ledger transitions", () => {
 describe("adding a source", () => {
   const source = {
     title: "A modal names its primary action in a verb",
-    dimension: "copy", stance: "always", confidence: 8, kind: "practice" as const, component: "modals",
+    dimension: "copy", stance: "always", kind: "practice" as const, component: "modals",
     rule: "The confirming button says what it does.",
     why: "A generic label makes the reader re-read the sentence above it.",
     evidence: ["reference:https://example.com/ok-cancel — Publisher, OK or Cancel"],

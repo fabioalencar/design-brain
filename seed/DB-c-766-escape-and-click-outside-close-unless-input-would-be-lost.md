@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: modals
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/ — W3C WAI (ARIA Authoring Practices, Modal Dialog pattern)"

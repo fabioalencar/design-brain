@@ -118,7 +118,6 @@ One block per rule. Only what the sources support.
 ### <Short rule stated as a sentence>
 - dimension: <typography | color | spacing | layout | motion | copy | components | process>
 - stance: <always | never | prefer | avoid | context>
-- confidence: <1-10; 8+ only when a document states it or history shows it enforced more than once>
 - evidence:
   - `repo:<path>#<section or line>` — "<verbatim quote if any>"
   - `commit:<hash>` — "<verbatim message>"

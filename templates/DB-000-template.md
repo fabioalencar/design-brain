@@ -9,7 +9,6 @@ kind: harvested         # harvested (default) | heuristic | bias | practice — 
 source: transcripts     # where this came from: transcripts | forge record | design audits | repos and docs |
                         # imported project | heuristic | bias | practice. Survives promotion.
 # component: data-tables  # practice only — one of lib.ts COMPONENTS
-confidence: 5           # 1-10
 occurrences: [project-slug]
 evidence:
   - "transcript:<project>:<YYYY-MM-DD> \"verbatim quote, original language\""

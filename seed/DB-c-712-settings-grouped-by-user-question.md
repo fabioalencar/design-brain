@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: settings
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://developer.apple.com/design/human-interface-guidelines/settings — Apple Human Interface Guidelines (Settings)"

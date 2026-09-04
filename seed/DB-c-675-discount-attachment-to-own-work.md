@@ -7,7 +7,6 @@ stance: avoid
 status: candidate
 source: bias
 kind: bias
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://doi.org/10.1016/j.jcps.2011.08.002 — Norton, Mochon, Ariely, The IKEA Effect: When Labor Leads to Love, Journal of Consumer Psychology 2012"

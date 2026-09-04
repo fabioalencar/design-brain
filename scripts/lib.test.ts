@@ -24,7 +24,6 @@ dimension: color
 scope: universal
 stance: prefer
 status: confirmed
-confidence: 6
 occurrences: [meridian]
 evidence:
   - "repo:meridian/app.css"

@@ -7,7 +7,6 @@ stance: avoid
 status: candidate
 source: bias
 kind: bias
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/videos/availability-heuristic/ — Nielsen Norman Group, The Availability Heuristic (video)"

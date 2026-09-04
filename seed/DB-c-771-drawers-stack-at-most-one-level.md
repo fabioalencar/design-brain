@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: drawers
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://atlassian.design/components/drawer/usage — Atlassian Design System (Drawer usage)"

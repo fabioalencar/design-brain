@@ -7,7 +7,6 @@ stance: always
 status: candidate
 source: heuristic
 kind: heuristic
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://lawsofux.com/hicks-law/ — Laws of UX, Hick's Law"

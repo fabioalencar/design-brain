@@ -21,7 +21,7 @@ function card(d: Doc) {
   const ev = Array.isArray(d.fm.evidence) ? (d.fm.evidence as string[]) : [];
   return {
     id: d.fm.id, file: d.file, title: d.fm.title, dimension: d.fm.dimension, scope: d.fm.scope, stance: d.fm.stance,
-    confidence: d.fm.confidence, occurrences: d.fm.occurrences ?? [], status: d.fm.status,
+    occurrences: d.fm.occurrences ?? [], status: d.fm.status,
     kind: d.fm.kind ?? "harvested", component: d.fm.component ?? null, source: d.fm.source ?? null,
     notes: section(d.body, "Review notes"), longParas: longParagraphs(d.body).length,
     conflicts_with: conflictsOf(d), resolution: d.fm.resolution ?? "",
@@ -45,7 +45,7 @@ function decorate(docs: Doc[], universe: Doc[]) {
 function queue() {
   const all = ledger.all();
   const cands = ledger.candidates().sort(
-    (a, b) => occ(b) - occ(a) || (b.fm.confidence as number) - (a.fm.confidence as number) || String(a.fm.id).localeCompare(String(b.fm.id)),
+    (a, b) => occ(b) - occ(a) || String(a.fm.id).localeCompare(String(b.fm.id)),
   );
   return { queue: decorate(cands, all), confirmed: ledger.confirmed().length, retired: ledger.retired().length };
 }

@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: notifications
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/empty-state-interface-design/ — Nielsen Norman Group (Designing Empty States in Complex Applications)"

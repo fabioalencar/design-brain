@@ -66,7 +66,7 @@ design-brain review                 # http://localhost:4455
 Four tabs:
 
 - **Queue** — one card at a time. Swipe, or use the arrows: right promotes, left retires,
-  down skips. Adjust stance, scope and confidence on the card before deciding, leave a
+  down skips. Adjust stance and scope on the card before deciding, leave a
   dated note, undo with `Z`. Every card carries its evidence: the line you actually typed,
   the repo path, the article it came from.
 - **Rules** — the whole ledger as a sortable, paged table: confirmed, in review, retired,

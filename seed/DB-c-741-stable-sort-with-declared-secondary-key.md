@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: sorting
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort — MDN Web Docs (Array.prototype.sort, sort stability)"

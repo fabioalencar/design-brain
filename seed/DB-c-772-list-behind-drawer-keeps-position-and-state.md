@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: drawers
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://m3.material.io/components/side-sheets/guidelines — Material Design 3 (Side sheets guidelines)"

@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: progressive-disclosure
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/ — W3C WAI (ARIA Authoring Practices, Disclosure pattern)"

@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: drawers
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/url-as-ui/ — Nielsen Norman Group (URL as UI)"

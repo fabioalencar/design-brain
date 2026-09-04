@@ -32,8 +32,7 @@ dimension: color
 scope: ${o.scope ?? "universal"}
 stance: prefer
 status: ${o.status ?? "candidate"}
-${o.kind ? `kind: ${o.kind}\n` : ""}confidence: 6
-occurrences: [${o.occurrences ?? "meridian"}]
+${o.kind ? `kind: ${o.kind}\n` : ""}occurrences: [${o.occurrences ?? "meridian"}]
 evidence:
   - "${o.evidence ?? "repo:app.css"}"
 last_seen: 2026-09-04

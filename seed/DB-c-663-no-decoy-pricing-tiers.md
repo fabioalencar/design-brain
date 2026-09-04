@@ -7,7 +7,6 @@ stance: never
 status: candidate
 source: bias
 kind: bias
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://doi.org/10.1086/208899 — Huber, Payne, Puto, Adding Asymmetrically Dominated Alternatives, Journal of Consumer Research 1982"

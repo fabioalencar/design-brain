@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: settings
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/wizards/ — Nielsen Norman Group (Wizards: Definition and Design Recommendations)"

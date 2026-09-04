@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: filtering
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://carbondesignsystem.com/patterns/filtering/ — IBM Carbon Design System (Filtering pattern)"

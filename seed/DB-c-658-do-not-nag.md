@@ -7,7 +7,6 @@ stance: never
 status: candidate
 source: bias
 kind: bias
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.deceptive.design/types/nagging — deceptive.design (Harry Brignull), Nagging"

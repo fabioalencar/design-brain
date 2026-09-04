@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: notifications
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://developer.apple.com/design/human-interface-guidelines/notifications — Apple Human Interface Guidelines (Notifications, grouping and summaries)"

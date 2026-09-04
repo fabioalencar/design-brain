@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: notifications
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html — W3C WAI (WCAG 2.1 Understanding SC 1.4.1 Use of Color)"

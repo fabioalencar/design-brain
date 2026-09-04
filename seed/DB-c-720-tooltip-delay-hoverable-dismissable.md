@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: tooltips
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html — W3C WAI (WCAG 2.1 Understanding SC 1.4.13 Content on Hover or Focus)"

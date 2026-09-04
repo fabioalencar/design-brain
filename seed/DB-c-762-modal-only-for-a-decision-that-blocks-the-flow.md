@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: modals
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/modal-nonmodal-dialog/ — Nielsen Norman Group (Modal and Nonmodal Dialogs: When (and When Not) to Use Them)"

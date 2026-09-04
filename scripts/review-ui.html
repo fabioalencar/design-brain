@@ -344,7 +344,7 @@
   <div id="bulk"></div>
   <div class="scrollarea"><table class="rules"><thead><tr><th class="c"><input type="checkbox" id="rall" title="Select all" aria-label="Select every rule on this page"></th>
     <th class="sortable id" data-col="id"><button>ID</button></th><th class="sortable" data-col="title"><button>Rule</button></th><th class="sortable" data-col="stance"><button>Stance</button></th><th class="sortable" data-col="dimension"><button>Dimension</button></th>
-    <th class="sortable" data-col="scope"><button>Scope</button></th><th class="sortable n" data-col="confidence"><button>Conf</button></th><th class="sortable n" data-col="seen"><button>Seen</button></th>
+    <th class="sortable" data-col="scope"><button>Scope</button></th><th class="sortable n" data-col="seen"><button>Seen</button></th>
     <th class="sortable" data-col="status"><button>Status</button></th></tr></thead><tbody id="rbody"></tbody></table>
   </div>
   <div class="tfoot" id="tfoot"></div>
@@ -619,10 +619,10 @@ let sortCol = "", sortDir = 1, page = 0, perPage = 25;
 const STATUS_ORDER = { confirmed: 0, candidate: 1, retired: 2 };
 const VALUE = {
   title: (c) => String(c.title).toLowerCase(), stance: (c) => c.stance, dimension: (c) => c.dimension,
-  id: (c) => String(c.id).replace(/(\d+)$/, (n) => n.padStart(5, "0")), scope: (c) => c.scope, status: (c) => STATUS_ORDER[c.status], confidence: (c) => c.confidence, seen: (c) => c.occurrences.length,
+  id: (c) => String(c.id).replace(/(\d+)$/, (n) => n.padStart(5, "0")), scope: (c) => c.scope, status: (c) => STATUS_ORDER[c.status], seen: (c) => c.occurrences.length,
 };
 /** Default order when no column is chosen: confirmed first, then most-seen, then most-confident. */
-const byDefault = (a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status] || b.occurrences.length - a.occurrences.length || b.confidence - a.confidence;
+const byDefault = (a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status] || b.occurrences.length - a.occurrences.length;
 async function loadRules() {
   if (!schema) schema = await api.schema();
   const r = await api.rules();
@@ -651,7 +651,7 @@ function renderRules() {
     <td class="id">${esc(c.id)}</td>
     <td class="t">${esc(c.title)}${c.conflicts_with.length ? ` <span class="st conflict">${c.resolution ? "resolved" : "conflict"}</span>` : ""}</td>
     <td class="stance-t ${esc(c.stance)}">${esc(c.stance)}</td><td>${esc(c.dimension)}</td><td>${esc(c.scope)}</td>
-    <td class="n">${c.confidence}</td><td class="n">${c.occurrences.length}×</td><td><span class="st ${esc(c.status)}">${esc(statusLabel(c.status))}</span></td></tr>`).join("") || `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--ink-3)">Nothing matches.</td></tr>`;
+    <td class="n">${c.occurrences.length}×</td><td><span class="st ${esc(c.status)}">${esc(statusLabel(c.status))}</span></td></tr>`).join("") || `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--ink-3)">Nothing matches.</td></tr>`;
   refreshFades();
 }
 let shown = [];
@@ -743,7 +743,7 @@ function openDrawer(id) {
     <div class="row" id="clist">${c.conflicts.map((x) => `<span class="cid" data-id="${esc(x.id)}"><button type="button" class="rulelink" onclick="openRule('${esc(x.id)}')" title="Open ${esc(x.id)}">${esc(x.id)}</button> <span class="small">${esc(x.title).slice(0, 60)} · ${esc(x.status)}</span><button title="Remove this conflict" aria-label="Remove the conflict with ${esc(x.id)}" onclick="this.parentNode.remove()">×</button></span>`).join("") || '<span class="small">None declared.</span>'}</div>
     <div class="row"><input id="cadd" placeholder="Add id, e.g. DB-012" style="width:180px"><button class="open" onclick="addConflict()" style="border:1px solid var(--warn-line);background:var(--card);border-radius:999px;padding:6px 12px;font-weight:600;color:var(--warn-ink);cursor:pointer">Add</button></div>
     <textarea id="cres" placeholder="Resolution: which rule wins, and when. Required before two confirmed rules that conflict can compile.">${esc(c.resolution)}</textarea>
-    <span class="small">Stance, scope and confidence edits on the card above are saved with this.</span>`;
+    <span class="small">Stance and scope edits on the card above are saved with this.</span>`;
   el.querySelector(".body").appendChild(conf);
   $("#dbody").innerHTML = ""; $("#dbody").appendChild(el);
   const acts = [];

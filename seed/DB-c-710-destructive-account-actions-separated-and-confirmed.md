@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: user-profile
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/confirmation-dialog/ — Nielsen Norman Group (Confirmation Dialogs Can Prevent User Errors, If Not Overused)"

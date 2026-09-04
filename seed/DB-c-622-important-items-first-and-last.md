@@ -7,7 +7,6 @@ stance: always
 status: candidate
 source: heuristic
 kind: heuristic
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://lawsofux.com/serial-position-effect/ — Laws of UX, Serial Position Effect"

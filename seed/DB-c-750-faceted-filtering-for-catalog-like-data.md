@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: filtering
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/filters-vs-facets/ — Nielsen Norman Group (Filters vs. Facets)"

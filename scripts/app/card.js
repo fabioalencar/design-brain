@@ -56,7 +56,6 @@ export function cardEl(c, { depth = 0, schema, skipped = new Set() } = {}) {
     <div class="head"><h1>${esc(c.title)}</h1>
       <div class="chips">
         <span class="chip ${esc(c.stance)}"><em>stance</em><select name="stance" onchange="this.parentNode.className='chip '+this.value">${option(stances, c.stance)}</select></span>
-        <span class="chip dim"><em>confidence</em><input name="confidence" type="number" min="1" max="10" value="${c.confidence}"></span>
         <span class="chip dim"><em>scope</em><select name="scope">${option(scopes, c.scope)}</select></span>
       </div>
     </div>
@@ -104,7 +103,6 @@ export function cardEdits(el, c) {
   const e = {};
   if (g("stance") && g("stance") !== c.stance) e.stance = g("stance");
   if (g("scope") && g("scope") !== c.scope) e.scope = g("scope");
-  if (g("confidence") && Number(g("confidence")) !== Number(c.confidence)) e.confidence = Number(g("confidence"));
   return Object.keys(e).length ? e : undefined;
 }
 

@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: filtering
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://baymard.com/blog/how-to-design-applied-filters — Baymard Institute (Filtering UX: Display Applied Filters in an Overview)"

@@ -7,7 +7,6 @@ stance: never
 status: candidate
 source: bias
 kind: bias
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://www.deceptive.design/types/visual-interference — deceptive.design (Harry Brignull), Visual interference"

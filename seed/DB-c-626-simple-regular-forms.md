@@ -7,7 +7,6 @@ stance: always
 status: candidate
 source: heuristic
 kind: heuristic
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://lawsofux.com/law-of-pr%C3%A4gnanz/ — Laws of UX, Law of Prägnanz"

@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: search
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/search-no-results-serp/ — Nielsen Norman Group (3 Guidelines for Search Engine No Results Pages)"

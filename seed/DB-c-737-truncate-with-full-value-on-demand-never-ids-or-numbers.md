@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: data-tables
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://carbondesignsystem.com/patterns/overflow-content/ — IBM Carbon Design System (Overflow content pattern)"

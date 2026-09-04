@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: details-page
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://design-system.service.gov.uk/components/back-link/ — GOV.UK Design System (Back link component)"

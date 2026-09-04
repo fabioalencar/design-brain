@@ -7,7 +7,6 @@ stance: always
 status: candidate
 source: heuristic
 kind: heuristic
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://www.w3.org/TR/WCAG22/#contrast-minimum — W3C, WCAG 2.2 SC 1.4.3 Contrast (Minimum) and SC 2.5.8 Target Size (Minimum)"

@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: highlight-cards
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://ui-patterns.com/patterns/dashboard — ui-patterns.com (Dashboard pattern)"

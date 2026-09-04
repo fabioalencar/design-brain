@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: data-tables
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://carbondesignsystem.com/components/data-table/usage/ — IBM Carbon Design System (Data table usage, batch actions)"

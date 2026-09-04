@@ -7,7 +7,6 @@ stance: never
 status: candidate
 source: bias
 kind: bias
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://www.deceptive.design/types/hidden-subscription — deceptive.design (Harry Brignull), Hidden subscription"

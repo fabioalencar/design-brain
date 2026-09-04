@@ -7,7 +7,6 @@ stance: always
 status: candidate
 source: heuristic
 kind: heuristic
-confidence: 6
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/ten-usability-heuristics/ — Nielsen Norman Group (Jakob Nielsen, 10 Usability Heuristics)"

@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: details-page
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://polaris.shopify.com/patterns/resource-details — Shopify Polaris (Resource details layout pattern)"

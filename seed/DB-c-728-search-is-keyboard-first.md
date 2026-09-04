@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: search
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://www.w3.org/WAI/ARIA/apg/patterns/combobox/ — W3C WAI (ARIA Authoring Practices, Combobox pattern)"

@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: settings
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://m3.material.io/components/switch/guidelines — Material Design 3 (Switch guidelines)"

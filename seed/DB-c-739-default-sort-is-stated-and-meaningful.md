@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: sorting
-confidence: 7
 occurrences: [reference]
 evidence:
   - "reference:https://baymard.com/blog/default-sort-type — Baymard Institute (Always Sort Product Lists by Diversity-Based Relevance)"

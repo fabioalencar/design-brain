@@ -8,7 +8,6 @@ status: candidate
 source: practice
 kind: practice
 component: progressive-disclosure
-confidence: 8
 occurrences: [reference]
 evidence:
   - "reference:https://www.nngroup.com/articles/progressive-disclosure/ — Nielsen Norman Group (Progressive Disclosure)"
