@@ -107,6 +107,8 @@
   table.rules tbody tr:hover td { background:var(--hover) }
   table.rules td.t { color:var(--ink); font-weight:500; max-width:52ch }
   table.rules td.n { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap }
+  table.rules td.id, table.rules th.id { width:1%; white-space:nowrap }
+  table.rules td.id { font:12px/20px ui-monospace, "JetBrains Mono", monospace; color:var(--ink-3) }
   .st { display:inline-block; font:600 12px/18px var(--sans); padding:0 8px; border-radius:999px; background:var(--paper); color:var(--ink-2) }
   .st.confirmed { background:var(--yes-soft); color:var(--yes) } .st.retired { color:var(--ink-3) } .st.candidate { background:var(--accent-soft); color:var(--accent) }
   .st.conflict { background:var(--warn-soft); color:var(--warn) }
@@ -341,7 +343,7 @@
   </div>
   <div id="bulk"></div>
   <div class="scrollarea"><table class="rules"><thead><tr><th class="c"><input type="checkbox" id="rall" title="Select all" aria-label="Select every rule on this page"></th>
-    <th class="sortable" data-col="title"><button>Rule</button></th><th class="sortable" data-col="stance"><button>Stance</button></th><th class="sortable" data-col="dimension"><button>Dimension</button></th>
+    <th class="sortable id" data-col="id"><button>ID</button></th><th class="sortable" data-col="title"><button>Rule</button></th><th class="sortable" data-col="stance"><button>Stance</button></th><th class="sortable" data-col="dimension"><button>Dimension</button></th>
     <th class="sortable" data-col="scope"><button>Scope</button></th><th class="sortable n" data-col="confidence"><button>Conf</button></th><th class="sortable n" data-col="seen"><button>Seen</button></th>
     <th class="sortable" data-col="status"><button>Status</button></th></tr></thead><tbody id="rbody"></tbody></table>
   </div>
@@ -617,7 +619,7 @@ let sortCol = "", sortDir = 1, page = 0, perPage = 25;
 const STATUS_ORDER = { confirmed: 0, candidate: 1, retired: 2 };
 const VALUE = {
   title: (c) => String(c.title).toLowerCase(), stance: (c) => c.stance, dimension: (c) => c.dimension,
-  scope: (c) => c.scope, status: (c) => STATUS_ORDER[c.status], confidence: (c) => c.confidence, seen: (c) => c.occurrences.length,
+  id: (c) => String(c.id).replace(/(\d+)$/, (n) => n.padStart(5, "0")), scope: (c) => c.scope, status: (c) => STATUS_ORDER[c.status], confidence: (c) => c.confidence, seen: (c) => c.occurrences.length,
 };
 /** Default order when no column is chosen: confirmed first, then most-seen, then most-confident. */
 const byDefault = (a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status] || b.occurrences.length - a.occurrences.length || b.confidence - a.confidence;
@@ -644,11 +646,12 @@ function renderRules() {
   renderHeadings();
   renderBulk();
   shown = rows.map((c) => c.id);
-  $("#rbody").innerHTML = rows.map((c) => `<tr data-id="${esc(c.id)}" tabindex="0" aria-label="${esc(c.title)}. ${esc(statusLabel(c.status))}. Press Enter to open.">
+  $("#rbody").innerHTML = rows.map((c) => `<tr data-id="${esc(c.id)}" tabindex="0" aria-label="${esc(c.id)}. ${esc(c.title)}. ${esc(statusLabel(c.status))}. Press Enter to open.">
     <td class="c"><input type="checkbox" ${picked.has(c.id) ? "checked" : ""}></td>
+    <td class="id">${esc(c.id)}</td>
     <td class="t">${esc(c.title)}${c.conflicts_with.length ? ` <span class="st conflict">${c.resolution ? "resolved" : "conflict"}</span>` : ""}</td>
     <td class="stance-t ${esc(c.stance)}">${esc(c.stance)}</td><td>${esc(c.dimension)}</td><td>${esc(c.scope)}</td>
-    <td class="n">${c.confidence}</td><td class="n">${c.occurrences.length}×</td><td><span class="st ${esc(c.status)}">${esc(statusLabel(c.status))}</span></td></tr>`).join("") || `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--ink-3)">Nothing matches.</td></tr>`;
+    <td class="n">${c.confidence}</td><td class="n">${c.occurrences.length}×</td><td><span class="st ${esc(c.status)}">${esc(statusLabel(c.status))}</span></td></tr>`).join("") || `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--ink-3)">Nothing matches.</td></tr>`;
   refreshFades();
 }
 let shown = [];
