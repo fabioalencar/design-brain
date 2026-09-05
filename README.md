@@ -69,8 +69,13 @@ whether it is linked into `~/.claude/skills`. Compile and install without leavin
 Requires [Bun](https://bun.sh) 1.1 or newer.
 
 ```bash
-git clone https://github.com/fabioalencar/design-brain.git
-cd design-brain && bun install && bun link
+bun install -g @forgedesign/design-brain
+```
+
+Or try it without installing anything:
+
+```bash
+bunx design-brain init ~/design-brain-me
 ```
 
 ## Create a brain
@@ -203,8 +208,13 @@ directory.
 ## Working on the tool
 
 ```bash
-bun test scripts/          # 71 tests, each driving a real brain in a temp directory
+git clone https://github.com/fabioalencar/design-brain.git
+cd design-brain && bun install && bun link   # `design-brain` now runs from your checkout
+bun test scripts/                             # 71 tests, each driving a real brain in a temp directory
 ```
+
+The package on npm is `@forgedesign/design-brain`; `design-brain` is an alias so the short
+name works with `bunx`.
 
 `brain.ts` resolves a brain and hands out its paths. `ledger.ts` owns every mutation of it
 (confirm, retire, restore, edit, note, and id allocation), so the CLI and the review app

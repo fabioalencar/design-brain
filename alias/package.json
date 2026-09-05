@@ -1,0 +1,24 @@
+{
+  "name": "design-brain",
+  "version": "0.1.0",
+  "description": "Alias for @forgedesign/design-brain, so `bunx design-brain` works.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabioalencar/design-brain.git",
+    "directory": "alias"
+  },
+  "homepage": "https://github.com/fabioalencar/design-brain#readme",
+  "keywords": ["design", "design-systems", "claude-code", "agent-skills", "ai-agents", "ux", "bun"],
+  "engines": {
+    "bun": ">=1.1"
+  },
+  "files": ["bin"],
+  "bin": {
+    "design-brain": "bin/design-brain.ts"
+  },
+  "dependencies": {
+    "@forgedesign/design-brain": "0.1.0"
+  }
+}
