@@ -5,7 +5,7 @@
 Capture the design decisions you keep re-teaching AI, review them one at a time, and
 compile the ones you stand behind into agent skills that load on every project.
 
-![design-brain](assets/banner.png)
+![design-brain](https://raw.githubusercontent.com/fabioalencar/design-brain/master/assets/banner.png)
 
 ## What is design-brain
 
@@ -34,7 +34,7 @@ is a published heuristic, bias or component practice rather than anyone's privat
 
 ### Queue
 
-![The review queue](assets/screens/queue.gif)
+![The review queue](https://raw.githubusercontent.com/fabioalencar/design-brain/master/assets/screens/queue.gif)
 
 One card at a time, with its evidence. Right confirms, left retires, down skips. Stance and
 scope are editable on the card before you decide, `N` leaves a dated note, and `Z` undoes.
@@ -42,7 +42,7 @@ The bar at the top counts what is left.
 
 ### Rules
 
-![The rules table](assets/screens/rules.png)
+![The rules table](https://raw.githubusercontent.com/fabioalencar/design-brain/master/assets/screens/rules.png)
 
 The whole ledger as a sortable, paged table: confirmed, in review, retired, and the
 conflicts. Filter by dimension, scope or kind, search across evidence and ids, select rows
@@ -50,14 +50,14 @@ for a bulk verdict, or open one to edit it, send it back to review, or resolve a
 
 ### Sources
 
-![The sources tab](assets/screens/sources.png)
+![The sources tab](https://raw.githubusercontent.com/fabioalencar/design-brain/master/assets/screens/sources.png)
 
 Every published reference the ledger cites, grouped by publisher, with the rules each page
 supports. Anything you want to read later parks here until you do.
 
 ### Skills
 
-![The skills tab](assets/screens/skills.png)
+![The skills tab](https://raw.githubusercontent.com/fabioalencar/design-brain/master/assets/screens/skills.png)
 
 What compiled into each skill, section by section, with its rule and word counts and
 whether it is linked into `~/.claude/skills`. Compile and install without leaving the page.
