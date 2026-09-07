@@ -1,6 +1,6 @@
 {
   "name": "@forgedesign/design-brain",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Capture your design decisions across projects, review them in a swipe queue, compile them into agent skills.",
   "license": "MIT",
   "private": false,

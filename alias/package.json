@@ -1,6 +1,6 @@
 {
   "name": "design-brain",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Alias for @forgedesign/design-brain, so `bunx design-brain` works.",
   "license": "MIT",
   "type": "module",
@@ -19,6 +19,6 @@
     "design-brain": "bin/design-brain.ts"
   },
   "dependencies": {
-    "@forgedesign/design-brain": "0.1.0"
+    "@forgedesign/design-brain": "0.1.1"
   }
 }
