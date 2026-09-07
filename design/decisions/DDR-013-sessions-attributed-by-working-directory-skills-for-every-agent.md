@@ -3,7 +3,7 @@ type: Decision
 id: DDR-013
 title: Sessions are attributed to projects by working directory; skills install for every agent present
 date: 2026-09-06
-decision_status: draft
+decision_status: accepted
 context_source: 'Fabio, 2026-09-06, after asking whether the tool worked with Codex: "we need
   to allow the harvest agnostic from any ai model projects and make the skill installation
   easy and out of the box"'
