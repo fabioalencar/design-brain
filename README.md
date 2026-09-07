@@ -60,7 +60,7 @@ supports. Anything you want to read later parks here until you do.
 ![The skills tab](https://raw.githubusercontent.com/fabioalencar/design-brain/master/assets/screens/skills.png)
 
 What compiled into each skill, section by section, with its rule and word counts and
-whether it is linked into `~/.claude/skills`. Compile and install without leaving the page.
+which agents it is linked for. Compile and install without leaving the page.
 
 ---
 
@@ -101,15 +101,19 @@ work yields universal craft and constraints, never your taste. Then:
 
 ```bash
 design-brain harvest:repos          # fonts, palettes, tokens, components → inventory/
-design-brain harvest:transcripts    # design directives from Claude Code sessions
+design-brain harvest:transcripts    # your directives, from Claude Code, Codex or exported chats
 ```
+
+Sessions are matched to projects by working directory, so there is nothing to configure per
+agent: if a project's `path` contains the folder a session ran in, its turns belong to that
+project. For any other tool, point `transcripts:` at a folder of exported chats.
 
 Four routes in, all landing in the same queue:
 
 | Route                                  | What it mines                                                                                |
 | -------------------------------------- | -------------------------------------------------------------------------------------------- |
 | `harvest:repos`                        | tokens, palettes, fonts and component choices across your repos                              |
-| `harvest:transcripts`                  | the corrections you actually typed, quoted verbatim                                          |
+| `harvest:transcripts`                  | the corrections you actually typed to any coding agent, quoted verbatim                      |
 | `templates/external-extract-prompt.md` | a read-only prompt to run on a repo you cannot share; drop its output into `inbox/_imports/` |
 | `design-brain-add-source` skill        | an article or guideline page you just read, cited back to its page                           |
 
@@ -130,15 +134,19 @@ Four tabs:
   review, or resolve a conflict.
 - **Sources.** Every published reference the ledger cites, grouped by publisher, with the
   rules each page supports. Park links here to read later.
-- **Skills.** What compiled into each skill, section by section, and whether it is linked
-  into `~/.claude/skills`. Compile and install from here.
+- **Skills.** What compiled into each skill, section by section, and which agents it is
+  linked for. Compile and install from here.
 
 ## Use
 
 ```bash
 design-brain compile                # skills/ and exports/ from the confirmed decisions
-design-brain install                # symlink them into ~/.claude/skills
+design-brain install                # symlink them into every agent on this machine
 ```
+
+Install links the skills for Claude Code and for the open Agent Skills directory Codex reads,
+and for Gemini CLI, Copilot, Cursor and OpenCode when those are present. One command, every
+agent, and the links follow the brain, so a recompile is picked up everywhere.
 
 Three skills come out of your ledger:
 
@@ -180,9 +188,10 @@ Everything stays on your machine.
 - `harvest:repos` reads the repositories listed in your `sources.yaml`, and only those:
   token files, stylesheets and component sources. It writes what it finds to `inventory/`
   inside the brain.
-- `harvest:transcripts` reads your Claude Code session transcripts under
-  `~/.claude/projects`, again only for the projects in `sources.yaml`. It keeps the lines
-  you typed, not the agent's replies.
+- `harvest:transcripts` reads the session files your coding agents keep locally (Claude Code
+  under `~/.claude/projects`, Codex under `~/.codex/sessions`) and any export folder a project
+  points at. It keeps only sessions that ran inside a project listed in `sources.yaml`, and
+  only the lines you typed, not the agent's replies.
 - The review app listens on `127.0.0.1` and is not reachable from the network.
 - The tool makes no network requests. Nothing you harvest or decide leaves the machine
   unless you push the brain somewhere yourself.
@@ -195,11 +204,11 @@ review                the review app
 check                 validate inbox/, decisions/, patterns/
 compile               build skills/ and exports/ from the confirmed decisions
 harvest:repos         design facts from the projects in sources.yaml
-harvest:transcripts   design directives from Claude Code transcripts
+harvest:transcripts   design directives from your coding-agent sessions (--all, --agents a,b)
 add <staged.json>     write staged candidates into inbox/
 confirm|retire|restore <DB-c-###> …
 rescope <id> <scope>  |  note <id> <text>
-install [dir]         symlink the skills into ~/.claude/skills
+install [dir]         symlink the skills into every agent on this machine
 ```
 
 Every command takes `--brain <dir>`, or reads `$DESIGN_BRAIN`, or uses the current

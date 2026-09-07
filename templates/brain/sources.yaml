@@ -1,6 +1,12 @@
 # Project registry. scope drives what a harvester may claim as taste.
 # scope: personal (your own brands and unbranded work) | client:<slug> (constraints only, never taste)
-# transcripts: dir name under ~/.claude/projects (encoded path), if you use Claude Code
+#
+# path is what ties sessions to a project: harvest:transcripts reads your coding-agent sessions
+# (Claude Code, Codex) and attributes each one to the project whose path contains the session's
+# working directory. No per-agent setup.
+#
+# transcripts is optional. Point it at a folder of chats exported from any other tool
+# (.jsonl, .json, .md, .txt) and its user turns are attributed to this project.
 language: en
 personal_brands: []
 projects: []
@@ -8,9 +14,8 @@ projects: []
   #   path: ~/Code/my-site
   #   scope: personal
   #   sources: [css, tailwind, tokens]
-  #   transcripts: -Users-me-Code-my-site
+  #   transcripts: ~/exports/my-site-chats
 gstack:
   projects_dir: ~/.gstack/projects
   audits_glob: "*/designs/design-audit-*/*.md"
   learnings_glob: "*/learnings.jsonl"
-transcripts_dir: ~/.claude/projects

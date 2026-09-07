@@ -379,7 +379,7 @@
   <div class="skillbar">
     <span class="last" id="lastcompile"></span>
     <span class="sp"></span>
-    <button onclick="installSkills()">Install into ~/.claude/skills</button>
+    <button onclick="installSkills()" title="Symlink into every agent's skills directory on this machine">Install skills</button>
     <button class="primary" onclick="compile()">Compile skills <kbd>C</kbd></button>
   </div>
   <div class="scrollarea"><div class="src-list" id="skillcards"></div></div>
@@ -902,7 +902,7 @@ async function loadSkills() {
     <div class="top" role="button" tabindex="0" aria-expanded="false" onclick="toggleSkill(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSkill(this)}">
       <h3>${esc(s.name)}</h3>
       <span class="host">${facts}</span>
-      <span class="n">${s.installed ? '<span class="ok">linked</span>' : '<span class="warn">not linked</span>'}</span>
+      <span class="n" title="${(s.installedIn ?? []).join(", ")}">${s.installed ? '<span class="ok">linked</span>' : s.installedIn?.length ? '<span class="warn">linked: ' + s.installedIn.join(", ") + '</span>' : '<span class="warn">not linked</span>'}</span>
       <button class="cta" onclick="event.stopPropagation(); showSkill('${esc(s.name)}')">View SKILL.md</button>
       <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
     <ul>
@@ -936,7 +936,7 @@ function showSkill(name) {
   $("#drawerbg").classList.add("on");
   openDialog($("#drawer"));
 }
-async function installSkills() { const r = await api.install(); toast(r.ok ? "Installed: " + r.installed.join(", ") : "Error: " + r.error); loadSkills(); }
+async function installSkills() { const r = await api.install(); toast(r.ok ? "Installed for " + r.installed.map((t) => t.agent).join(", ") : "Error: " + r.error); loadSkills(); }
 Object.assign(window, { act, undo, compile, saveNote, openNote, closeNote, openAbout, closeAbout, toggleTheme, toggleSynapse,
   openDrawer, closeDrawer, saveDrawer, drawerVerdict, drawerNote, addConflict, bulk, showSkill, toggleSkill, installSkills, fromSource, renderRules, refreshFades, picked,
   openReading, closeReading, saveReading, dropReading, openRule });

@@ -10,7 +10,30 @@ export const SKILL_NAMES = ["design-brain", "design-brain-check", "design-brain-
 export const TOOL_SKILLS = ["design-brain-add-source"] as const;
 export type SkillName = (typeof SKILL_NAMES)[number];
 
-const skillsDir = (home: string) => join(home, ".claude", "skills");
+/** Where each coding agent reads skills from. `always` targets exist on every machine we support;
+ *  the rest are used only when that agent's home directory is present, so installing never
+ *  scatters directories for tools the designer does not run. `~/.agents/skills` is the open
+ *  Agent Skills location, which Codex reads. */
+export interface SkillTarget { agent: string; dir: string }
+export function skillTargets(home: string): SkillTarget[] {
+  const t: SkillTarget[] = [
+    { agent: "claude", dir: join(home, ".claude", "skills") },
+    { agent: "codex", dir: join(home, ".agents", "skills") },
+  ];
+  const optional: [string, string[]][] = [
+    ["gemini", [".gemini"]], ["copilot", [".copilot"]], ["cursor", [".cursor"]], ["opencode", [".config", "opencode"]],
+  ];
+  for (const [agent, homeDir] of optional) if (existsSync(join(home, ...homeDir))) t.push({ agent, dir: join(home, ...homeDir, "skills") });
+  return t;
+}
+
+const linkedAt = (dir: string, name: string, src: string) => {
+  try { const l = join(dir, name); return lstatSync(l).isSymbolicLink() && readlinkSync(l) === src; } catch { return false; }
+};
+/** Agents this skill is linked for, given where it lives. */
+export function installedIn(src: string, name: string, home: string): string[] {
+  return skillTargets(home).filter((t) => linkedAt(t.dir, name, src)).map((t) => t.agent);
+}
 
 export interface SkillInfo {
   name: string;
@@ -20,7 +43,9 @@ export interface SkillInfo {
   ids?: string[];
   mtime?: string;
   sections?: { level: number; title: string; rules: number }[];
+  /** Linked for every agent on this machine. */
   installed?: boolean;
+  installedIn?: string[];
   body?: string;
 }
 
@@ -36,11 +61,7 @@ export function readSkill(brain: Brain, name: string, home = process.env.HOME ??
     if (/^##+\s/.test(line)) cur++;
     else if (/^- \*\*/.test(line) && cur >= 0 && sections[cur]) sections[cur].rules++;
   }
-  let installed = false;
-  try {
-    const link = join(skillsDir(home), name);
-    installed = lstatSync(link).isSymbolicLink() && readlinkSync(link) === brain.path("skills", name);
-  } catch {}
+  const where = installedIn(brain.path("skills", name), name, home);
   return {
     name,
     exists: true,
@@ -49,7 +70,8 @@ export function readSkill(brain: Brain, name: string, home = process.env.HOME ??
     ids: [...new Set(body.match(/DB-(?:c-)?\d{3}/g) ?? [])],
     mtime: statSync(path).mtime.toISOString(),
     sections: sections.filter((x) => x.level === 2 || x.rules),
-    installed,
+    installed: where.length === skillTargets(home).length,
+    installedIn: where,
     body,
   };
 }
@@ -60,12 +82,8 @@ export function readToolSkill(name: string, home = process.env.HOME ?? ""): Skil
   if (!existsSync(path)) return { name, exists: false };
   const content = readFileSync(path, "utf8");
   const description = content.match(/^description:\s*([\s\S]*?)\n---/m)?.[1]?.trim() ?? "";
-  let installed = false;
-  try {
-    const link = join(skillsDir(home), name);
-    installed = lstatSync(link).isSymbolicLink() && readlinkSync(link) === join(toolRoot, "agent-skills", name);
-  } catch {}
-  return { name, exists: true, description, installed, body: content.replace(/^---[\s\S]*?---\n/, "") };
+  const where = installedIn(join(toolRoot, "agent-skills", name), name, home);
+  return { name, exists: true, description, installed: where.length === skillTargets(home).length, installedIn: where, body: content.replace(/^---[\s\S]*?---\n/, "") };
 }
 
 export function lastCompile(brain: Brain): unknown {
@@ -76,36 +94,33 @@ export function lastCompile(brain: Brain): unknown {
   }
 }
 
-/** Symlink this brain's compiled skills into ~/.claude/skills. Refuses to replace a real directory. */
-export function installSkills(brain: Brain, home = process.env.HOME ?? ""): string[] {
-  const dir = skillsDir(home);
-  mkdirSync(dir, { recursive: true });
-  const done: string[] = [];
-  for (const name of SKILL_NAMES) {
-    const src = brain.path("skills", name);
-    const dest = join(dir, name);
-    if (!existsSync(src)) throw new Error(`missing ${src}; compile first`);
-    try {
-      if (!lstatSync(dest).isSymbolicLink()) throw new Error(`${dest} exists and is not a symlink`);
-      unlinkSync(dest);
-    } catch (e: any) {
-      if (e?.code !== "ENOENT") throw e;
+export interface Installed { agent: string; dir: string; skills: string[] }
+
+/** Symlink this brain's compiled skills, and the tool's hand-written ones, into every agent's
+ *  skills directory on this machine. Idempotent. Refuses to replace a real directory. */
+export function installSkills(brain: Brain, home = process.env.HOME ?? ""): Installed[] {
+  const sources: [string, string][] = [
+    ...SKILL_NAMES.map((n): [string, string] => [n, brain.path("skills", n)]),
+    ...TOOL_SKILLS.map((n): [string, string] => [n, join(toolRoot, "agent-skills", n)]),
+  ];
+  for (const [name, src] of sources) if (!existsSync(src) && (SKILL_NAMES as readonly string[]).includes(name)) throw new Error(`missing ${src}; compile first`);
+  const out: Installed[] = [];
+  for (const target of skillTargets(home)) {
+    mkdirSync(target.dir, { recursive: true });
+    const done: string[] = [];
+    for (const [name, src] of sources) {
+      if (!existsSync(src)) continue;
+      const dest = join(target.dir, name);
+      try {
+        if (!lstatSync(dest).isSymbolicLink()) throw new Error(`${dest} exists and is not a symlink`);
+        unlinkSync(dest);
+      } catch (e: any) {
+        if (e?.code !== "ENOENT") throw e;
+      }
+      symlinkSync(src, dest);
+      done.push(name);
     }
-    symlinkSync(src, dest);
-    done.push(name);
+    out.push({ ...target, skills: done });
   }
-  for (const name of TOOL_SKILLS) {
-    const src = join(toolRoot, "agent-skills", name);
-    const dest = join(dir, name);
-    if (!existsSync(src)) continue;
-    try {
-      if (!lstatSync(dest).isSymbolicLink()) throw new Error(`${dest} exists and is not a symlink`);
-      unlinkSync(dest);
-    } catch (e: any) {
-      if (e?.code !== "ENOENT") throw e;
-    }
-    symlinkSync(src, dest);
-    done.push(name);
-  }
-  return done;
+  return out;
 }

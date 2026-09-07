@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 // design-brain <command> [--brain <dir>] — runs the tool against a brain directory.
-import { existsSync, mkdirSync, readdirSync, copyFileSync, readlinkSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, copyFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { toolRoot } from "../scripts/lib";
 import { DIRS, expandHome, openBrain } from "../scripts/brain";
@@ -41,10 +41,7 @@ function init(dirArg?: string) {
 function install(dirArg?: string) {
   try {
     const brain = openBrain(dirArg ?? process.cwd());
-    for (const name of installSkills(brain, home)) {
-      const link = join(home, ".claude", "skills", name);
-      console.log(`${link} → ${readlinkSync(link)}`);
-    }
+    for (const t of installSkills(brain, home)) console.log(`${t.agent.padEnd(9)} ${t.dir}  (${t.skills.length} skills)`);
   } catch (e) {
     console.error((e as Error).message);
     process.exit(1);
@@ -62,11 +59,12 @@ else {
   check                 validate inbox/, decisions/, patterns/
   compile               build skills/ and exports/ from the confirmed decisions
   harvest:repos         extract design facts from the projects in sources.yaml
-  harvest:transcripts   mine Claude Code transcripts for design directives
+  harvest:transcripts   mine your coding-agent sessions (Claude Code, Codex, exported chats) for design directives
+                        --all rescans everything; --agents claude,codex,export limits the sources
   add <staged.json>     write staged candidates into inbox/ (see the add-source skill)
   confirm|retire|restore <DB-c-###> …
   rescope <id> <scope>  |  note <id> <text>
-  install [dir]         symlink the brain's skills into ~/.claude/skills
+  install [dir]         symlink the brain's skills into every agent on this machine (Claude Code, Codex, Gemini, Copilot, Cursor, OpenCode)
 
 All commands take --brain <dir> (default: current directory, or $DESIGN_BRAIN).`);
   process.exit(cmd ? 1 : 0);
