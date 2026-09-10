@@ -3,7 +3,7 @@
 Copy everything below the line into a fresh session of any coding agent (Claude Code,
 Cursor, Codex, Copilot) opened at the root of the project. Answer the two questions it
 asks first. Paste the single markdown document it produces into
-`~/Code/design-brain/inbox/_imports/<project-slug>.md`.
+your brain's `inbox/_imports/<project-slug>.md` (the directory `design-brain init` created, or wherever `--brain` points).
 
 ---
 
