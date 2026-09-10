@@ -43,3 +43,8 @@
     confirmed rules that conflict without a resolution block `compile`.
 15. **Provenance is a field.** Every candidate records `source:` — where it came from. Ids are
     allocated, not meaningful; never infer provenance from an id range.
+14. **Harvested decisions** in `inbox/_ddr-queue.md` (from `harvest:ddrs`) are settled project
+    decisions, not taste yet. `.cache/ddr-queue.json` holds each as a candidate missing only
+    `dimension` and `stance`: supply those two, shorten any title over 80 characters, drop
+    the entries that are about the project's tooling rather than its design, then
+    `design-brain add .cache/ddr-queue.json`. Never fill the two fields by default value.

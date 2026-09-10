@@ -44,6 +44,7 @@
     "review": "bun --watch scripts/review-server.ts",
     "harvest:repos": "bun scripts/harvest-repos.ts",
     "harvest:transcripts": "bun scripts/harvest-transcripts.ts",
+    "harvest:ddrs": "bun scripts/harvest-ddrs.ts",
     "confirm": "bun scripts/promote.ts confirm",
     "promote": "bun scripts/promote.ts confirm",
     "retire": "bun scripts/promote.ts retire",

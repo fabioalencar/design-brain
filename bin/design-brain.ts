@@ -10,7 +10,7 @@ const [cmd, ...rest] = process.argv.slice(2);
 const home = process.env.HOME ?? "";
 const scripts: Record<string, string> = {
   check: "check.ts", compile: "compile-skills.ts", review: "review-server.ts",
-  "harvest:transcripts": "harvest-transcripts.ts", "harvest:repos": "harvest-repos.ts",
+  "harvest:transcripts": "harvest-transcripts.ts", "harvest:repos": "harvest-repos.ts", "harvest:ddrs": "harvest-ddrs.ts",
   confirm: "promote.ts confirm", promote: "promote.ts confirm", retire: "promote.ts retire", restore: "promote.ts restore",
   rescope: "promote.ts rescope", note: "promote.ts note", add: "add.ts",
 };
@@ -61,6 +61,7 @@ else {
   harvest:repos         extract design facts from the projects in sources.yaml
   harvest:transcripts   mine your coding-agent sessions (Claude Code, Codex, exported chats) for design directives
                         --all rescans everything; --agents claude,codex,export limits the sources
+  harvest:ddrs          stage accepted decision records (DDRs) from projects that declare ddr_dir; --all rescans
   add <staged.json>     write staged candidates into inbox/ (see the add-source skill)
   confirm|retire|restore <DB-c-###> …
   rescope <id> <scope>  |  note <id> <text>
