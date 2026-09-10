@@ -72,4 +72,8 @@ title: Todos
 
 ## Done
 
+- [x] TASK-022 harvest:ddrs — stage accepted decision records from projects with a ddr_dir as candidates missing dimension and stance; follow-ups: recurrence across projects, re-propose on amendment
+  status: done · opened: 2026-09-09
+  genesis: ai-design root audit 2026-09-09, Q1
+
 ## Deferred

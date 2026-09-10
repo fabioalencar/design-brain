@@ -236,6 +236,9 @@ describe("adding a source", () => {
   test("refuses a reference kind with no reference", () => {
     const l = openLedger(newBrain());
     expect(() => l.add({ ...source, evidence: ["repo:somewhere"] })).toThrow(/needs a reference/);
+    // a staged harvest leaves these empty for the agent; the ledger must not write them empty
+    expect(() => l.add({ ...source, dimension: "" })).toThrow(/dimension must be one of/);
+    expect(() => l.add({ ...source, stance: "" })).toThrow(/stance must be one of/);
   });
 
   test("refuses a title that would not fit two lines", () => {

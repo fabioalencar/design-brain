@@ -5,6 +5,10 @@
 # (Claude Code, Codex) and attributes each one to the project whose path contains the session's
 # working directory. No per-agent setup.
 #
+# ddr_dir is optional. Name the folder of decision records inside the project (Forge keeps them
+# in design/decisions) and harvest:ddrs stages its accepted decisions for review, cited back to
+# the file. The candidate inherits this project's scope.
+#
 # transcripts is optional. Point it at a folder of chats exported from any other tool
 # (.jsonl, .json, .md, .txt) and its user turns are attributed to this project.
 language: en
@@ -15,6 +19,7 @@ projects: []
   #   scope: personal
   #   sources: [css, tailwind, tokens]
   #   transcripts: ~/exports/my-site-chats
+  #   ddr_dir: design/decisions
 gstack:
   projects_dir: ~/.gstack/projects
   audits_glob: "*/designs/design-audit-*/*.md"

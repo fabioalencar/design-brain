@@ -102,18 +102,20 @@ work yields universal craft and constraints, never your taste. Then:
 ```bash
 design-brain harvest:repos          # fonts, palettes, tokens, components → inventory/
 design-brain harvest:transcripts    # your directives, from Claude Code, Codex or exported chats
+design-brain harvest:ddrs           # accepted decision records from projects that keep a design/decisions/
 ```
 
 Sessions are matched to projects by working directory, so there is nothing to configure per
 agent: if a project's `path` contains the folder a session ran in, its turns belong to that
 project. For any other tool, point `transcripts:` at a folder of exported chats.
 
-Four routes in, all landing in the same queue:
+Five routes in, all landing in the same queue:
 
 | Route                                  | What it mines                                                                                |
 | -------------------------------------- | -------------------------------------------------------------------------------------------- |
 | `harvest:repos`                        | tokens, palettes, fonts and component choices across your repos                              |
 | `harvest:transcripts`                  | the corrections you actually typed to any coding agent, quoted verbatim                      |
+| `harvest:ddrs`                         | the decisions a project already settled in its `design/decisions/`, cited back to the DDR    |
 | `templates/external-extract-prompt.md` | a read-only prompt to run on a repo you cannot share; drop its output into `inbox/_imports/` |
 | `design-brain-add-source` skill        | an article or guideline page you just read, cited back to its page                           |
 
@@ -205,6 +207,7 @@ check                 validate inbox/, decisions/, patterns/
 compile               build skills/ and exports/ from the confirmed decisions
 harvest:repos         design facts from the projects in sources.yaml
 harvest:transcripts   design directives from your coding-agent sessions (--all, --agents a,b)
+harvest:ddrs          accepted decision records from projects with a ddr_dir (--all)
 add <staged.json>     write staged candidates into inbox/
 confirm|retire|restore <DB-c-###> …
 rescope <id> <scope>  |  note <id> <text>

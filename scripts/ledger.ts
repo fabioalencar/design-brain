@@ -3,7 +3,7 @@
 // Nothing outside it may write a decision file.
 import { readdirSync, readFileSync, writeFileSync, unlinkSync, existsSync } from "node:fs";
 import type { Brain } from "./brain";
-import { parseDoc, type Doc } from "./lib";
+import { DIMENSIONS, parseDoc, STANCES, type Doc } from "./lib";
 
 export const ID_RE = /^DB-(c-)?\d{3}$/;
 const CANDIDATE_PREFIX = /^DB-c-\d{3}-/;
@@ -196,6 +196,8 @@ export function openLedger(brain: Brain, today: () => string = () => new Date().
     add(c, range = ADDED_RANGE) {
       const need = (ok: unknown, msg: string) => { if (!ok) throw new Error(msg); };
       need(c.title && c.title.length <= TITLE_MAX, `title is required and at most ${TITLE_MAX} characters`);
+      need((DIMENSIONS as readonly string[]).includes(c.dimension), `dimension must be one of ${DIMENSIONS.join(", ")}`);
+      need((STANCES as readonly string[]).includes(c.stance), `stance must be one of ${STANCES.join(", ")}`);
       need(c.rule?.trim(), "a rule is required");
       need(c.evidence?.length, "at least one evidence line is required");
       if (c.kind && c.kind !== "harvested") need(c.evidence.some((e) => /^reference:/.test(e)), `a ${c.kind} needs a reference: evidence line`);
