@@ -30,6 +30,7 @@ file below is one concept; tools and agents read them directly.
 * [The verb that produces a state shares its stem; each review state has one word](decisions/DDR-012-one-word-per-review-state.md) - Decision · DDR-012
 * [Sessions are attributed to projects by working directory; skills install for every agent present](decisions/DDR-013-sessions-attributed-by-working-directory-skills-for-every-agent.md) - Decision · DDR-013
 * [A harvested decision record is staged for the agent, never written as a candidate](decisions/DDR-014-harvested-decisions-are-staged-not-candidates.md) - Decision · DDR-014
+* [The check skill owns judging existing UI; no trigger phrase in two skill descriptions](decisions/DDR-015-check-owns-judging-existing-ui.md) - Decision · DDR-015
 
 ## glossary
 

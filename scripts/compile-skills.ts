@@ -67,8 +67,10 @@ for (const d of decisions.filter((d) => scopeKind(d.fm.scope) === "client")) {
 const projects = decisions.filter((d) => scopeKind(d.fm.scope) === "project");
 
 // ---------- skill 1: design-brain (context) ----------
+// Routing is decided from descriptions alone. design-brain owns building UI; design-brain-check
+// owns judging UI that already exists. Never give both the same trigger phrase (DDR-015).
 const mainDesc =
-  "The designer's standing design decisions, compiled from their past projects. Use this skill whenever a task touches UI, layout, landing pages, heroes, sections, components, typography, fonts, color, tokens, spacing, motion, or UX copy, even if the user only says 'make it look better', 'design this', 'build a page', or 'it looks generic'. Load it before proposing any visual direction so the defaults and known rejections are applied without being re-told.";
+  "The designer's standing design decisions, compiled from their past projects. Use this skill whenever a task builds or changes UI: layout, landing pages, heroes, sections, components, typography, fonts, color, tokens, spacing, motion, or UX copy, even if the user only says 'design this' or 'build a page'. Load it before proposing any visual direction so the defaults and known rejections are applied without being re-told. To judge or rework UI that already exists, start with design-brain-check.";
 
 let main = `---
 name: design-brain
@@ -81,6 +83,9 @@ Standing decisions distilled from the designer's own projects. Each line is a ru
 a stance, an id, and how many projects it was observed in. Ask before
 overriding an **Always**/**Never**; **Prefer**/**Avoid** are defaults you may deviate
 from with a stated reason.
+
+If the task starts from existing UI the user called generic, sloppy, AI-made or off, run
+\`design-brain-check\` on it before applying these rules.
 
 **First, establish scope.** If the project is a client brand (see
 \`${BRAIN}/sources.yaml\`), apply only *Universal* rules plus that client's
@@ -111,7 +116,7 @@ writeSkill("design-brain", main);
 
 // ---------- skill 2: design-brain-check (detect) ----------
 const checkDesc =
-  "Scan a page, screenshot, component, or diff for the designer's known design failure patterns and name them. Use whenever asked to review, critique, QA, or 'check' a UI, whenever the user says something looks generic, sloppy, 'AI', or 'off', and before declaring any UI work done. Names the pattern, quotes the evidence, gives the fix in a few words. Does not score.";
+  "Load this first, before design-brain, whenever the user points at UI that already exists and says it looks generic, sloppy, 'AI', or 'off', or asks to polish it or make it look better. Also use it to review, critique, QA, or 'check' a page, screenshot, component, or diff, and before declaring any UI work done. Names the designer's known failure patterns, quotes the evidence, gives the fix in a few words. Does not score. Not for building new UI from a brief; that is design-brain.";
 const anti = patterns.filter((p) => p.fm.kind === "anti-slop").sort(byWeight);
 const craft = patterns.filter((p) => p.fm.kind === "craft").sort(byWeight);
 const patLine = (p: Doc) => {
@@ -138,6 +143,9 @@ Output shape:
 \`\`\`
 [pattern name] — <where> — <fix>
 \`\`\`
+
+If the user also asked you to fix it, load \`design-brain\` after the scan and apply the fixes
+you named, following its rules.
 
 ## Anti-slop patterns (things that keep needing fixing)
 
@@ -207,8 +215,9 @@ writeFileSync(root + "exports/learnings.jsonl", learnings + (learnings ? "\n" : 
 
 writeFileSync(root + "exports/CLAUDE-snippet.md", `## Design decisions
 
-This project follows the designer's standing design decisions. Load the \`design-brain\` skill
-before any UI work and run \`design-brain-check\` before declaring UI done.
+This project follows the designer's standing design decisions. For UI that already exists and
+needs judging or reworking, run \`design-brain-check\` first. Otherwise load the \`design-brain\`
+skill before any UI work, and run \`design-brain-check\` before declaring UI done.
 Scope: **<personal | client:name>**. New non-obvious design choices get a note in
 \`${BRAIN}/inbox/\` (or a Forge DDR if this repo has a record).
 `);

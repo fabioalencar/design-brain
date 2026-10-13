@@ -137,3 +137,16 @@ test("the DDR-005 leak guard names the line where a rule carries a project slug"
   expect(out).toContain("DDR-005:");
   expect(out).toContain("name a project");
 });
+
+test("DDR-015: judging existing UI routes to the check skill, never to the main one", () => {
+  const dir = newBrain({ "decisions/DB-001-a.md": decision("DB-001") });
+  expect(compile(dir).code).toBe(0);
+  const desc = (name: string) => skill(dir, name).match(/^description: (.*)$/m)![1].toLowerCase();
+  // An agent picks one skill from these descriptions alone; a phrase in both goes to the broader one.
+  for (const phrase of ["generic", "sloppy", "look better", "polish", "'ai'", "'off'"]) {
+    expect(desc("design-brain")).not.toContain(phrase);
+  }
+  expect(desc("design-brain-check")).toContain("looks generic");
+  expect(desc("design-brain-check")).toContain("before design-brain");
+  expect(desc("design-brain")).toContain("design-brain-check");
+});
